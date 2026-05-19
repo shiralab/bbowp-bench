@@ -1,0 +1,17 @@
+{
+    "problem_id": "MuJoCo_Swimmer",
+    "obs": [
+        "angle_front_tip",
+        "angle_rotor1",
+        "angle_rotor2",
+        "velocity_tip_x",
+        "velocity_tip_y",
+        "angular_velocity_front_tip",
+        "angular_velocity_rotor1",
+        "angular_velocity_rotor2"
+    ],
+    "act": [
+        "torque_rotor1",
+        "torque_rotor2"
+    ]
+}

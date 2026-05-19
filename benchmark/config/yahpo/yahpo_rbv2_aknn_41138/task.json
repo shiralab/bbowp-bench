@@ -1,0 +1,163 @@
+{
+    "problem_id": "yahpo_rbv2_aknn_41138",
+    "meta_data": {
+        "domain": "Hyperparameter Optimization",
+        "source": "YAHPO Gym Benchmark Suite"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the hyperparameters of RcppHNSW to maximize AUC. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the hyperparameters of an approximate nearest neighbor model, based on the HNSW algorithm, to maximize AUC for a classification task. It is important to consider the mechanics of graph-based proximity search and data preprocessing. The overall predictive quality heavily relies on the categorical choice of the spatial similarity metric, alongside the discrete number of target neighbors used for the final inference. Additionally, constructing an effective and navigable small-world graph requires a careful balance between the maximum allowed connectivity for each node and the capacity of the dynamic candidate lists maintained during both the index construction phase and the subsequent querying phase. Finally, the preliminary strategy chosen to resolve missing data points significantly influences the robustness of the resulting graph structure and the model's ultimate performance. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the hyperparameters of an approximate nearest neighbor model, based on the HNSW algorithm, to maximize AUC for a classification task. This optimization is formulated within a 6-dimensional mixed search space comprising both integer and categorical variables. It is important to consider the mechanics of graph-based proximity search and data preprocessing. The overall predictive quality heavily relies on the categorical choice of the spatial similarity metric, defined by the variable 'distance' (with possible options being 'l2', 'cosine', or 'ip'), alongside the discrete number of target neighbors used for the final inference, controlled by the variable 'k' (ranging from 1 to 50). Additionally, constructing an effective and navigable small-world graph requires a careful balance between the maximum allowed connectivity for each node, represented by the variable 'M' (ranging from 18 to 50), and the capacity of the dynamic candidate lists maintained during both the index construction phase, managed by the variable 'ef_construction' (spanning from 8 to 512 with log-scale), and the subsequent querying phase, governed by the variable 'ef' (spanning from 8 to 256 with log-scale). Finally, the preliminary strategy chosen to resolve missing data points significantly influences the robustness of the resulting graph structure and the model's ultimate performance, which is determined by the variable 'num.impute.selected.cpo' (accepting categorical values of 'impute.mean', 'impute.median', or 'impute.hist'). Please note that while these specified ranges and categorical options define the absolute implementational boundaries and available choices for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "M",
+                            "low": 18,
+                            "high": 50,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "distance",
+                            "choices": [
+                                {
+                                    "actual_name": "l2"
+                                },
+                                {
+                                    "actual_name": "cosine"
+                                },
+                                {
+                                    "actual_name": "ip"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "ef",
+                            "low": 8,
+                            "high": 256,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "ef_construction",
+                            "low": 8,
+                            "high": 512,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "k",
+                            "low": 1,
+                            "high": 50,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "value": "impute.hist",
+                            "type": "const_cat"
+                        }
+                    ],
+                    "reason": "All variables related to the algorithm are included since the evaluation budget is large enough to obtain a reasonable solution. The variable 'num.impute.selected.cpo' is fixed to 'impute.hist' as categorical variables can prevent the optimization process from converging, and its impact is limited when missing data is minimal."
+                },
+                "algorithm": {
+                    "name": "CatCMA with margin",
+                    "reason": "The evaluation budget is moderate to explore the search space involving both integer and categorical variables. CatCMA with margin is a strong algorithm for optimizing in such search spaces, which can handle the mixed variable types and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "M",
+                            "low": 18,
+                            "high": 50,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "distance",
+                            "choices": [
+                                {
+                                    "actual_name": "l2"
+                                },
+                                {
+                                    "actual_name": "cosine"
+                                },
+                                {
+                                    "actual_name": "ip"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "ef",
+                            "low": 50,
+                            "high": 256,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "ef_construction",
+                            "low": 8,
+                            "high": 512,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "k",
+                            "low": 1,
+                            "high": 50,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "value": "impute.hist",
+                            "type": "const_cat"
+                        }
+                    ],
+                    "reason": "Variables with lower importance or known reasonable default values can be reduced by considering a given budget. The variable 'ef' is clipped to the range of 50-256 to keep larger than the variable 'k'. The variable 'num.impute.selected.cpo' is fixed to 'impute.hist' as its impact is limited when missing data is minimal."
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space includes four integer variables and one categorical variable. TPE can handle such mixed variable types and reach reasonable solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

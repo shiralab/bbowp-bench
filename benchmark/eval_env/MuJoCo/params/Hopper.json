@@ -1,0 +1,21 @@
+{
+    "problem_id": "MuJoCo_Hopper",
+    "obs": [
+        "torso_height",
+        "torso_angle",
+        "thigh_joint_angle",
+        "leg_joint_angle",
+        "foot_joint_angle",
+        "torso_x_velocity",
+        "torso_z_velocity",
+        "torso_angular_velocity",
+        "thigh_angular_velocity",
+        "leg_angular_velocity",
+        "foot_angular_velocity"
+    ],
+    "act": [
+        "torque_thigh",
+        "torque_leg",
+        "torque_foot"
+    ]
+}

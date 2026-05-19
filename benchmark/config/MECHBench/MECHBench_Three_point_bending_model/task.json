@@ -1,0 +1,176 @@
+{
+    "problem_id": "Three_point_bending_model",
+    "meta_data": {
+        "domain": "Structural Mechanics",
+        "source": "MECHBench"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "The objective is to minimize the penalized mass of a three-point bending beam. The design variables are the geometric parameters of the beam. The beam is fixed at both ends and impacted at the center by a cylindrical impactor with a 36 mm radius. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "The objective is to minimize the penalized mass of a three-point bending beam. The design variables are geometric parameters defining the five internal ribs structure of the beam. The beam is fixed at both ends and impacted at the center by a cylindrical impactor with a 36 mm radius. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "The objective is to minimize the penalized mass, defined as the beam mass if the intrusion length is 50 mm or less, and 4.25952 + 10 * (intrusion length / 50 - 1) if it exceeds 50 mm. The beam has a height of 120 mm, a width of 800 mm, and a depth of 80 mm. The beam is fixed at both ends and impacted at the center by a cylindrical impactor with a 36 mm radius. The design variables consist of 10 continuous variables: rib1_upper (upper length of the first rib, in mm) ranging over [0.5, 3.0], rib1_lower (lower length of the first rib, in mm) ranging over [0.5, 3.0], rib2_upper (upper length of the second rib, in mm) ranging over [0.5, 3.0], rib2_lower (lower length of the second rib, in mm) ranging over [0.5, 3.0], rib3_upper (upper length of the third rib, in mm) ranging over [0.5, 3.0], rib3_lower (lower length of the third rib, in mm) ranging over [0.5, 3.0], rib4_upper (upper length of the fourth rib, in mm) ranging over [0.5, 3.0], rib4_lower (lower length of the fourth rib, in mm) ranging over [0.5, 3.0], rib5_upper (upper length of the fifth rib, in mm) ranging over [0.5, 3.0], and rib5_lower (lower length of the fifth rib, in mm) ranging over [0.5, 3.0]. Please note that while these specified ranges define the absolute implementational boundaries for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "rib1_lower",
+                            "low": 0.5,
+                            "high": 3,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rib2_lower",
+                            "low": 0.5,
+                            "high": 3,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rib3_lower",
+                            "low": 0.5,
+                            "high": 3,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rib4_lower",
+                            "low": 0.5,
+                            "high": 3,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rib5_lower",
+                            "low": 0.5,
+                            "high": 3,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rib1_upper",
+                            "low": 0.5,
+                            "high": 3,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rib2_upper",
+                            "low": 0.5,
+                            "high": 3,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rib3_upper",
+                            "low": 0.5,
+                            "high": 3,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rib4_upper",
+                            "low": 0.5,
+                            "high": 3,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rib5_upper",
+                            "low": 0.5,
+                            "high": 3,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included since they are likely to be important equally, and the evaluation budget is moderate to explore the whole search space."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is moderate to explore the search space. CMA-ES can be a strong algorithm for continuous optimization problems and can effectively search the space and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "rib1_lower",
+                            "value": 2.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "rib2_lower",
+                            "value": 1.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "rib3_lower",
+                            "value": 1.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "rib4_lower",
+                            "value": 2.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "rib5_lower",
+                            "value": 2.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "rib1_upper",
+                            "low": 2,
+                            "high": 3,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rib2_upper",
+                            "value": 1.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "rib3_upper",
+                            "value": 1.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "rib4_upper",
+                            "low": 2,
+                            "high": 3,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rib5_upper",
+                            "low": 2,
+                            "high": 3,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "The search space is needed to be narrowed and its dimensionality reduced due to the limited evaluation budget. The variables 'rib1_upper', 'rib4_upper', and 'rib5_upper' are included in the search space since they are likely to be more important than the others. The other variables are fixed at constant values based on the results of previous work: 'Distributing three horizontal ribs with the maximum allowable thickness across the whole height of the component and having the two ribs in between vanish results in the best compromise between low weight and sufficiently low impactor intrusion.' Kaps et al. (2022) 'A hierarchical kriging approach for multi-fidelity optimization of automotive crashworthiness problems' (doi: 10.1007/s00158-022-03211-2)"
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space involves three continuous variables. TPE is suitable for finding a reasonable solution within a limited budget and can handle continuous optimization problems.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

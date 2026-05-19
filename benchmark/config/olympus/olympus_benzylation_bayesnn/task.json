@@ -1,0 +1,111 @@
+{
+    "problem_id": "olympus_benzylation_bayesnn",
+    "meta_data": {
+        "domain": "Optimization in realistic experimental scenarios",
+        "source": "Olympus"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the reaction conditions of an N-benzylation reaction to minimize impurity. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the reaction conditions of an N-benzylation reaction to minimize the formation of unwanted tertiary amine impurities. It is important to consider that the impurity yield is highly sensitive to the thermal energy applied to the system, the fluid processing speed which dictates the physical reaction time, the stoichiometric balance between the primary reagents, and the relative proportion of the reaction medium used. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the reaction conditions of an N-benzylation reaction to minimize the formation of unwanted tertiary amine impurities. This optimization problem involves a 4-dimensional continuous search space consisting of specific controllable variables. It is important to consider that the impurity yield is highly sensitive to the thermal energy applied to the system, which can be controlled by the variable 'temperature' (typically evaluated within the bounds of 110.0 to 150.0 \u00b0C). It is also highly dependent on the fluid processing speed that dictates the physical reaction time, adjustable via the variable 'flow_rate' (expected to be around 0.2 to 0.4 mL/min). Furthermore, the outcome is strongly influenced by the stoichiometric balance between the primary reagents, specifically the variable 'ratio', the ratio of benzyl bromide equivalents to the methylbenzylamine reagent (generally ranging from 1.0 to 5.0), as well as the relative proportion of the reaction medium used, represented by the variable 'solvent', the solvent equivalents (such as 0.5 to 1.0 equivalents relative to the reagent stock solution). Please note that while these intervals provide a broad functional domain for each variable, they serve merely as reference boundaries; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "flow_rate",
+                            "low": 0.2,
+                            "high": 0.4,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "ratio",
+                            "low": 1.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "solvent",
+                            "low": 0.5,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "temperature",
+                            "low": 110.0,
+                            "high": 150.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included since the evaluation budget is large enough to explore the whole search space."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is large enough to explore the search space. The search space includes only continuous variables. CMA-ES is a strong algorithm for optimizing in such search spaces, which can converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "flow_rate",
+                            "low": 0.2,
+                            "high": 0.4,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "ratio",
+                            "low": 1.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "solvent",
+                            "low": 0.5,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "temperature",
+                            "low": 110.0,
+                            "high": 150.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included in the search space since the dimensionality is not too high, and only continuous variables are present. This allows the algorithm to find good solutions rather than excluding some variables and potentially missing the optimal solution."
+                },
+                "algorithm": {
+                    "name": "GPSampler",
+                    "reason": "The search space includes only four-dimensional continuous variables, and the evaluation budget is small. GPSampler is a strong algorithm for optimizing in such search spaces, which can find good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

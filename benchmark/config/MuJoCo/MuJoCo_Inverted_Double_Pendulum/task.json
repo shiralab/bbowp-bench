@@ -1,0 +1,175 @@
+{
+    "problem_id": "MuJoCo_Inverted_Double_Pendulum",
+    "meta_data": {
+        "domain": "Optimization in a linear policy for control problems",
+        "source": "MuJoCo Inverted Double Pendulum environment"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a cart-pole system with two serially connected poles remains balanced. The control is performed by a linear policy at each timestep. The total reward per timestep is defined as alive_bonus minus distance_penalty minus velocity_penalty, where alive_bonus is a fixed value of 10.0 awarded if the pendulum is healthy in every timestep, distance_penalty measures the displacement of the tip of the second pole from the upright position, and velocity_penalty penalizes excessive angular velocities of the two hinge joints. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a cart-pole system with two serially connected poles remains balanced. The control is performed by a linear policy that computes a horizontal force applied to the cart based on the current observation at each timestep. The total reward per timestep is defined as alive_bonus minus distance_penalty minus velocity_penalty, where alive_bonus is a fixed value of 10.0 awarded if the pendulum is healthy in every timestep, distance_penalty measures the displacement of the tip of the second pole from the upright position, and velocity_penalty penalizes excessive angular velocities of the two hinge joints. The design variables consist of feedback gains and a bias term. The observation variables are: position of the cart along the linear track, in meters; sine of the angle between the cart and the first pole, unitless; sine of the angle between the first and second poles, unitless; cosine of the angle between the cart and the first pole, unitless; cosine of the angle between the first and second poles, unitless; linear velocity of the cart, in meters per second; angular velocity of the first hinge joint, in radians per second; angular velocity of the second hinge joint, in radians per second; and constraint force acting on the cart along the x-axis, in Newtons. The action variable is horizontal force applied to the cart, in Newtons. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a cart-pole system with two serially connected poles remains balanced, simulated in MuJoCo via the Gymnasium interface (InvertedDoublePendulum-v5). The control is performed by a linear policy that computes a horizontal force applied to the cart based on the current observation at each timestep. The episode terminates early if the y-coordinate of the tip of the second pole drops to 1.0 meters or below (the maximum standing height is 1.2 meters when all components are perpendicularly vertical), and the maximum episode length is 1000 timesteps. The total reward per timestep is defined as alive_bonus minus distance_penalty minus velocity_penalty, where alive_bonus is a fixed value of 10.0 awarded if the pendulum is healthy in every timestep, distance_penalty measures the displacement of the tip of the second pole from the upright position, and velocity_penalty penalizes excessive angular velocities of the two hinge joints. The observation variables are: position (position of the cart along the linear track, in meters), sin_pole1 (sine of the angle between the cart and the first pole, unitless), sin_pole2 (sine of the angle between the first and second poles, unitless), cos_pole1 (cosine of the angle between the cart and the first pole, unitless), cos_pole2 (cosine of the angle between the first and second poles, unitless), velocity (linear velocity of the cart, in meters per second), angular_velocity_pole1 (angular velocity of the first hinge joint, in radians per second), angular_velocity_pole2 (angular velocity of the second hinge joint, in radians per second), and constraint_force (constraint force acting on the cart along the x-axis, in Newtons). The action variable force (horizontal force applied to the cart, in Newtons) is clipped to [-1.0, 1.0] by the simulator. The design variables consist of 10 continuous variables. Nine of them are feedback gains that multiply each observation variable, and the remaining one is a bias term. The feedback gains are named as 'observation variable'_to_'action variable', and the bias term is named as bias_to_force. Each design variable ranges over [-1000, 1000]. Please note that while these specified ranges define the absolute implementational boundaries for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "position_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "sin_pole1_to_force",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "sin_pole2_to_force",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "cos_pole1_to_force",
+                            "low": -2.0,
+                            "high": 2.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "cos_pole2_to_force",
+                            "low": -2.0,
+                            "high": 2.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "velocity_to_force",
+                            "low": -2.0,
+                            "high": 2.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_pole1_to_force",
+                            "low": -50.0,
+                            "high": 50.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_pole2_to_force",
+                            "low": -50.0,
+                            "high": 50.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "constraint_force_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "bias_to_force",
+                            "low": -1.0,
+                            "high": 1.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "The search space is designed based on the scale of the action variable, which is bounded to [-1.0, 1.0] by the simulator, and has a margin to allow broad exploration. Excluding less important variables from the search space can be useful when the evaluation budget is limited. The gain of position is fixed to 0.0 since position is not associated with the reward function (which depends only on the tip displacement and angular velocities). The gain of constraint_force is fixed to 0.0 since it is redundant information derivable from the other state variables."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is moderate to explore the search space involving eight continuous variables. CMA-ES can be a strong algorithm for continuous optimization problems and can effectively search the space and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "position_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "sin_pole1_to_force",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "sin_pole2_to_force",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "cos_pole1_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "cos_pole2_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "velocity_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_pole1_to_force",
+                            "low": -50.0,
+                            "high": 50.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_pole2_to_force",
+                            "low": -50.0,
+                            "high": 50.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "constraint_force_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "bias_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        }
+                    ],
+                    "reason": "The search space is designed based on the scale of the action variable, which is bounded to [-1.0, 1.0] by the simulator, and has a margin to allow broad exploration. The reduction of the search space is needed due to the limited evaluation budget. The gain of sin of both poles, angular velocities of both poles are considered the most important parameters for the control of the inverted double pendulum. The gains of position, cosines, velocity, and constraint force are fixed to 0.0 to reduce the search space. The bias term is fixed to 0.0 as this is expected to be less important."
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space involves four continuous variables. TPE is suitable for finding a reasonable solution within a limited budget and can handle continuous optimization problems.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

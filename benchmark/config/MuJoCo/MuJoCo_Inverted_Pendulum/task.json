@@ -1,0 +1,119 @@
+{
+    "problem_id": "MuJoCo_Inverted_Pendulum",
+    "meta_data": {
+        "domain": "Optimization in linear policy for control problems",
+        "source": "MuJoCo Inverted Pendulum environment"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "The objective is to maximize the number of timesteps an inverted pendulum remains balanced. The control is performed by a linear policy at each timestep. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "The objective is to maximize the number of timesteps an inverted pendulum remains balanced. The control is performed by a linear policy that computes a horizontal force applied to the cart based on the current observation at each timestep. The design variables consist of feedback gains and a bias term. The observation variables are: position of the cart along the linear track, in meters; vertical angle of the pole relative to the upright position, in radians; linear velocity of the cart, in meters per second; and angular velocity of the pole, in radians per second. The action variable is horizontal force applied to the cart, in Newtons. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "The objective is to maximize the number of timesteps an inverted pendulum remains balanced, simulated in MuJoCo via the Gymnasium interface (InvertedPendulum-v5). The control is performed by a linear policy that computes a horizontal force applied to the cart based on the current observation at each timestep. The episode terminates early if the absolute value of the pole angle exceeds 0.2 radians, and the maximum episode length is 1000 timesteps. The observation variables are: position (position of the cart along the linear track, in meters), angle (vertical angle of the pole relative to the upright position, in radians), velocity (linear velocity of the cart, in meters per second), and angular_velocity (angular velocity of the pole, in radians per second). The action variable force (horizontal force applied to the cart, in Newtons) is clipped to [-3.0, 3.0] by the simulator. The design variables consist of 5 continuous variables. Four of them are feedback gains that multiply each observation variable, and the remaining one is a bias term. The feedback gains are named as 'observation variable'_to_'action variable', and the bias term is named as bias_to_force. Each design variable ranges over [-1000, 1000]. Please note that while these specified ranges define the absolute implementational boundaries for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "position_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angle_to_force",
+                            "low": -150.0,
+                            "high": 150.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "velocity_to_force",
+                            "low": -6.0,
+                            "high": 6.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_to_force",
+                            "low": -30.0,
+                            "high": 30.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "bias_to_force",
+                            "low": -3.0,
+                            "high": 3.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "The search space is designed based on the scale of the action variable, which is bounded to [-3.0, 3.0] by the simulator, and has a margin to allow broad exploration. Excluding less important variables from the search space can be useful when the evaluation budget is limited. The gain of position is fixed to 0.0 since position of the pendulum is not directly relevant to the reward."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is moderate to explore the search space involving four continuous variables. CMA-ES can be a strong algorithm for continuous optimization problems and can effectively search the space and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "position_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angle_to_force",
+                            "low": -150.0,
+                            "high": 150.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "velocity_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_to_force",
+                            "low": -30.0,
+                            "high": 30.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "bias_to_force",
+                            "value": 0.0,
+                            "type": "const_float"
+                        }
+                    ],
+                    "reason": "The search space is designed based on the scale of the action variable, which is bounded to [-3.0, 3.0] by the simulator, and has a margin to allow broad exploration. The reduction of the search space is needed due to the limited evaluation budget. The gain of angle and angular velocity can be considered the two most important parameters for the control of the inverted pendulum, and the gain of position is fixed to 0.0 to reduce the search space. The bias term is fixed to 0.0 as this is expected to be less important."
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space involves three continuous variables. TPE is suitable for finding a reasonable solution within a limited budget and can handle continuous optimization problems.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

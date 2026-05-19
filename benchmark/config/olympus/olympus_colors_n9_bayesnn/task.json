@@ -1,0 +1,99 @@
+{
+    "problem_id": "olympus_colors_n9_bayesnn",
+    "meta_data": {
+        "domain": "Optimization in realistic experimental scenarios",
+        "source": "Olympus"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the mixing ratio of the three dyes (red, green, blue) to minimize distance to green. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the blending of a limited set of available dyes to minimize the colorimetric distance to a specific target green shade. It is important to consider the principles of color theory; achieving the target shade is highly dependent on the synergistic balance between a cooler, shorter-wavelength component and a mid-wavelength component. Conversely, the introduction of the remaining longer-wavelength, warmer component will drastically muddy the mixture, shift the hue away from the target, and increase the error. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the blending of a limited set of available dyes to minimize the colorimetric distance to a specific target green shade. This optimization problem is defined within a 3-dimensional continuous search space representing the relative proportions of each dye. It is important to consider the principles of color theory; achieving the target shade is highly dependent on the synergistic balance between a cooler, shorter-wavelength component, explicitly controlled by the variable 'blue' (typically evaluated within the bounds of 0.0 to 1.0), and a mid-wavelength component, represented by the variable 'green' (also evaluated within the bounds of 0.0 to 1.0). Conversely, the introduction of the remaining longer-wavelength, warmer component, identified by the variable 'red' (with an allowable range of 0.0 to 1.0), will drastically muddy the mixture, shift the hue away from the target, and increase the error. Please note that while these 0.0 to 1.0 intervals define the absolute physical limits for each dye proportion, they serve merely as reference boundaries; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "red",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "green",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "blue",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included since the evaluation budget is large enough to explore the whole search space."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is large enough to explore the search space. The search space includes only continuous variables. CMA-ES is a strong algorithm for optimizing in such search spaces, which can converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "red",
+                            "low": 0.0,
+                            "high": 0.5,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "green",
+                            "low": 0.3,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "blue",
+                            "low": 0.0,
+                            "high": 0.5,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "Reducing the search space can be effective due to the limited evaluation budget. The variables 'red' and 'blue' are limited to a maximum of 0.5 as they are expected to have smaller contributions to the target green shade. The variable 'green' is limited to a minimum of 0.3 as it is expected to have a larger contribution to the target green shade."
+                },
+                "algorithm": {
+                    "name": "GPSampler",
+                    "reason": "The search space includes only three-dimensional continuous variables, and the evaluation budget is small. GPSampler is a strong algorithm for optimizing in such search spaces, which can find good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

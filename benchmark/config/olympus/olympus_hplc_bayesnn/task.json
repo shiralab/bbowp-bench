@@ -1,0 +1,135 @@
+{
+    "problem_id": "olympus_hplc_bayesnn",
+    "meta_data": {
+        "domain": "Optimization in realistic experimental scenarios",
+        "source": "Olympus"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the parameters of an automated high-performance liquid chromatography (HPLC) system to maximize peak area. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the process parameters of an automated high-performance liquid chromatography (HPLC) system to maximize the resulting peak area. It is important to understand the fluid dynamics of the autosampler system. The measured peak area is highly sensitive to the physical volumes of the sample managed by the internal fluidic pathway, the mechanical speeds at which the pumps draw and drive the liquid, and the specific timing delays programmed into the injection sequence. Balancing the injected fluid mass with the mechanical transit speeds is critical to prevent signal degradation and maximize the detector's response. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the process parameters of an automated high-performance liquid chromatography (HPLC) system to maximize the resulting peak area. This optimization problem takes place in a 6-dimensional continuous search space. It is important to understand the fluid dynamics of the autosampler system. The measured peak area is highly sensitive to the physical volumes of the sample managed by the internal fluidic pathway, which are explicitly controlled by the variable 'sample_loop' (typically evaluated within the bounds of 0.0 to 0.08), the variable 'additional_volume' (ranging from 0.0 to 0.06), and the variable 'tubing_volume' (ranging from 0.1 to 0.9). Furthermore, balancing the injected fluid mass with the mechanical transit speeds is critical to prevent signal degradation and maximize the detector's response; this balance is dictated by the mechanical speeds at which the pumps draw and drive the liquid, represented by the variable 'sample_flow' (with an allowable range of 0.5 to 2.5) and the variable 'push_speed' (ranging from 80.0 to 150.0), along with the specific timing delays programmed into the injection sequence, identified by the variable 'wait_time' (evaluated within 0.5 to 10.0). Please note that while these intervals define the absolute physical limits for each parameter, they serve merely as reference boundaries; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "sample_loop",
+                            "low": 0.0,
+                            "high": 0.08,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "additional_volume",
+                            "low": 0.0,
+                            "high": 0.06,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "tubing_volume",
+                            "low": 0.1,
+                            "high": 0.9,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "sample_flow",
+                            "low": 0.5,
+                            "high": 2.5,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "push_speed",
+                            "low": 80.0,
+                            "high": 150.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "wait_time",
+                            "low": 0.5,
+                            "high": 10.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included since the evaluation budget is large enough to explore the whole search space."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is large enough to explore the search space. The search space includes only continuous variables. CMA-ES is a strong algorithm for optimizing in such search spaces, which can converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "sample_loop",
+                            "low": 0.0,
+                            "high": 0.08,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "additional_volume",
+                            "low": 0.0,
+                            "high": 0.06,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "tubing_volume",
+                            "low": 0.1,
+                            "high": 0.9,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "sample_flow",
+                            "low": 0.5,
+                            "high": 2.5,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "push_speed",
+                            "low": 80.0,
+                            "high": 150.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "wait_time",
+                            "low": 0.5,
+                            "high": 10.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included in the search space since the dimensionality is not too high, and only continuous variables are present. This allows the algorithm to find good solutions rather than excluding some variables and potentially missing the optimal solution."
+                },
+                "algorithm": {
+                    "name": "GPSampler",
+                    "reason": "The search space includes only six-dimensional continuous variables, and the evaluation budget is small. GPSampler is a strong algorithm for optimizing in such search spaces, which can find good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

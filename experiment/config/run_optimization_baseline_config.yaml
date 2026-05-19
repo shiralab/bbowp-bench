@@ -1,0 +1,35 @@
+data_dir: benchmark/config
+out_dir: experiment/result/human_baseline
+
+task:
+  - MuJoCo_Hopper
+  - MuJoCo_Inverted_Double_Pendulum
+  - MuJoCo_Inverted_Pendulum
+  - MuJoCo_Reacher
+  - MuJoCo_Swimmer
+  - MECHBench_Star_shaped_crash_box
+  - MECHBench_Three_point_bending_model
+  - olympus_benzylation_bayesnn
+  - olympus_colors_bob_bayesnn
+  - olympus_colors_n9_bayesnn
+  - olympus_fullerenes_bayesnn
+  - olympus_hplc_bayesnn
+  - olympus_photo_pce10_bayesnn
+  - olympus_photo_wf3_bayesnn
+  - olympus_snar_bayesnn
+  - olympus_suzuki_bayesnn
+  - yahpo_lcbench_3945
+  - yahpo_rbv2_aknn_41138
+  - yahpo_rbv2_ranger_4135
+  - yahpo_rbv2_rpart_41138
+  - yahpo_rbv2_super_41138
+  - yahpo_rbv2_svm_40981
+  - yahpo_rbv2_xgboost_16
+
+budget:
+  - large
+  - small
+
+seed:
+  start: 1
+  end: 1

@@ -1,0 +1,267 @@
+{
+    "problem_id": "MuJoCo_Swimmer",
+    "meta_data": {
+        "domain": "Optimization in linear policy for control problems",
+        "source": "MuJoCo Swimmer environment"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a three-link swimmer moves its front tip as fast as possible in the positive x-direction through a two-dimensional fluid environment. The control is performed by a linear policy that computes torques applied to the two rotor joints based on the current observation at each timestep. The total reward per timestep is defined as forward_reward minus ctrl_cost, where forward_reward is the displacement of the front tip along the x-axis per unit time weighted by forward_reward_weight (default 1.0), and ctrl_cost is the squared Euclidean norm of the action vector weighted by ctrl_cost_weight (default 1e-4). The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a three-link swimmer moves its front tip as fast as possible in the positive x-direction through a two-dimensional fluid environment. The control is performed by a linear policy that computes torques applied to the two rotor joints based on the current observation at each timestep. The total reward per timestep is defined as forward_reward minus ctrl_cost, where forward_reward is the displacement of the front tip along the x-axis per unit time weighted by forward_reward_weight (default 1.0), and ctrl_cost is the squared Euclidean norm of the action vector weighted by ctrl_cost_weight (default 1e-4). The design variables consist of feedback gains and bias terms. The observation variables are: angle of the front tip of the swimmer body, in radians; angle of the first rotor joint connecting the first and second links, in radians; angle of the second rotor joint connecting the second and third links, in radians; velocity of the front tip along the x-axis, in meters per second; velocity of the front tip along the y-axis, in meters per second; angular velocity of the front tip, in radians per second; angular velocity of the first rotor joint, in radians per second; and angular velocity of the second rotor joint, in radians per second. The action variables are torque applied at the first rotor joint connecting the first and second links, in Newton-meters; and torque applied at the second rotor joint connecting the second and third links, in Newton-meters. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a three-link swimmer moves its front tip as fast as possible in the positive x-direction through a two-dimensional fluid environment, simulated in MuJoCo via the Gymnasium interface (Swimmer-v5). The control is performed by a linear policy that computes torques applied to the two rotor joints based on the current observation at each timestep. The episode has a fixed length of 1000 timesteps. The total reward per timestep is defined as forward_reward minus ctrl_cost, where forward_reward is the displacement of the front tip along the x-axis per unit time weighted by forward_reward_weight (default 1.0), and ctrl_cost is the squared Euclidean norm of the action vector weighted by ctrl_cost_weight (default 1e-4). The observation variables are: angle_front_tip (angle of the front tip of the swimmer body, in radians), angle_rotor1 (angle of the first rotor joint connecting the first and second links, in radians), angle_rotor2 (angle of the second rotor joint connecting the second and third links, in radians), velocity_tip_x (velocity of the front tip along the x-axis, in meters per second), velocity_tip_y (velocity of the front tip along the y-axis, in meters per second), angular_velocity_front_tip (angular velocity of the front tip, in radians per second), angular_velocity_rotor1 (angular velocity of the first rotor joint, in radians per second), and angular_velocity_rotor2 (angular velocity of the second rotor joint, in radians per second). The action variables are torque_rotor1 (torque applied at the first rotor joint connecting the first and second links, in Newton-meters) and torque_rotor2 (torque applied at the second rotor joint connecting the second and third links, in Newton-meters), each clipped to [-1.0, 1.0] by the simulator. The design variables consist of 18 continuous variables. Sixteen of them are feedback gains that multiply each observation variable for each action dimension, and the remaining two are bias terms. The feedback gains are named as 'observation variable'_to_'action variable', and the bias terms are named as bias_to_torque_rotor1 and bias_to_torque_rotor2. Each design variable ranges over [-1000, 1000]. Please note that while these specified ranges define the absolute implementational boundaries for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "angle_front_tip_to_torque_rotor1",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angle_rotor1_to_torque_rotor1",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angle_rotor2_to_torque_rotor1",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "velocity_tip_x_to_torque_rotor1",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "velocity_tip_y_to_torque_rotor1",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_front_tip_to_torque_rotor1",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_rotor1_to_torque_rotor1",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_rotor2_to_torque_rotor1",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angle_front_tip_to_torque_rotor2",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angle_rotor1_to_torque_rotor2",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angle_rotor2_to_torque_rotor2",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "velocity_tip_x_to_torque_rotor2",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "velocity_tip_y_to_torque_rotor2",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_front_tip_to_torque_rotor2",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_rotor1_to_torque_rotor2",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_rotor2_to_torque_rotor2",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_rotor1",
+                            "low": -1.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_rotor2",
+                            "low": -1.0,
+                            "high": 1.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "The search space is designed based on the scale of the action variable, which is bounded to [-1.0, 1.0] by the simulator, and has a margin to allow broad exploration. All variables are included since the evaluation budget is moderate."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is moderate to explore the search space involving 18 continuous variables. CMA-ES can be a strong algorithm for continuous optimization problems and can effectively search the space and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "angle_front_tip_to_torque_rotor1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angle_rotor1_to_torque_rotor1",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angle_rotor2_to_torque_rotor1",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "velocity_tip_x_to_torque_rotor1",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "velocity_tip_y_to_torque_rotor1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_front_tip_to_torque_rotor1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_rotor1_to_torque_rotor1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_rotor2_to_torque_rotor1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angle_front_tip_to_torque_rotor2",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angle_rotor1_to_torque_rotor2",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angle_rotor2_to_torque_rotor2",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "velocity_tip_x_to_torque_rotor2",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "velocity_tip_y_to_torque_rotor2",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_front_tip_to_torque_rotor2",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_rotor1_to_torque_rotor2",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_rotor2_to_torque_rotor2",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_rotor1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_rotor2",
+                            "value": 0.0,
+                            "type": "const_float"
+                        }
+                    ],
+                    "reason": "The search space is designed based on the scale of the action variable, which is bounded to [-1.0, 1.0] by the simulator, and has a margin to allow broad exploration. The reduction of the search space is needed due to the limited evaluation budget. Only the gain of x velocity and rotor angles are included in the search space since they are directly relevant to the reward."
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space involves six continuous variables. TPE is suitable for finding a reasonable solution within a limited budget and can handle continuous optimization problems.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

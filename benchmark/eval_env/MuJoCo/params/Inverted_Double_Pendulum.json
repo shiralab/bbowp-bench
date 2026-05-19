@@ -1,0 +1,17 @@
+{
+    "problem_id": "MuJoCo_Inverted_Double_Pendulum",
+    "obs": [
+        "position",
+        "sin_pole1",
+        "sin_pole2",
+        "cos_pole1",
+        "cos_pole2",
+        "velocity",
+        "angular_velocity_pole1",
+        "angular_velocity_pole2",
+        "constraint_force"
+    ],
+    "act": [
+        "force"
+    ]
+}

@@ -1,0 +1,486 @@
+{
+    "problem_id": "yahpo_rbv2_super_41138",
+    "meta_data": {
+        "domain": "Hyperparameter Optimization",
+        "source": "YAHPO Gym Benchmark Suite"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the selection of a classification algorithm from multiple candidates: RcppHNSW, Ranger (random forest), RPART (decision tree), SVM, XGBoost and their hyperparameters to maximize AUC. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the selection of a classification algorithm from multiple candidates: RcppHNSW, Ranger (random forest), RPART (decision tree), SVM, XGBoost and their hyperparameters to maximize AUC for a classification task. It is important to consider the hierarchical and conditional nature of simultaneous algorithm selection and hyperparameter tuning. The foundational step dictates choosing the optimal base classifier from a diverse categorical pool of candidates, which includes linear models, single decision trees, tree-based ensembles, support vector machines, and proximity-based algorithms. Crucially, the search space is highly conditional; finding the best configuration requires tuning a specific, mutually exclusive subset of architectural and regularization parameters whose activation strictly depends on the base algorithm chosen in the first step. Finally, regardless of the underlying model, the shared preliminary strategy chosen to resolve missing data points plays a critical role in determining the overall robustness of the final pipeline. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the selection of a classification algorithm from multiple candidates: RcppHNSW, Ranger (random forest), RPART (decision tree), SVM, XGBoost and their hyperparameters to maximize AUC for a classification task. This complex optimization is formulated within a 36-dimensional mixed search space comprising continuous, integer, and categorical variables. It is important to consider the hierarchical and conditional nature of simultaneous algorithm selection and hyperparameter tuning. The foundational step dictates choosing the optimal base classifier from a diverse categorical pool, explicitly controlled by the variable 'learner_id' (accepting 'aknn', 'ranger', 'rpart', 'svm', or 'xgboost'), while the shared preliminary strategy to resolve missing data points is specified by the variable 'num.impute.selected.cpo' (accepting 'impute.mean', 'impute.median', or 'impute.hist'). Crucially, the search space is highly conditional; finding the best configuration requires tuning a mutually exclusive subset of parameters whose activation strictly depends on the chosen base algorithm. If 'aknn' is selected, you must optimize its graph-based proximity mechanics via the variables 'aknn.k' (1 to 50), 'aknn.distance' ('l2', 'cosine', 'ip'), 'aknn.M' (18 to 50), 'aknn.ef' (8 to 256 with log-scale), and 'aknn.ef_construction' (8 to 512 with log-scale). If the choice is 'rpart', recursive partitioning is controlled by the complexity penalty 'rpart.cp' (0.0009118819655545162 to 1.0 with log-scale), 'rpart.maxdepth' (1 to 30), 'rpart.minsplit' (1 to 100), and 'rpart.minbucket' (1 to 100). When building random forests with 'ranger', the ensemble relies on 'ranger.num.trees' (1 to 2000), 'ranger.sample.fraction' (0.1 to 1.0), 'ranger.mtry.power' (0.0 to 1.0), 'ranger.respect.unordered.factors' ('ignore', 'order', 'partition'), 'ranger.min.node.size' (1 to 100), 'ranger.splitrule' ('gini' or 'extratrees'), and 'ranger.num.random.splits' (1 to 100). Choosing 'svm' requires tuning the support vector machine's boundary via 'svm.cost' (4.5399929762484854e-05 to 22026.465794806718 with log-scale), 'svm.kernel' ('linear', 'polynomial', 'radial'), 'svm.degree' (2 to 5), 'svm.gamma' (4.5399929762484854e-05 to 22026.465794806718 with log-scale), and 'svm.tolerance' (4.5399929762484854e-05 to 2.0 with log-scale). Finally, if 'xgboost' is selected, the gradient boosting dynamics are governed by 'xgboost.booster' ('gblinear', 'gbtree', 'dart'), 'xgboost.nrounds' (7 to 2981 with log-scale), 'xgboost.eta' (0.0009118819655545162 to 1.0 with log-scale), 'xgboost.gamma' (4.5399929762484854e-05 to 7.38905609893065 with log-scale), 'xgboost.max_depth' (1 to 15), 'xgboost.min_child_weight' (2.718281828459045 to 148.4131591025766 with log-scale), 'xgboost.colsample_bytree' (0.01 to 1.0), 'xgboost.colsample_bylevel' (0.01 to 1.0), 'xgboost.lambda' (0.0009118819655545162 to 1096.6331584284585 with log-scale), 'xgboost.alpha' (0.0009118819655545162 to 1096.6331584284585 with log-scale), 'xgboost.subsample' (0.1 to 1.0), 'xgboost.rate_drop' (0.0 to 1.0), and 'xgboost.skip_drop' (0.0 to 1.0). Please note that while these specified ranges and categorical options define the absolute implementational boundaries and available choices for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "learner_id",
+                            "choices": [
+                                {
+                                    "actual_name": "aknn"
+                                },
+                                {
+                                    "actual_name": "ranger"
+                                },
+                                {
+                                    "actual_name": "rpart"
+                                },
+                                {
+                                    "actual_name": "svm"
+                                },
+                                {
+                                    "actual_name": "xgboost"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "aknn.M",
+                            "low": 18,
+                            "high": 50,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "aknn.distance",
+                            "choices": [
+                                {
+                                    "actual_name": "l2"
+                                },
+                                {
+                                    "actual_name": "cosine"
+                                },
+                                {
+                                    "actual_name": "ip"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "aknn.ef",
+                            "low": 8,
+                            "high": 256,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "aknn.ef_construction",
+                            "low": 8,
+                            "high": 512,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "aknn.k",
+                            "low": 1,
+                            "high": 50,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "ranger.min.node.size",
+                            "low": 1,
+                            "high": 100,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "ranger.mtry.power",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "ranger.num.trees",
+                            "low": 1,
+                            "high": 2000,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "ranger.respect.unordered.factors",
+                            "value": "ignore",
+                            "type": "const_cat"
+                        },
+                        {
+                            "actual_name": "ranger.sample.fraction",
+                            "low": 0.1,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "ranger.splitrule",
+                            "choices": [
+                                {
+                                    "actual_name": "gini"
+                                },
+                                {
+                                    "actual_name": "extratrees"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "ranger.num.random.splits",
+                            "low": 1,
+                            "high": 100,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "rpart.cp",
+                            "low": 0.0009118819655545162,
+                            "high": 1.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rpart.maxdepth",
+                            "low": 1,
+                            "high": 30,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "rpart.minbucket",
+                            "low": 1,
+                            "high": 100,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "rpart.minsplit",
+                            "low": 1,
+                            "high": 100,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "svm.cost",
+                            "low": 4.5399929762484854e-05,
+                            "high": 22026.465794806718,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "svm.kernel",
+                            "choices": [
+                                {
+                                    "actual_name": "linear"
+                                },
+                                {
+                                    "actual_name": "polynomial"
+                                },
+                                {
+                                    "actual_name": "radial"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "svm.tolerance",
+                            "low": 4.5399929762484854e-05,
+                            "high": 2.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "svm.gamma",
+                            "low": 4.5399929762484854e-05,
+                            "high": 22026.465794806718,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.alpha",
+                            "value": 0.001,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "xgboost.booster",
+                            "choices": [
+                                {
+                                    "actual_name": "gblinear"
+                                },
+                                {
+                                    "actual_name": "gbtree"
+                                },
+                                {
+                                    "actual_name": "dart"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "xgboost.lambda",
+                            "low": 0.01,
+                            "high": 100.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.nrounds",
+                            "low": 7,
+                            "high": 2981,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "xgboost.subsample",
+                            "low": 0.1,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.colsample_bylevel",
+                            "low": 0.01,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.colsample_bytree",
+                            "low": 0.01,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.eta",
+                            "low": 0.0009118819655545162,
+                            "high": 1.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.gamma",
+                            "low": 4.5399929762484854e-05,
+                            "high": 7.38905609893065,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.max_depth",
+                            "low": 1,
+                            "high": 15,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "xgboost.min_child_weight",
+                            "low": 2.718281828459045,
+                            "high": 148.4131591025766,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.rate_drop",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.skip_drop",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "value": "impute.hist",
+                            "type": "const_cat"
+                        }
+                    ],
+                    "reason": "Variables with lower importance or known reasonable default values can be reduced by considering a given budget. All learner algorithms are included, but for each algorithm, only subsets of the most important hyperparameters are included to reduce the search space. The variable 'num.impute.selected.cpo' is fixed to 'impute.hist' as its impact is limited when missing data is minimal."
+                },
+                "algorithm": {
+                    "name": "CatCMA with margin",
+                    "reason": "The evaluation budget is moderate to explore the search space, which includes continuous, integer, and categorical variables. CatCMA with margin is a strong algorithm for optimizing in such search spaces, which can handle the mixed variable types and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "learner_id",
+                            "choices": [
+                                {
+                                    "actual_name": "svm"
+                                },
+                                {
+                                    "actual_name": "xgboost"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "svm.cost",
+                            "low": 4.5399929762484854e-05,
+                            "high": 22026.465794806718,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "svm.kernel",
+                            "choices": [
+                                {
+                                    "actual_name": "linear"
+                                },
+                                {
+                                    "actual_name": "polynomial"
+                                },
+                                {
+                                    "actual_name": "radial"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "svm.tolerance",
+                            "low": 4.5399929762484854e-05,
+                            "high": 2.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "svm.degree",
+                            "low": 2,
+                            "high": 5,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "svm.gamma",
+                            "low": 4.5399929762484854e-05,
+                            "high": 22026.465794806718,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.alpha",
+                            "value": 0.001,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "xgboost.booster",
+                            "choices": [
+                                {
+                                    "actual_name": "gblinear"
+                                },
+                                {
+                                    "actual_name": "gbtree"
+                                },
+                                {
+                                    "actual_name": "dart"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "xgboost.lambda",
+                            "low": 0.01,
+                            "high": 100.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.nrounds",
+                            "low": 7,
+                            "high": 2981,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "xgboost.subsample",
+                            "low": 0.1,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.colsample_bylevel",
+                            "value": 1.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "xgboost.colsample_bytree",
+                            "value": 1.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "xgboost.eta",
+                            "low": 0.0009118819655545162,
+                            "high": 1.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "xgboost.gamma",
+                            "value": 4.5399929762484854e-05,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "xgboost.max_depth",
+                            "low": 1,
+                            "high": 15,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "xgboost.min_child_weight",
+                            "value": 2.718281828459045,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "xgboost.rate_drop",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "xgboost.skip_drop",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "value": "impute.hist",
+                            "type": "const_cat"
+                        }
+                    ],
+                    "reason": "Variables with lower importance or known reasonable default values can be reduced by considering a given budget. Only the 'xgboost' and 'svm' algorithms are included, as they are generally strong algorithms across various tasks. Only some hyperparameters are included in the search space as they are the most important hyperparameters, and the other hyperparameters are fixed to reasonable values based on common practices, or excluded."
+                },
+                "algorithm": {
+                    "name": "SMAC3",
+                    "reason": "The search space includes hierarchical variables: 'learner id' and the other variables corresponding to its choice. SMAC3 can handle such mixed variable types and reach reasonable solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,467 @@
+{
+    "problem_id": "MuJoCo_Hopper",
+    "meta_data": {
+        "domain": "Optimization in linear policy for control problems",
+        "source": "MuJoCo Hopper environment"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a two-dimensional one-legged hopper moves forward as fast as possible while maintaining balance. The control is performed by a linear policy that computes torques applied to the three hinge joints based on the current observation at each timestep. The total reward per timestep is defined as healthy_reward plus forward_reward minus ctrl_cost, where healthy_reward is a fixed bonus of 1.0 awarded at each timestep the hopper remains healthy, forward_reward is the forward velocity of the torso weighted by forward_reward_weight (default 1.0), and ctrl_cost is the squared Euclidean norm of the action vector weighted by ctrl_cost_weight (default 0.001). The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a two-dimensional one-legged hopper moves forward as fast as possible while maintaining balance. The control is performed by a linear policy that computes torques applied to the three hinge joints based on the current observation at each timestep. The total reward per timestep is defined as healthy_reward plus forward_reward minus ctrl_cost, where healthy_reward is a fixed bonus of 1.0 awarded at each timestep the hopper remains healthy, forward_reward is the forward velocity of the torso weighted by forward_reward_weight (default 1.0), and ctrl_cost is the squared Euclidean norm of the action vector weighted by ctrl_cost_weight (default 0.001). The design variables consist of feedback gains and bias terms. The observation variables are: z-coordinate of the torso, in meters; angle of the torso relative to the vertical axis, in radians; angle of the thigh joint, in radians; angle of the leg joint, in radians; angle of the foot joint, in radians; velocity of the torso along the x-axis, in meters per second; velocity of the torso along the z-axis, in meters per second; angular velocity of the torso hinge, in radians per second; angular velocity of the thigh hinge joint, in radians per second; angular velocity of the leg hinge joint, in radians per second; and angular velocity of the foot hinge joint, in radians per second. The action variables are torque applied at the hinge joint connecting the torso and the thigh, in Newton-meters; torque applied at the hinge joint connecting the thigh and the leg, in Newton-meters; and torque applied at the hinge joint connecting the leg and the foot, in Newton-meters. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a two-dimensional one-legged hopper moves forward as fast as possible while maintaining balance, simulated in MuJoCo via the Gymnasium interface (Hopper-v5). The control is performed by a linear policy that computes torques applied to the three hinge joints based on the current observation at each timestep. The episode terminates when the hopper becomes unhealthy or after a maximum of 1000 timesteps. The total reward per timestep is defined as healthy_reward plus forward_reward minus ctrl_cost, where healthy_reward is a fixed bonus of 1.0 awarded at each timestep the hopper remains healthy, forward_reward is the forward velocity of the torso weighted by forward_reward_weight (default 1.0), and ctrl_cost is the squared Euclidean norm of the action vector weighted by ctrl_cost_weight (default 0.001). The observation variables are: torso_height (z-coordinate of the torso, i.e., height of the hopper, in meters), torso_angle (angle of the torso relative to the vertical axis, in radians), thigh_joint_angle (angle of the thigh joint, in radians), leg_joint_angle (angle of the leg joint, in radians), foot_joint_angle (angle of the foot joint, in radians), torso_x_velocity (velocity of the torso along the x-axis, in meters per second), torso_z_velocity (velocity of the torso along the z-axis, in meters per second), torso_angular_velocity (angular velocity of the torso hinge, in radians per second), thigh_angular_velocity (angular velocity of the thigh hinge joint, in radians per second), leg_angular_velocity (angular velocity of the leg hinge joint, in radians per second), and foot_angular_velocity (angular velocity of the foot hinge joint, in radians per second). The action variables are torque_thigh (torque applied at the hinge joint connecting the torso and the thigh, in Newton-meters), torque_leg (torque applied at the hinge joint connecting the thigh and the leg, in Newton-meters), and torque_foot (torque applied at the hinge joint connecting the leg and the foot, in Newton-meters), each clipped to [-1.0, 1.0] by the simulator. The design variables consist of 36 continuous variables. Thirty-three of them are feedback gains that multiply each observation variable for each action dimension, and the remaining three are bias terms. The feedback gains are named as 'observation variable'_to_'action variable', and the bias terms are named as bias_to_torque_thigh, bias_to_torque_leg, and bias_to_torque_foot. Each design variable ranges over [-1000, 1000]. Please note that while these specified ranges define the absolute implementational boundaries for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "torso_height_to_torque_thigh",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_angle_to_torque_thigh",
+                            "low": -100.0,
+                            "high": 100.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "thigh_joint_angle_to_torque_thigh",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "leg_joint_angle_to_torque_thigh",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "foot_joint_angle_to_torque_thigh",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_x_velocity_to_torque_thigh",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_z_velocity_to_torque_thigh",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_angular_velocity_to_torque_thigh",
+                            "low": -30.0,
+                            "high": 30.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "thigh_angular_velocity_to_torque_thigh",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "leg_angular_velocity_to_torque_thigh",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "foot_angular_velocity_to_torque_thigh",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_height_to_torque_leg",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_angle_to_torque_leg",
+                            "low": -100.0,
+                            "high": 100.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "thigh_joint_angle_to_torque_leg",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "leg_joint_angle_to_torque_leg",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "foot_joint_angle_to_torque_leg",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_x_velocity_to_torque_leg",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_z_velocity_to_torque_leg",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_angular_velocity_to_torque_leg",
+                            "low": -30.0,
+                            "high": 30.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "thigh_angular_velocity_to_torque_leg",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "leg_angular_velocity_to_torque_leg",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "foot_angular_velocity_to_torque_leg",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_height_to_torque_foot",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_angle_to_torque_foot",
+                            "low": -100.0,
+                            "high": 100.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "thigh_joint_angle_to_torque_foot",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "leg_joint_angle_to_torque_foot",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "foot_joint_angle_to_torque_foot",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_x_velocity_to_torque_foot",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_z_velocity_to_torque_foot",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_angular_velocity_to_torque_foot",
+                            "low": -30.0,
+                            "high": 30.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "thigh_angular_velocity_to_torque_foot",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "leg_angular_velocity_to_torque_foot",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "foot_angular_velocity_to_torque_foot",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_thigh",
+                            "low": -1.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_leg",
+                            "low": -1.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_foot",
+                            "low": -1.0,
+                            "high": 1.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "The search space is designed based on the scale of the action variable, which is bounded to [-1.0, 1.0] by the simulator, and has a margin to allow broad exploration. All variables are included since the evaluation budget is moderate to explore the whole search space."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is moderate to explore the search space involving 33 continuous variables. CMA-ES can be a strong algorithm for continuous optimization problems and can effectively search the space and potentially converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "torso_height_to_torque_thigh",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "torso_angle_to_torque_thigh",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "thigh_joint_angle_to_torque_thigh",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "leg_joint_angle_to_torque_thigh",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "foot_joint_angle_to_torque_thigh",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "torso_x_velocity_to_torque_thigh",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_z_velocity_to_torque_thigh",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "torso_angular_velocity_to_torque_thigh",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "thigh_angular_velocity_to_torque_thigh",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "leg_angular_velocity_to_torque_thigh",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "foot_angular_velocity_to_torque_thigh",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "torso_height_to_torque_leg",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "torso_angle_to_torque_leg",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "thigh_joint_angle_to_torque_leg",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "leg_joint_angle_to_torque_leg",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "foot_joint_angle_to_torque_leg",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "torso_x_velocity_to_torque_leg",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_z_velocity_to_torque_leg",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "torso_angular_velocity_to_torque_leg",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "thigh_angular_velocity_to_torque_leg",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "leg_angular_velocity_to_torque_leg",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "foot_angular_velocity_to_torque_leg",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "torso_height_to_torque_foot",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "torso_angle_to_torque_foot",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "thigh_joint_angle_to_torque_foot",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "leg_joint_angle_to_torque_foot",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "foot_joint_angle_to_torque_foot",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_x_velocity_to_torque_foot",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "torso_z_velocity_to_torque_foot",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "torso_angular_velocity_to_torque_foot",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "thigh_angular_velocity_to_torque_foot",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "leg_angular_velocity_to_torque_foot",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "foot_angular_velocity_to_torque_foot",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_thigh",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_leg",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_foot",
+                            "value": 0.0,
+                            "type": "const_float"
+                        }
+                    ],
+                    "reason": "The search space is designed based on the scale of the action variable, which is bounded to [-1.0, 1.0] by the simulator, and has a margin to allow broad exploration. The reduction of the search space is needed due to the limited evaluation budget. The gains of joint angles of each part for the corresponding torque, velocity of torso along the x-axis, angular velocity for the torso torque, and angular velocity of foot for the foot torque are included in the search space. These parameters are considered the most important for this task."
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space involves eight continuous variables. TPE is suitable for finding a reasonable solution within a limited budget and can handle continuous optimization problems.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

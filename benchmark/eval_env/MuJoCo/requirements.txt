@@ -1,0 +1,40 @@
+absl-py==2.4.0
+anyio==4.9.0
+fastapi==0.115.12
+h11==0.16.0
+httptools==0.6.4
+python-dotenv==1.1.0
+sniffio==1.3.1
+starlette==0.46.2
+uvicorn[standard]==0.34.2
+uvloop==0.21.0
+watchfiles==1.0.5
+websockets==15.0.1
+alembic==1.18.4
+cloudpickle==3.1.2
+colorama==0.4.6 ; sys_platform == 'win32'
+colorlog==6.10.1
+etils==1.14.0
+farama-notifications==0.0.4
+fsspec==2026.3.0
+glfw==2.10.0
+greenlet==3.3.2 ; platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'
+gymnasium==1.2.3
+imageio==2.37.3
+mako==1.3.10
+markupsafe==3.0.3
+mujoco==3.6.0
+numpy==2.4.4
+optuna==4.8.0
+packaging==26.0
+pandas==3.0.2
+pillow==12.2.0
+pyopengl==3.1.10
+python-dateutil==2.9.0.post0
+pyyaml==6.0.3
+six==1.17.0
+sqlalchemy==2.0.49
+tqdm==4.67.3
+typing-extensions==4.15.0
+tzdata==2026.1 ; sys_platform == 'emscripten' or sys_platform == 'win32'
+zipp==3.23.0

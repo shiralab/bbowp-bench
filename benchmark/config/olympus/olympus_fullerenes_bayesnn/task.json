@@ -1,0 +1,99 @@
+{
+    "problem_id": "olympus_fullerenes_bayesnn",
+    "meta_data": {
+        "domain": "Optimization in realistic experimental scenarios",
+        "source": "Olympus"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the process conditions of the synthesis of o-xylenyl Buckminsterfullerene adducts to maximize the mole fraction of the desired first- and second-order adducts. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the process conditions for synthesizing o-xylenyl Buckminsterfullerene adducts to maximize the mole fraction of the desired first- and second-order adducts. It is important to consider the underlying reaction mechanism. The formation of these specific adducts is highly sensitive to the thermal energy supplied to drive the in-situ generation of the reactive intermediate. Furthermore, achieving the exact desired substitution order requires a delicate balance between the physical duration the mixture spends in the reaction zone and the initial stoichiometric excess of the precursor relative to the fullerene substrate, which together prevent both under-reaction and the formation of unwanted higher-order adducts. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the process conditions for synthesizing o-xylenyl Buckminsterfullerene adducts to maximize the mole fraction of the desired first- and second-order adducts. This optimization problem is defined within a 3-dimensional continuous search space. It is important to consider the underlying reaction mechanism. The formation of these specific adducts is highly sensitive to the thermal energy supplied to drive the in-situ generation of the reactive intermediate, which is explicitly controlled by the variable 'temperature' (typically evaluated within the bounds of 100.0 to 150.0 \u00b0C). Furthermore, achieving the exact desired substitution order requires a delicate balance between the physical duration the mixture spends in the reaction zone, determined by the variable 'reaction_time' (ranging from 3.0 to 31.0 minutes), and the initial stoichiometric excess of the precursor relative to the fullerene substrate, represented by the variable 'sultine' (with an allowable range of 1.5 to 6.0 equivalents), which together prevent both under-reaction and the formation of unwanted higher-order adducts. Please note that while these intervals define the absolute physical limits for each parameter, they serve merely as reference boundaries; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "reaction_time",
+                            "low": 3.0,
+                            "high": 31.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "sultine",
+                            "low": 1.5,
+                            "high": 6.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "temperature",
+                            "low": 100.0,
+                            "high": 150.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included since the evaluation budget is large enough to explore the whole search space."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is large enough to explore the search space. The search space includes only continuous variables. CMA-ES is a strong algorithm for optimizing in such search spaces, which can converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "reaction_time",
+                            "low": 3.0,
+                            "high": 31.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "sultine",
+                            "low": 1.5,
+                            "high": 6.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "temperature",
+                            "low": 100.0,
+                            "high": 150.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included in the search space since the dimensionality is not too high, and only continuous variables are present. This allows the algorithm to find good solutions rather than excluding some variables and potentially missing the optimal solution."
+                },
+                "algorithm": {
+                    "name": "GPSampler",
+                    "reason": "The search space includes only three-dimensional continuous variables, and the evaluation budget is small. GPSampler is a strong algorithm for optimizing in such search spaces, which can find good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

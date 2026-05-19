@@ -1,0 +1,111 @@
+{
+    "problem_id": "olympus_photo_wf3_bayesnn",
+    "meta_data": {
+        "domain": "Optimization in realistic experimental scenarios",
+        "source": "Olympus"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the ratios of individual polymers in a blend containing WF3 to minimize photodegradation. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the composition of a multi-component polymer blend for organic solar cells to minimize its photodegradation under illumination. It is important to consider the morphological stability of the multi-component system. The overall photo-stability is highly sensitive to the delicate balance between a specific high-efficiency donor polymer, a secondary polymeric component, and two distinct types of electron acceptor materials. The synergistic or antagonistic interactions among these four specific macromolecular components dictate the degradation rate of the active layer. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the composition of a multi-component polymer blend for organic solar cells to minimize its photodegradation under illumination. This optimization problem operates within a 4-dimensional continuous search space representing the relative fractions of the blend's constituent materials. It is important to consider the morphological stability of the multi-component system. The overall photo-stability is highly sensitive to the delicate balance between a specific high-efficiency donor polymer, explicitly represented by the variable 'mat_1' (typically evaluated within the bounds of 0.0 to 1.0), a secondary polymeric component, identified by the variable 'mat_2' (also ranging from 0.0 to 1.0), and two distinct types of electron acceptor materials, corresponding to the variable 'mat_3' and the variable 'mat_4' (both with an allowable range of 0.0 to 1.0). The synergistic or antagonistic interactions among these four specific macromolecular components dictate the degradation rate of the active layer. Please note that while these 0.0 to 1.0 intervals define the absolute physical limits for each material fraction, they serve merely as reference boundaries; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "mat_1",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "mat_2",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "mat_3",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "mat_4",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included since the evaluation budget is large enough to explore the whole search space."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is large enough to explore the search space. The search space includes only continuous variables. CMA-ES is a strong algorithm for optimizing in such search spaces, which can converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "mat_1",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "mat_2",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "mat_3",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "mat_4",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included in the search space since the dimensionality is not too high, and only continuous variables are present. This allows the algorithm to find good solutions rather than excluding some variables and potentially missing the optimal solution."
+                },
+                "algorithm": {
+                    "name": "GPSampler",
+                    "reason": "The search space includes only four-dimensional continuous variables, and the evaluation budget is small. GPSampler is a strong algorithm for optimizing in such search spaces, which can find good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,251 @@
+{
+    "problem_id": "yahpo_rbv2_xgboost_16",
+    "meta_data": {
+        "domain": "Hyperparameter Optimization",
+        "source": "YAHPO Gym Benchmark Suite"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the hyperparameters of XGBoost to maximize AUC. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the hyperparameters of an XGBoost model to maximize AUC for a classification task. It is important to consider the mechanics of sequential ensemble learning, structural constraints, and data preprocessing. The foundational architecture requires selecting the categorical type of the underlying base learner. Achieving high predictive accuracy heavily relies on determining the discrete number of sequential boosting iterations. However, to prevent the ensemble from rapidly overfitting the training data, this must be carefully balanced with a continuous learning rate that shrinks the contribution of each successive step. Furthermore, the structural complexity and variance of the individual components must be constrained by tuning various parameters, such as the limits on tree growth and the continuous proportions of data subsampled during training, to ensure robust generalization. Finally, the preliminary categorical strategy chosen to resolve missing data points plays a critical role in the resulting model's stability and ultimate performance. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the hyperparameters of an XGBoost model to maximize the Area Under the Curve (AUC) for a classification task. This complex optimization is formulated within a 14-dimensional mixed search space comprising continuous, integer, and categorical variables. It is important to consider the mechanics of sequential ensemble learning, structural constraints, and data preprocessing. The foundational architecture requires selecting the categorical type of the underlying base learner, explicitly defined by the variable 'booster' (accepting values like 'gblinear', 'gbtree', or 'dart'). Achieving high predictive accuracy heavily relies on determining the discrete number of sequential boosting iterations, managed by the variable 'nrounds' (typically evaluated between 7 and 2981 with log-scale). However, to prevent the ensemble from rapidly overfitting the training data, this must be carefully balanced with a continuous learning rate that shrinks the contribution of each successive step, which corresponds to the variable 'eta' (ranging from 0.0009118819655545162 to 1.0 with log-scale). Furthermore, the structural complexity of individual trees must be constrained by tuning the maximum allowed depth, governed by the variable 'max_depth' (spanning from 1 to 15), the minimum sum of instance weight needed in a child node, specified by the variable 'min_child_weight' (evaluated from 2.718281828459045 to 148.4131591025766 with log-scale), and the minimum loss reduction required to make a further partition, represented by the variable 'gamma' (evaluated from 4.5399929762484854e-05 to 7.38905609893065 with log-scale). To ensure robust generalization and maintain variance, you must control the continuous proportions of data subsampled during training, managed by the variable 'subsample' (ranging from 0.1 to 1.0), alongside the fraction of features evaluated at each tree and each level, defined by the variables 'colsample_bytree' (spanning from 0.01 to 1.0) and 'colsample_bylevel' (also spanning from 0.01 to 1.0). The model's complexity is further penalized through continuous L1 and L2 regularization terms applied to the weights, controlled respectively by the variables 'alpha' (ranging from 0.0009118819655545162 to 1096.6331584284585 with log-scale) and 'lambda' (also ranging from 0.0009118819655545162 to 1096.6331584284585 with log-scale). When using specific tree algorithms, the dropout techniques can be fine-tuned via the fraction of previous trees to drop, identified by the variable 'rate_drop' (ranging from 0.0 to 1.0), and the probability of skipping the dropout procedure, represented by the variable 'skip_drop' (ranging from 0.0 to 1.0). Finally, the preliminary categorical strategy chosen to resolve missing data points plays a critical role in the resulting model's stability and ultimate performance, which is determined by the variable 'num.impute.selected.cpo' (accepting categorical options 'impute.mean', 'impute.median', or 'impute.hist'). Please note that while these specified ranges and categorical options define the absolute implementational boundaries and available choices for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "alpha",
+                            "value": 0.001,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "booster",
+                            "choices": [
+                                {
+                                    "actual_name": "gblinear"
+                                },
+                                {
+                                    "actual_name": "gbtree"
+                                },
+                                {
+                                    "actual_name": "dart"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "lambda",
+                            "low": 0.01,
+                            "high": 100.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "nrounds",
+                            "low": 7,
+                            "high": 2981,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "subsample",
+                            "low": 0.1,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "colsample_bylevel",
+                            "low": 0.01,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "colsample_bytree",
+                            "low": 0.01,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "eta",
+                            "low": 0.0009118819655545162,
+                            "high": 1.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "gamma",
+                            "low": 4.5399929762484854e-05,
+                            "high": 7.38905609893065,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "max_depth",
+                            "low": 1,
+                            "high": 15,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "min_child_weight",
+                            "low": 2.718281828459045,
+                            "high": 148.4131591025766,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "rate_drop",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "skip_drop",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "value": "impute.hist",
+                            "type": "const_cat"
+                        }
+                    ],
+                    "reason": "Variables with lower importance or known reasonable default values can be reduced by considering a given budget. The variable 'alpha' is fixed to 0.001, and 'lambda' is clipped [0.01, 100.0] as reasonable value/range based on common practices. The variable 'num.impute.selected.cpo' is fixed to 'impute.hist' as its impact is limited when missing data is minimal."
+                },
+                "algorithm": {
+                    "name": "CatCMA with margin",
+                    "reason": "The evaluation budget is moderate to explore the search space involving continuous, integer, and categorical variables. CatCMA with margin is a strong algorithm for optimizing in such search spaces, which can handle the mixed variable types and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "alpha",
+                            "value": 0.001,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "booster",
+                            "choices": [
+                                {
+                                    "actual_name": "gblinear"
+                                },
+                                {
+                                    "actual_name": "gbtree"
+                                },
+                                {
+                                    "actual_name": "dart"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "lambda",
+                            "low": 0.01,
+                            "high": 100.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "nrounds",
+                            "low": 7,
+                            "high": 2981,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "subsample",
+                            "low": 0.1,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "colsample_bylevel",
+                            "value": 1.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "colsample_bytree",
+                            "value": 1.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "eta",
+                            "low": 0.0009118819655545162,
+                            "high": 1.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "gamma",
+                            "value": 4.5399929762484854e-05,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "max_depth",
+                            "low": 1,
+                            "high": 15,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "min_child_weight",
+                            "value": 2.718281828459045,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "rate_drop",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "skip_drop",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "value": "impute.hist",
+                            "type": "const_cat"
+                        }
+                    ],
+                    "reason": "Variables with lower importance or known reasonable default values can be reduced by considering a given budget. The variable 'alpha' is fixed to 0.001 as it can be redundant when the variable 'lambda' is optimized. The variables 'colsample_bylevel', 'colsample_bytree', 'gamma', 'min_child_weight', 'rate_drop', and 'skip_drop' are fixed to their default values (or the nearest values in the domain space) specified in the XGBoost documentation. The variable 'num.impute.selected.cpo' is fixed to 'impute.hist' as its impact is limited when missing data is minimal."
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space involves three continuous variables, two integer variables, and one categorical variable. TPE can handle such mixed variable types and reach reasonable solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

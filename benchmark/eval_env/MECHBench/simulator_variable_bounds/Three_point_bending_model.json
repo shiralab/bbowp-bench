@@ -1,0 +1,77 @@
+{
+    "problem_id": "Three_point_bending_model",
+    "meta_data": {
+        "domain": "Structural Mechanics",
+        "difficulty": "hard",
+        "source": "MECHBench",
+        "url": "https://github.com/BayesOptApp/MECHBench"
+    },
+    "target": {
+        "metric": "penalized_mass",
+        "direction": "minimize"
+    },
+    "search_space": {
+        "variables": [
+            {
+                "actual_name": "rib1_lower",
+                "low": 0.3,
+                "high": 3,
+                "type": "float"
+            },
+            {
+                "actual_name": "rib2_lower",
+                "low": 0.3,
+                "high": 3,
+                "type": "float"
+            },
+            {
+                "actual_name": "rib3_lower",
+                "low": 0.3,
+                "high": 3,
+                "type": "float"
+            },
+            {
+                "actual_name": "rib4_lower",
+                "low": 0.3,
+                "high": 3,
+                "type": "float"
+            },
+            {
+                "actual_name": "rib5_lower",
+                "low": 0.3,
+                "high": 3,
+                "type": "float"
+            },
+            {
+                "actual_name": "rib1_upper",
+                "low": 0.3,
+                "high": 3,
+                "type": "float"
+            },
+            {
+                "actual_name": "rib2_upper",
+                "low": 0.3,
+                "high": 3,
+                "type": "float"
+            },
+            {
+                "actual_name": "rib3_upper",
+                "low": 0.3,
+                "high": 3,
+                "type": "float"
+            },
+            {
+                "actual_name": "rib4_upper",
+                "low": 0.3,
+                "high": 3,
+                "type": "float"
+            },
+            {
+                "actual_name": "rib5_upper",
+                "low": 0.3,
+                "high": 3,
+                "type": "float"
+            }
+        ]
+    }
+}

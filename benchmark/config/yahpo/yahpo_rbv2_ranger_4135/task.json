@@ -1,0 +1,171 @@
+{
+    "problem_id": "yahpo_rbv2_ranger_4135",
+    "meta_data": {
+        "domain": "Hyperparameter Optimization",
+        "source": "YAHPO Gym Benchmark Suite"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the hyperparameters of Ranger (random forest) to maximize AUC. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the hyperparameters of a random forest (Ranger) model to maximize AUC for a classification task. It is important to consider the mechanics of ensemble learning and decision tree construction. Achieving robust predictive performance heavily relies on the discrete size of the tree ensemble, alongside the continuous proportion of the training data sampled to build each individual tree. Furthermore, the model's ability to capture complex patterns while maintaining diversity is governed by several factors: the strategy used to determine the subset of features evaluated at each split, the categorical rule chosen to measure split quality, and the discrete number of random threshold evaluations per feature. To prevent the individual trees from growing too deep and overfitting, you must also carefully tune the discrete stopping criterion that defines the minimum allowed number of samples in a terminal leaf. Finally, the categorical approach taken to handle non-ordinal features, combined with the preliminary strategy chosen to resolve missing data points, plays a critical role in the stability and ultimate performance of the resulting model. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the hyperparameters of a random forest (Ranger) model to maximize AUC for a classification task. This optimization is formulated within an 8-dimensional mixed search space comprising continuous, integer, and categorical variables. It is important to consider the mechanics of ensemble learning and decision tree construction. Achieving robust predictive performance heavily relies on the discrete size of the tree ensemble, explicitly controlled by the variable 'num.trees' (typically evaluated within the bounds of 1 to 2000), alongside the continuous proportion of the training data sampled to build each individual tree, represented by the variable 'sample.fraction' (ranging from 0.1 to 1.0). Furthermore, the model's ability to capture complex patterns while maintaining diversity is governed by several factors: the strategy used to determine the subset of features evaluated at each split, defined by the variable 'mtry.power' (ranging from 0.0 to 1.0), the categorical rule chosen to measure split quality, corresponding to the variable 'splitrule' (with options being 'gini' or 'extratrees'), and the discrete number of random threshold evaluations per feature, controlled by the variable 'num.random.splits' (ranging from 1 to 100). To prevent the individual trees from growing too deep and overfitting, you must also carefully tune the discrete stopping criterion that defines the minimum allowed number of samples in a terminal leaf, which is managed by the variable 'min.node.size' (ranging from 1 to 100). Finally, the categorical approach taken to handle non-ordinal features, determined by the variable 'respect.unordered.factors' (accepting values like 'ignore', 'order', or 'partition'), combined with the preliminary strategy chosen to resolve missing data points, specified by the variable 'num.impute.selected.cpo' (with options 'impute.mean', 'impute.median', or 'impute.hist'), plays a critical role in the stability and ultimate performance of the resulting model. Please note that while these specified ranges and categorical options define the absolute implementational boundaries and available choices for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "min.node.size",
+                            "low": 1,
+                            "high": 100,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "mtry.power",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "num.trees",
+                            "low": 1,
+                            "high": 2000,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "respect.unordered.factors",
+                            "value": "ignore",
+                            "type": "const_cat"
+                        },
+                        {
+                            "actual_name": "sample.fraction",
+                            "low": 0.1,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "splitrule",
+                            "choices": [
+                                {
+                                    "actual_name": "gini"
+                                },
+                                {
+                                    "actual_name": "extratrees"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "num.random.splits",
+                            "low": 1,
+                            "high": 100,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "value": "impute.hist",
+                            "type": "const_cat"
+                        }
+                    ],
+                    "reason": "Variables with lower importance or known reasonable default values can be reduced by considering a given budget. The variable 'respect.unordered.factors' is fixed to 'ignore' as it is a common choice for handling non-ordinal features. The variable 'num.impute.selected.cpo' is fixed to 'impute.hist' as its impact is limited when missing data is minimal."
+                },
+                "algorithm": {
+                    "name": "CatCMA with margin",
+                    "reason": "The evaluation budget is moderate to explore the search space involving continuous, integer, and categorical variables. CatCMA with margin is a strong algorithm for optimizing in such search spaces, which can handle the mixed variable types and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "min.node.size",
+                            "value": 1,
+                            "type": "const_int"
+                        },
+                        {
+                            "actual_name": "mtry.power",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "num.trees",
+                            "low": 1,
+                            "high": 2000,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "respect.unordered.factors",
+                            "value": "ignore",
+                            "type": "const_cat"
+                        },
+                        {
+                            "actual_name": "sample.fraction",
+                            "low": 0.1,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "splitrule",
+                            "choices": [
+                                {
+                                    "actual_name": "gini"
+                                },
+                                {
+                                    "actual_name": "extratrees"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "num.random.splits",
+                            "low": 1,
+                            "high": 100,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "value": "impute.hist",
+                            "type": "const_cat"
+                        }
+                    ],
+                    "reason": "Variables with lower importance or known reasonable default values can be reduced by considering a given budget. The variable 'min.node.size' is fixed to 1 since this is default value for classification. The variable 'respect.unordered.factors' is fixed to 'ignore' as it is a common choice for handling non-ordinal features. The variable 'num.impute.selected.cpo' is fixed to 'impute.hist' as its impact is limited when missing data is minimal."
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space involves two continuous variables, two integer variables, and one categorical variable. 100 evaluations are not sufficient for evolution strategies. TPE can handle such mixed variable types and reach reasonable solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

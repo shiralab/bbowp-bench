@@ -1,0 +1,8 @@
+gmsh==4.15.0
+numpy==2.2.6
+optuna==4.7.0
+pandas==2.3.3
+vtk==9.5.2
+uvicorn==0.40.0
+fastapi==0.128.0
+pydantic==2.12.5

@@ -1,0 +1,570 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "equivalentProperty": "cr:equivalentProperty",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "samplingRate": "cr:samplingRate",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "@type": "sc:Dataset",
+  "name": "BBOWP-Bench",
+  "description": "BBOWP-Bench is an auto-formulation benchmark dataset for black-box optimization from natural-language description.",
+  "conformsTo": "http://mlcommons.org/croissant/1.1",
+  "citeAs": "TODO",
+  "creator": [
+    {
+      "@type": "sc:Person",
+      "name": "Yutaro Yamada",
+      "url": "https://github.com/ymyuuuu"
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Kei Hiroshima",
+      "url": "https://github.com/KeiHiroshima"
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Nozomu Yoshinari",
+      "url": "https://github.com/yoshnary"
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Kento Uchida",
+      "url": "https://github.com/kento031"
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Shinichi Shirakawa",
+      "url": "https://github.com/shirakawas"
+    }
+  ],
+  "datePublished": "2026-05-18T18:16:22.261688",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "url": "https://github.com/shiralab/bbowp-bench",
+  "version": "1.0.0",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_0",
+      "name": "task.json",
+      "contentSize": "6238",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_photo_wf3_bayesnn/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "2bc8414920f8e9e3f12fd8e230d67bee267fe49f25d95236aa3f8c834eb1f2c3"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_1",
+      "name": "eval_config.json",
+      "contentSize": "88849",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_photo_wf3_bayesnn/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "62343a81cef6b09a24b76b1d2170d70c312c1a4e3adff2d5436025eb86cba580"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_2",
+      "name": "task.json",
+      "contentSize": "6190",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_benzylation_bayesnn/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "82d3f14d715332bc15e6d5b9221e0f4f97300886eb5dfc17079ae81d9de6c8e9"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_3",
+      "name": "eval_config.json",
+      "contentSize": "35998",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_benzylation_bayesnn/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "ec061913952f38170ac36b7d00ae588c685cfc7a165926330fc296f2ffad2f3f"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_4",
+      "name": "task.json",
+      "contentSize": "6244",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_photo_pce10_bayesnn/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "adcf27d336c52770c0fffc72b0d0a2eb7eef15899a67b8a22762c0cb3f0018fb"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_5",
+      "name": "eval_config.json",
+      "contentSize": "38534",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_photo_pce10_bayesnn/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "9f8babe7c29419d09c22ce71d2e2e6c06869f77ca9080b82b884fc94d9722d60"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_6",
+      "name": "task.json",
+      "contentSize": "6441",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_suzuki_bayesnn/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "32d37da67d86639287acc5a4bc8dd7b094ba479da1a931e5aab803b39d84d116"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_7",
+      "name": "eval_config.json",
+      "contentSize": "31586",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_suzuki_bayesnn/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "b53f8bd206ee03710f8cb30e93a54a19d5f18839ace8c8555c94c4a253300b21"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_8",
+      "name": "task.json",
+      "contentSize": "5691",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_colors_n9_bayesnn/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "5fa5a5b65653ae2f7c29e312d99971e87f26ec7960a7b94fe18bfecbe089d4b1"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_9",
+      "name": "eval_config.json",
+      "contentSize": "62532",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_colors_n9_bayesnn/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "d59318c88b2e9d5e2fa77ce6d036328c5dae30699a5dc48c3333f87e3743b971"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_10",
+      "name": "task.json",
+      "contentSize": "7478",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_hplc_bayesnn/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "abd155b80a652a20799379535a76d1db135cbb8acdcc50c587abdf236718e8d0"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_11",
+      "name": "eval_config.json",
+      "contentSize": "61450",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_hplc_bayesnn/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "aa229d8c0571814e969fdbc66d706618531fa2be81035dce3615227fbb73c799"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_12",
+      "name": "task.json",
+      "contentSize": "6115",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_fullerenes_bayesnn/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "3c4bd1d2f4fcb9f8e58218123b612b7a412c24afb797fa51f1e452be88b74163"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_13",
+      "name": "eval_config.json",
+      "contentSize": "51041",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_fullerenes_bayesnn/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "3c12a6cf4820db05194c12754c2df71e2b8eb1f213fabb33d931df3ff324674b"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_14",
+      "name": "task.json",
+      "contentSize": "6356",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_snar_bayesnn/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "29757ff10f4cff92f430e516944f10c772b7b5356cadfab9d99ba80b611d56ff"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_15",
+      "name": "eval_config.json",
+      "contentSize": "69785",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_snar_bayesnn/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "0a13a8eb450d8abaa3a3ae4e84234f80ff46770d014f092dfda87f8f045a9904"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_16",
+      "name": "task.json",
+      "contentSize": "6612",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_colors_bob_bayesnn/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "d619654855ce68720e51086099402fa2b4cc5d224afea6a0401d08eb68f2adf5"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_17",
+      "name": "eval_config.json",
+      "contentSize": "59318",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/olympus/olympus_colors_bob_bayesnn/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "2c8d6fc5436eb266a18c8b2964a0e1381ffb638e77cd2d43889232adc28c0cb1"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_18",
+      "name": "task.json",
+      "contentSize": "9243",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MECHBench/MECHBench_Three_point_bending_model/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "5d417cf2c85a85ec3f7563ae0665a2382c0b6751ce54893cf2aed7b51d88c5ff"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_19",
+      "name": "eval_config.json",
+      "contentSize": "165443",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MECHBench/MECHBench_Three_point_bending_model/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "f78df97e7d55877f2c3f6a03486184782c5e39934c9679dc53fc849d58305ded"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_20",
+      "name": "task.json",
+      "contentSize": "6367",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MECHBench/MECHBench_Star_shaped_crash_box/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "9affa51298aa775841167077b2cfd328af265e57da621007a354da655296a5f2"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_21",
+      "name": "eval_config.json",
+      "contentSize": "42457",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MECHBench/MECHBench_Star_shaped_crash_box/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "325ad6fd7cc4c048a2cd1c0a6547655a7efefcdf3fb8a9a9aa85a5c7f73522dd"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_22",
+      "name": "task.json",
+      "contentSize": "12375",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MuJoCo/MuJoCo_Inverted_Double_Pendulum/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "ae28dfa62c691bbb3f6ae42ec5722c786a89c4b8eb77345dc94ed1f51d4bc7c6"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_23",
+      "name": "eval_config.json",
+      "contentSize": "187212",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MuJoCo/MuJoCo_Inverted_Double_Pendulum/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "a9b7f7a8345ca9a226532adf31b910d64c2dbca698ba458298fd792b61ae13a2"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_24",
+      "name": "task.json",
+      "contentSize": "25749",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MuJoCo/MuJoCo_Hopper/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "f07dd082ca5eec3ac2d2929e53c6b15a8a5889ceed2e70dc76230c8ff9af8c35"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_25",
+      "name": "eval_config.json",
+      "contentSize": "2112349",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MuJoCo/MuJoCo_Hopper/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "4d2aded36274a4a0fc76432ad9fb6f525f032c45dcc82ac078fe207fdb0a4a1d"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_26",
+      "name": "task.json",
+      "contentSize": "7524",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MuJoCo/MuJoCo_Inverted_Pendulum/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "d2af331f1ec293ecd1e2bd7758a7570360da78dfdb23f8a11bb0d313dad4279e"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_27",
+      "name": "eval_config.json",
+      "contentSize": "105506",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MuJoCo/MuJoCo_Inverted_Pendulum/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "52fb04c3d792bd5ff0bb8b5607e56abf7c171a4e2ef158d7fe0d724be15ab189"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_28",
+      "name": "task.json",
+      "contentSize": "16289",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MuJoCo/MuJoCo_Swimmer/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "8da661b7a2bb5080b823a6f33321cba85d5d06c1659db84daf9b298961180165"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_29",
+      "name": "eval_config.json",
+      "contentSize": "298317",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MuJoCo/MuJoCo_Swimmer/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "438f53683d065d0ccd3980f5dc2a9d8672f864e1e114f3151477445bdb37cbd7"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_30",
+      "name": "task.json",
+      "contentSize": "18250",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MuJoCo/MuJoCo_Reacher/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "f4323af0d6288b99020a93433ba8d2934f9452766354080aa5478bba022bc5af"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_31",
+      "name": "eval_config.json",
+      "contentSize": "927865",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/MuJoCo/MuJoCo_Reacher/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "99336ca24aad1340e28bfe07b27612a90a505f403e049b3b76a0020d276ddd9f"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_32",
+      "name": "task.json",
+      "contentSize": "9114",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_lcbench_3945/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "88f6389966815a00cf8d6b769d4a407db42d4fd41c78bc9fe481454f02411ed2"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_33",
+      "name": "eval_config.json",
+      "contentSize": "48089",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_lcbench_3945/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "bc6dc6a2bfb516d10db5b4b7a0a6afef98e40f28d74bb5354066406b96f7b779"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_34",
+      "name": "task.json",
+      "contentSize": "8506",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_rpart_41138/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "4a085068ddacb1a93f183741951e01d4c6e386e75b76fc30d65457a51e048a92"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_35",
+      "name": "eval_config.json",
+      "contentSize": "44292",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_rpart_41138/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "895aecc3739fdf0522b9c2deebac75df120a019ea2a84cbc2f925a3950ea3c82"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_36",
+      "name": "task.json",
+      "contentSize": "9427",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_aknn_41138/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "876b1aaabf109bbda0e92aa492f079b431e7650b273b38ac347f60e98a9ce180"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_37",
+      "name": "eval_config.json",
+      "contentSize": "59209",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_aknn_41138/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "cc9d376bd9e6e981c3f68194583567f3e4b73477ff14965362ddbded8a0866a6"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_38",
+      "name": "task.json",
+      "contentSize": "25024",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_super_41138/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "bb26c131950ec5eb63c0c95b8c0152585e257137ad1aae828554946b1b6c1d12"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_39",
+      "name": "eval_config.json",
+      "contentSize": "408770",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_super_41138/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "62e6b305bcf1233e879b19864984b78d4a93c3e6c2337c221b625222a36d4c31"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_40",
+      "name": "task.json",
+      "contentSize": "15066",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_xgboost_16/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "12196e4a6a3fbe993cb8b1c0cb9de4f20bc50231db703fbbb0f29069ebf2e1c0"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_41",
+      "name": "eval_config.json",
+      "contentSize": "92503",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_xgboost_16/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "8e2156489c0e3c759c78e24a22a820cd696cd066471146c85cd8693eab5c6fc7"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_42",
+      "name": "task.json",
+      "contentSize": "10857",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_ranger_4135/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "0eca87e95d3c0f621d7072d3752e4be14f65ad41e1dbec51dd918423514a00c8"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_43",
+      "name": "eval_config.json",
+      "contentSize": "98304",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_ranger_4135/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "8c62ca2e800319269535665dbcb6894ba1158a0c883215550cd8e46dfa41314a"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_44",
+      "name": "task.json",
+      "contentSize": "10666",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_svm_40981/task.json",
+      "encodingFormat": "application/json",
+      "sha256": "d836fd337dd5f3d9c1a59c3d52884326def75cef9aade42af5d09122451613b8"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "file_45",
+      "name": "eval_config.json",
+      "contentSize": "68086",
+      "contentUrl": "https://raw.githubusercontent.com/shiralab/bbowp-bench/refs/heads/main/benchmark/config/yahpo/yahpo_rbv2_svm_40981/eval_config.json",
+      "encodingFormat": "application/json",
+      "sha256": "52e59003200175c7b884217889f05bd519d2f7ad23e33124c4577ff48c69064c"
+    }
+  ],
+  "rai:dataLimitations": "Coverage is limited to 23 tasks from four benchmark sources and should not be treated as representative of all black-box optimization settings. Results also depend on the assumptions and fidelity of the underlying simulators and surrogate benchmarks.",
+  "rai:dataBiases": "The dataset inherits biases from the selected benchmark suites, including their task choices, metrics, and simulator or surrogate assumptions. Benchmark-friendly domains are overrepresented relative to real-world deployment settings. Also, the human baselines are rooted in experiences of a few black-box optimization researchers. It perhaps introduces bias in the task domains and baselines towards their familiar research topics.",
+  "rai:personalSensitiveInformation": "No personal or sensitive information is intended to be included.",
+  "rai:dataUseCases": "This dataset is designed to benchmark auto-formulation capability for black-box optimization.\nValidated use cases: zero-shot evaluation of large language models (see [TODO]). Not validated for high-stakes operational decision making or use in production systems.",
+  "rai:dataSocialImpact": "Potential benefits include improved reproducibility and comparability in optimization research. A main risk is overgeneralizing from benchmark performance to real-world settings.",
+  "rai:hasSyntheticData": true,
+  "prov:wasDerivedFrom": [
+    {
+      "@id": "https://github.com/slds-lmu/yahpo_gym",
+      "prov:label": "YAHPO Gym",
+      "sc:license": "Apache-2.0"
+    },
+    {
+      "@id": "https://github.com/aspuru-guzik-group/olympus",
+      "prov:label": "Olympus",
+      "sc:license": "MIT"
+    },
+    {
+      "@id": "https://github.com/BayesOptApp/MECHBench",
+      "prov:label": "MECHBench",
+      "sc:license": "MIT"
+    },
+    {
+      "@id": "https://github.com/google-deepmind/mujoco",
+      "prov:label": "MuJoCo",
+      "sc:license": "Apache-2.0"
+    }
+  ],
+  "prov:wasGeneratedBy": [
+    {
+      "@type": "prov:Activity",
+      "prov:type": {
+        "@id": "https://www.wikidata.org/wiki/Q4929239"
+      },
+      "prov:label": "Task Correction",
+      "sc:description": "Correcting benchmarks and simulators that can be used as built-in objectives from four sources:\nYAHPO Gym, Olympus, MECHBench, and MuJoCo.",
+      "prov:wasAttributedTo": [
+        {
+          "@type": "prov:Agent",
+          "@id": "research_team",
+          "prov:label": "Research Team",
+          "sc:description": "Conducted by the paper's research team"
+        }
+      ]
+    },
+    {
+      "@type": "prov:Activity",
+      "prov:type": {
+        "@id": "https://www.wikidata.org/wiki/Q109719325"
+      },
+      "prov:label": "Annotation",
+      "sc:description": "Creating task descriptions, aliases of variable names, evaluation environments, human baselines, and other metadata.",
+      "prov:wasAttributedTo": [
+        {
+          "@type": "prov:Agent",
+          "@id": "research_team",
+          "prov:label": "Research Team",
+          "sc:description": "The authors created and improved the annotations. Multiple authors verified each record."
+        },
+        {
+          "@type": "prov:SoftwareAgent",
+          "@id": "synthetic_agent",
+          "prov:label": "Synthetic Agent",
+          "sc:description": "GPT-5.2, Claude sonnet 4.6, and Gemini 2.5 Pro were used for the initial task description and aliases."
+        }
+      ]
+    }
+  ]
+}

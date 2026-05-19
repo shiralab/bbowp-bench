@@ -1,0 +1,12 @@
+{
+    "problem_id": "MuJoCo_Inverted_Pendulum",
+    "obs": [
+        "position",
+        "angle",
+        "velocity",
+        "angular_velocity"
+    ],
+    "act": [
+        "force"
+    ]
+}

@@ -1,0 +1,124 @@
+{
+    "problem_id": "olympus_colors_bob_bayesnn",
+    "meta_data": {
+        "domain": "Optimization in realistic experimental scenarios",
+        "source": "Olympus"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the mixing ratio of the five dyes (red, orange, yellow, blue, green) to minimize distance to green. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the blending of a set of available dyes to minimize the colorimetric distance to a specific target green shade. It is important to consider the principles of color theory; specifically, achieving the target shade is heavily reliant on the delicate balance between cooler, shorter-wavelength components and mid-wavelength components, whereas the introduction of longer-wavelength, warmer components will drastically muddy the mixture, shift the hue away from the target, and increase the error. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the blending of five specific dyes to minimize the colorimetric distance to a target green shade. This optimization problem operates within a 5-dimensional continuous search space representing the relative proportions of each dye. It is important to consider the principles of color theory; achieving the target shade is heavily reliant on the delicate balance between cooler, shorter-wavelength components, controlled by the variable 'blue', the blue dye fraction (typically evaluated within the bounds of 0.0 to 1.0), and mid-wavelength components represented by the variable 'green' and 'yellow', the green and yellow dye fractions (both also ranging from 0.0 to 1.0). Conversely, the introduction of longer-wavelength, warmer components, specifically the variable 'red' and 'orange', the red and orange dye fractions (each with an allowable range of 0.0 to 1.0), will drastically muddy the mixture, shift the hue away from the target, and increase the error. Please note that while these 0.0 to 1.0 intervals define the absolute physical limits for each dye proportion, they serve merely as reference boundaries; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "red",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "orange",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "yellow",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "blue",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "green",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included since the evaluation budget is large enough to explore the whole search space."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is large enough to explore the search space. The search space includes only continuous variables. CMA-ES is a strong algorithm for optimizing in such search spaces, which can converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "red",
+                            "low": 0.0,
+                            "high": 0.5,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "orange",
+                            "low": 0.0,
+                            "high": 0.5,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "yellow",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "log": false,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "blue",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "green",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "Reducing the search space can be effective due to the limited evaluation budget. The variables 'red' and 'orange' are limited to a maximum of 0.5 as they are opposite colors to 'green' and expected to have a negative impact on the objective function."
+                },
+                "algorithm": {
+                    "name": "GPSampler",
+                    "reason": "The search space includes only five-dimensional continuous variables, and the evaluation budget is small. GPSampler is a strong algorithm for optimizing in such search spaces, which can find good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,111 @@
+{
+    "problem_id": "olympus_suzuki_bayesnn",
+    "meta_data": {
+        "domain": "Optimization in realistic experimental scenarios",
+        "source": "Olympus"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the reaction conditions of palladium-catalyzed Suzuki cross-coupling between 2-bromophenyltetrazole and an electron-deficient aryl boronate to maximize product yield. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the reaction conditions of a palladium-catalyzed Suzuki cross-coupling between 2-bromophenyltetrazole and an electron-deficient aryl boronate to maximize the product yield. It is important to consider the mechanistic requirements of the catalytic cycle. The efficiency of the coupling is highly dependent on the thermal energy applied to the system. Furthermore, achieving a high catalytic turnover requires a delicate balance between the catalytic loading of the transition metal complex, the stoichiometric excess of the boron-containing coupling partner, and the relative amount of the basic additive necessary to facilitate the catalytic steps. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the reaction conditions of a palladium-catalyzed Suzuki cross-coupling between 2-bromophenyltetrazole and an electron-deficient aryl boronate to maximize the product yield. This optimization problem operates within a 4-dimensional continuous search space. It is important to consider the mechanistic requirements of the catalytic cycle. The efficiency of the coupling is highly dependent on the thermal energy applied to the system, which is explicitly controlled by the variable 'temperature' (typically evaluated within the bounds of 75.0 to 90.0). Furthermore, achieving a high catalytic turnover requires a delicate balance between the catalytic loading of the transition metal complex, represented by the variable 'pd_mol' (ranging from 0.5 to 5.0), the stoichiometric excess of the boron-containing coupling partner, identified by the variable 'arbpin' (with an allowable range of 1.0 to 1.75), and the relative amount of the basic additive necessary to facilitate the catalytic steps, corresponding to the variable 'k3po4' (ranging from 1.5 to 3). Please note that while these intervals define the absolute physical limits for each parameter, they serve merely as reference boundaries; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "temperature",
+                            "low": 75.0,
+                            "high": 90.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "pd_mol",
+                            "low": 0.5,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "arbpin",
+                            "low": 1.0,
+                            "high": 1.75,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "k3po4",
+                            "low": 1.5,
+                            "high": 3.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included since the evaluation budget is large enough to explore the whole search space."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is large enough to explore the search space. The search space includes only continuous variables. CMA-ES is a strong algorithm for optimizing in such search spaces, which can converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "temperature",
+                            "low": 75.0,
+                            "high": 90.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "pd_mol",
+                            "low": 0.5,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "arbpin",
+                            "low": 1.0,
+                            "high": 1.75,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "k3po4",
+                            "low": 1.5,
+                            "high": 3.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included in the search space since the dimensionality is not too high, and only continuous variables are present. This allows the algorithm to find good solutions rather than excluding some variables and potentially missing the optimal solution."
+                },
+                "algorithm": {
+                    "name": "GPSampler",
+                    "reason": "The search space includes only four-dimensional continuous variables, and the evaluation budget is small. GPSampler is a strong algorithm for optimizing in such search spaces, which can find good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+#This file is copied from MECHBench. (https://github.com/BayesOptApp/MECHBench)
+#Licensed under the MIT License
+#Copyright (c) 2025 Iván Olarte Rodríguez et al.
+#See LICENSES/MECHBench_LICENSE.txt for full license text
+#Citation: Rodríguez et al., "MECHBench: A Set of Black-Box Optimization
+#Benchmarks originated from Structural Mechanics," arXiv:2511.10821 (2025)
+#-  1. :
+#---1----|----2----|----3----|----4----|----5----|----6----|----7----|----8----|----9----|---10----|
+/ANIM/DT
+#   TSTART     TFREQ
+0.000000 0.000250
+/ANIM/SHELL/EPSP/UPPER
+/MON/ON
+/PRINT/-500/55
+/RUN/test_3_point_bending/1/
+                0.01
+/STOP
+# Emax Mmax Nmax NTH NANIM NERR_POSIT
+0 0 0 1 1 0
+/TFILE/0
+#            dT_HIS
+0.000010
+/VERS/2023
+/ANIM/VECT/VEL
+/ANIM/NODA/DMAS
+/ANIM/ELEM/EPSP
+/ANIM/ELEM/VONM
+/ANIM/SHELL/TENS/STRESS/UPPER
+/ANIM/SHELL/TENS/STRESS/LOWER
+/DT/NODA/CST/0
+0.9 0 0

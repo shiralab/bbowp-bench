@@ -1,0 +1,139 @@
+{
+    "problem_id": "yahpo_rbv2_rpart_41138",
+    "meta_data": {
+        "domain": "Hyperparameter Optimization",
+        "source": "YAHPO Gym Benchmark Suite"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the hyperparameters of RPART (decision tree) to maximize AUC. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the hyperparameters of a decision tree (RPART) model to maximize AUC for a classification task. It is important to consider the mechanics of recursive partitioning and data preprocessing. Achieving optimal predictive performance requires carefully tuning the continuous penalty applied to the overall complexity of the tree to prune unnecessary branches and prevent overfitting. Furthermore, controlling the structural growth is critical, which involves setting an integer limit on the maximum allowable vertical depth of the tree. Additionally, the model's ability to isolate specific data patterns must be balanced by strictly defining the integer thresholds for the minimum number of observations required to attempt a new split, as well as the minimum number of samples allowed to form a final terminal leaf. Finally, because the quality of the input data directly impacts the reliability of the routing rules at each node, the categorical preliminary strategy chosen to resolve missing data points plays a critical role in the resulting model's robustness. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the hyperparameters of a decision tree (RPART) model to maximize AUC for a classification task. This optimization is formulated within a 5-dimensional mixed search space comprising continuous, integer, and categorical variables. It is important to consider the mechanics of recursive partitioning and data preprocessing. Achieving optimal predictive performance requires carefully tuning the continuous penalty applied to the overall complexity of the tree to prune unnecessary branches and prevent overfitting, which is explicitly controlled by the variable 'cp' (typically evaluated within the bounds of 0.0009118819655545162 to 1.0 with log-scale). Furthermore, controlling the structural growth is critical, which involves setting an integer limit on the maximum allowable vertical depth of the tree, represented by the variable 'maxdepth' (ranging from 1 to 30). Additionally, the model's ability to isolate specific data patterns must be balanced by strictly defining the integer thresholds for the minimum number of observations required to attempt a new split, managed by the variable 'minsplit' (spanning from 1 to 100), as well as the minimum number of samples allowed to form a final terminal leaf, corresponding to the variable 'minbucket' (also spanning from 1 to 100). Finally, because the quality of the input data directly impacts the reliability of the routing rules at each node, the categorical preliminary strategy chosen to resolve missing data points plays a critical role in the resulting model's robustness, determined by the variable 'num.impute.selected.cpo' (accepting values like 'impute.mean', 'impute.median', or 'impute.hist'). Please note that while these specified ranges and categorical options define the absolute implementational boundaries and available choices for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "cp",
+                            "low": 0.0009118819655545162,
+                            "high": 1.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "maxdepth",
+                            "low": 1,
+                            "high": 30,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "minbucket",
+                            "low": 1,
+                            "high": 100,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "minsplit",
+                            "low": 1,
+                            "high": 100,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "choices": [
+                                {
+                                    "actual_name": "impute.mean"
+                                },
+                                {
+                                    "actual_name": "impute.median"
+                                },
+                                {
+                                    "actual_name": "impute.hist"
+                                }
+                            ],
+                            "type": "cat"
+                        }
+                    ],
+                    "reason": "All variables are included since the evaluation budget is large enough to obtain a reasonable solution."
+                },
+                "algorithm": {
+                    "name": "CatCMA with margin",
+                    "reason": "The evaluation budget is moderate to explore the search space involving continuous and integer variables. CatCMA with margin is a strong algorithm for mixture of variable types optimization problems and can effectively search the space and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "cp",
+                            "low": 0.0009118819655545162,
+                            "high": 1.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "maxdepth",
+                            "low": 1,
+                            "high": 30,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "minbucket",
+                            "low": 1,
+                            "high": 100,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "minsplit",
+                            "low": 1,
+                            "high": 100,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "value": "impute.hist",
+                            "type": "const_cat"
+                        }
+                    ],
+                    "reason": "All variables that are related to the algorithm are included. The variable 'num.impute.selected.cpo' is fixed to 'impute.hist' as its impact is limited when missing data is minimal."
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space involves one continuous variable and three integer variables. TPE can handle such mixed variable types and reach reasonable solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

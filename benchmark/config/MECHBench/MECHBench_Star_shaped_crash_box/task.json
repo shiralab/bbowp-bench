@@ -1,0 +1,121 @@
+{
+    "problem_id": "Star_shaped_crash_box",
+    "meta_data": {
+        "domain": "Structural Mechanics",
+        "source": "MECHBench"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "The objective is to minimize the negative penalized specific energy absorption of a star shaped crash-box. The design variables are the geometric parameters of the crash-box. The structure is clamped at the base and impacted by a 250 kg impactor from above at a velocity of 25.2 km/h. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "The objective is to minimize the negative penalized specific energy absorption of a star shaped crash-box. The design variables are geometric parameters defining the cross-sectional shape and wall thickness of the crash-box. The structure is clamped at the base, and is impacted by a 250 kg impactor from above at a velocity of 25.2 km/h. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "The objective is to minimize the negative penalized specific energy absorption, defined as -1 * specific energy absorption if the intrusion length is 60 mm or less, and 100 * (intrusion length - 60) if it exceeds 60 mm. The structure is a star shaped crash-box with an initial height of 120 mm, clamped at the base and impacted by a 250 kg impactor from above at a velocity of 25.2 km/h. The design variables consist of 5 continuous variables: width (overall dimension along the x-axis, in mm) ranging over [60, 120], depth (overall dimension along the y-axis, in mm) ranging over [60, 120], notch_width (indentation length on each side of the cross-section along the x-axis, in mm) ranging over [0, 30], notch_depth (indentation length on each side of the cross-section along the y-axis, in mm) ranging over [0, 30], and thickness (uniform wall thickness at the notch midpoints, in mm) ranging over [0.7, 3.0]. Please note that while these specified ranges define the absolute implementational boundaries for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "width",
+                            "low": 60,
+                            "high": 120,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "depth",
+                            "low": 60,
+                            "high": 120,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "notch_width",
+                            "low": 0,
+                            "high": 30,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "notch_depth",
+                            "low": 0,
+                            "high": 30,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "thickness",
+                            "low": 0.7,
+                            "high": 3,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included since the evaluation budget is large enough to explore the whole search space."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is moderate to explore the search space. The search space includes only continuous variables. CMA-ES can be a strong algorithm for continuous optimization problems and can effectively search the space and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "width",
+                            "low": 60,
+                            "high": 120,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "depth",
+                            "low": 60,
+                            "high": 120,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "notch_width",
+                            "value": 15,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "notch_depth",
+                            "value": 15,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "thickness",
+                            "low": 1.1,
+                            "high": 2.6,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "The search space should be reduced its dimensionality due to the limited evaluation budget. The variables 'notch_width' and 'notch_depth' are fixed to 15, and 'thickness' is limited to the range [1.1, 2.6] to avoid impractical solutions."
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space has three continuous variables. TPE is suitable for finding a reasonable solution within a limited budget and can handle continuous optimization problems.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

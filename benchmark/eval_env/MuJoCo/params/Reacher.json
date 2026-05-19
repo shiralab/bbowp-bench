@@ -1,0 +1,19 @@
+{
+    "problem_id": "MuJoCo_Reacher",
+    "obs": [
+        "cos_joint0",
+        "cos_joint1",
+        "sin_joint0",
+        "sin_joint1",
+        "target_x",
+        "target_y",
+        "angular_velocity_joint0",
+        "angular_velocity_joint1",
+        "fingertip_error_x",
+        "fingertip_error_y"
+    ],
+    "act": [
+        "torque_joint0",
+        "torque_joint1"
+    ]
+}

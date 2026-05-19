@@ -1,0 +1,169 @@
+{
+    "problem_id": "yahpo_rbv2_svm_40981",
+    "meta_data": {
+        "domain": "Hyperparameter Optimization",
+        "source": "YAHPO Gym Benchmark Suite"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the hyperparameters of SVM to maximize AUC. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the hyperparameters of a Support Vector Machine (SVM) model to maximize AUC for a classification task. It is important to consider the mechanics of maximum-margin classification, the kernel trick, and data preprocessing. The foundational choice involves selecting the categorical kernel function, which fundamentally defines the geometric shape of the decision boundary. Crucially, this search space exhibits conditional dependencies; selecting certain non-linear boundaries activates further specialized parameters, such as the continuous parameter dictating the influence radius of a single training example, or the integer exponent used for polynomial mapping. Regardless of the boundary shape, achieving a robust model requires carefully tuning the continuous penalty applied to misclassified training examples to manage the delicate trade-off between maximizing the margin and minimizing classification errors. Additionally, the continuous threshold defining the stopping criterion for the underlying numerical solver must be appropriately configured. Finally, the categorical preliminary strategy chosen to resolve missing data points plays a critical role in the resulting model's overall stability. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the hyperparameters of a Support Vector Machine (SVM) model to maximize the Area Under the Curve (AUC) for a classification task. This optimization is formulated within a 6-dimensional mixed search space comprising continuous, integer, and categorical variables. It is important to consider the mechanics of maximum-margin classification, the kernel trick, and data preprocessing. The foundational choice involves selecting the categorical kernel function, which fundamentally defines the geometric shape of the decision boundary and is explicitly controlled by the variable 'kernel' (with available options being 'linear', 'polynomial', or 'radial'). Crucially, this search space exhibits conditional dependencies; selecting certain non-linear boundaries activates further specialized parameters. For example, the continuous parameter dictating the influence radius of a single training example is represented by the variable 'gamma' (typically evaluated within the bounds of 4.5399929762484854e-05 to 22026.465794806718 with log-scale), while the integer exponent used for polynomial mapping corresponds to the variable 'degree' (ranging from 2 to 5). Regardless of the boundary shape, achieving a robust model requires carefully tuning the continuous penalty applied to misclassified training examples to manage the delicate trade-off between maximizing the margin and minimizing classification errors, which is managed by the variable 'cost' (also evaluated within the bounds of 4.5399929762484854e-05 to 22026.465794806718 with log-scale). Additionally, the continuous threshold defining the stopping criterion for the underlying numerical solver must be appropriately configured, governed by the variable 'tolerance' (spanning from 4.5399929762484854e-05 to 2.0 with log-scale). Finally, the categorical preliminary strategy chosen to resolve missing data points plays a critical role in the resulting model's overall stability, determined by the variable 'num.impute.selected.cpo' (accepting values like 'impute.mean', 'impute.median', or 'impute.hist'). Please note that while these specified ranges and categorical options define the absolute implementational boundaries and available choices for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "cost",
+                            "low": 4.5399929762484854e-05,
+                            "high": 22026.465794806718,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "kernel",
+                            "choices": [
+                                {
+                                    "actual_name": "linear"
+                                },
+                                {
+                                    "actual_name": "polynomial"
+                                },
+                                {
+                                    "actual_name": "radial"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "tolerance",
+                            "low": 4.5399929762484854e-05,
+                            "high": 2.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "degree",
+                            "low": 2,
+                            "high": 5,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "gamma",
+                            "low": 4.5399929762484854e-05,
+                            "high": 22026.465794806718,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "choices": [
+                                {
+                                    "actual_name": "impute.mean"
+                                },
+                                {
+                                    "actual_name": "impute.median"
+                                },
+                                {
+                                    "actual_name": "impute.hist"
+                                }
+                            ],
+                            "type": "cat"
+                        }
+                    ],
+                    "reason": "All variables are included since the evaluation budget is large enough to obtain a reasonable solution."
+                },
+                "algorithm": {
+                    "name": "CatCMA with margin",
+                    "reason": "The evaluation budget is moderate to explore the six-dimensional search space involving continuous, integer and categorical variables. CatCMA with margin is a strong algorithm for mixture of variable types optimization problems and can effectively search the space and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "cost",
+                            "low": 4.5399929762484854e-05,
+                            "high": 22026.465794806718,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "kernel",
+                            "choices": [
+                                {
+                                    "actual_name": "linear"
+                                },
+                                {
+                                    "actual_name": "polynomial"
+                                },
+                                {
+                                    "actual_name": "radial"
+                                }
+                            ],
+                            "type": "cat"
+                        },
+                        {
+                            "actual_name": "tolerance",
+                            "low": 4.5399929762484854e-05,
+                            "high": 2.0,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "degree",
+                            "low": 2,
+                            "high": 5,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "gamma",
+                            "low": 4.5399929762484854e-05,
+                            "high": 22026.465794806718,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "num.impute.selected.cpo",
+                            "value": "impute.hist",
+                            "type": "const_cat"
+                        }
+                    ],
+                    "reason": "Variables with lower importance or known reasonable default values can be reduced by considering a given budget. The variable 'num.impute.selected.cpo' is fixed to 'impute.hist' as its impact is limited when missing data is minimal."
+                },
+                "algorithm": {
+                    "name": "SMAC3",
+                    "reason": "The search space involves three continuous variables, one integer variable, and one categorical variable. The variables 'degree' and 'gamma' are conditionally optimized when the kernel is 'radial' and 'polynomial', respectively. SMAC3 can handle conditional relationships in the search space and can reach reasonable solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

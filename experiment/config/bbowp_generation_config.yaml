@@ -1,0 +1,95 @@
+data_dir: benchmark/config
+
+task:
+  - MuJoCo_Hopper
+  - MuJoCo_Inverted_Double_Pendulum
+  - MuJoCo_Inverted_Pendulum
+  - MuJoCo_Reacher
+  - MuJoCo_Swimmer
+  - MECHBench_Star_shaped_crash_box
+  - MECHBench_Three_point_bending_model
+  - olympus_benzylation_bayesnn
+  - olympus_colors_bob_bayesnn
+  - olympus_colors_n9_bayesnn
+  - olympus_fullerenes_bayesnn
+  - olympus_hplc_bayesnn
+  - olympus_photo_pce10_bayesnn
+  - olympus_photo_wf3_bayesnn
+  - olympus_snar_bayesnn
+  - olympus_suzuki_bayesnn
+  - yahpo_lcbench_3945
+  - yahpo_rbv2_aknn_41138
+  - yahpo_rbv2_ranger_4135
+  - yahpo_rbv2_rpart_41138
+  - yahpo_rbv2_super_41138
+  - yahpo_rbv2_svm_40981
+  - yahpo_rbv2_xgboost_16
+
+difficulty:
+  - hard
+  - intermediate
+  - easy
+
+budget:
+  - large
+  - small
+
+model:
+  - openai/gpt-5.2
+  - openai/gpt-5-mini
+  - google/gemini-3.1-pro-preview
+  - google/gemini-3-flash-preview
+
+prompt:
+  system_prompt: |
+    # Task
+    You are an expert in black-box optimization.
+    The user will give you a task description of a black-box optimization problem.
+    Your goal is to generate a JSON content that defines all of the following items based on the description:
+    1. search space
+    2. the best choice of an optimization algorithm, which must be selected from the predefined algorithms in the schema
+    
+    # Policy
+    To achieve the best result within the limited budget, please follow the policy below when generating the JSON content.
+    - For efficient optimization under the given budget, you can flexibly control the size of the search space by
+      1. reducing the dimensionality of the search space (e.g., by fixing some parameters to be constant).
+      2. adjusting the range of numerical parameters.
+      3. reducing the number of choices for categorical parameters.
+    - You should choose the optimization algorithm that is most suitable for the defined search space and the given budget.
+
+    # Output Format
+    Your output must be a JSON content that strictly follows the schema defined below.
+    {SCHEMA}
+
+    Additionally, the search space in the JSON content must be defined according to the following schema, where you can choose any combination of the variable types (int, float, bool, cat) and the constraints mentioned below:
+    - int: {{"actual_name": "...", "type": "int", "low": 1, "high": 10, "step": 1, "log": false}}
+    - float: {{"actual_name": "...", "type": "float", "low": 1e-4, "high": 1.0, "log": true}}
+    - bool: {{"actual_name": "...", "type": "bool"}}
+    - cat: {{"actual_name": "...", "type": "cat", "choices": [{{"actual_name": "a"}}, {{"actual_name": "b"}}]}}
+    - const_int: {{"actual_name": "...", "type": "const_int", "value": 5}}
+    - const_float: {{"actual_name": "...", "type": "const_float", "value": 0.1}}
+    - const_bool: {{"actual_name": "...", "type": "const_bool", "value": true}}
+    - const_cat: {{"actual_name": "...", "type": "const_cat", "value": "gbtree"}}
+
+    Make sure to include reasons for your search space design and algorithm choice in the JSON content, each of which should be written in the following aspects:
+    - search space design
+      - the reason why each variable is included in the search space
+      - the reason why each variable is optimized/fixed
+      - the reason for the range/choices of each variable
+    - algorithm choice
+      - the reason why the chosen algorithm is suitable for the defined search space and the given budget
+
+    # Constraints
+    1. The name of each variable in the search space must be in snake_case.
+    2. The name of each choice for categorical variables must be in snake_case.
+  user_prompt: |
+    Based on the task description given below, generate a JSON content according to the defined schema and system instructions.
+
+    # Task Description
+    {TASK_DESCRIPTION}
+
+out_dir: experiment/result
+
+seed:
+  start: 1
+  end: 1

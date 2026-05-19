@@ -1,0 +1,47 @@
+{
+    "problem_id": "Star_shaped_crash_box",
+    "meta_data": {
+        "domain": "Structural Mechanics",
+        "difficulty": "hard",
+        "source": "MECHBench",
+        "url": "https://github.com/BayesOptApp/MECHBench"
+    },
+    "target": {
+        "metric": "penalized_sea",
+        "direction": "minimize"
+    },
+    "search_space": {
+        "variables": [
+            {
+                "actual_name": "width",
+                "low": 60,
+                "high": 120,
+                "type": "float"
+            },
+            {
+                "actual_name": "depth",
+                "low": 60,
+                "high": 120,
+                "type": "float"
+            },
+            {
+                "actual_name": "notch_width",
+                "low": 0,
+                "high": 30,
+                "type": "float"
+            },
+            {
+                "actual_name": "notch_depth",
+                "low": 0,
+                "high": 30,
+                "type": "float"
+            },
+            {
+                "actual_name": "thickness",
+                "low": 0.7,
+                "high": 3,
+                "type": "float"
+            }
+        ]
+    }
+}

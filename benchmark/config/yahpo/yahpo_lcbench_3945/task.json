@@ -1,0 +1,158 @@
+{
+    "problem_id": "yahpo_lcbench_3945",
+    "meta_data": {
+        "domain": "Hyperparameter Optimization",
+        "source": "YAHPO Gym Benchmark Suite"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "We need to optimize the hyperparameters of a Neural Network (MLP) to maximize validation accuracy. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "We need to optimize the hyperparameters of a Neural Network (MLP) to maximize validation accuracy for a classification task. It is important to consider the mechanics of deep learning architectures, gradient-based optimization, and regularization strategies. The representational capacity of the model must be carefully designed by determining the discrete depth of the network alongside the discrete maximum number of artificial neurons allowed in the hidden layers. Achieving successful and stable convergence requires fine-tuning the continuous step size of the weight updates, the continuous inertia applied to accelerate gradient descent, and the discrete number of training examples processed before each model update. Finally, to prevent the network from merely memorizing the training data, generalization must be enforced by tuning the continuous penalty applied to the magnitude of the weights, along with the continuous maximum probability of randomly deactivating neurons during the training phase. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "We need to optimize the hyperparameters of a Neural Network (MLP) to maximize validation accuracy for a classification task. This optimization is formulated within a 7-dimensional mixed search space comprising continuous and integer variables. It is important to consider the mechanics of deep learning architectures, gradient-based optimization, and regularization strategies. The representational capacity of the model must be carefully designed by determining the discrete depth of the network, explicitly controlled by the variable 'num_layers' (typically evaluated within the bounds of 1 to 5), alongside the discrete maximum number of artificial neurons allowed in the hidden layers, represented by the variable 'max_units' (ranging from 64 to 1024 with log-scale). Achieving successful and stable convergence requires fine-tuning the continuous step size of the weight updates, corresponding to the variable 'learning_rate' (spanning from 1e-4 to 1e-1 with log-scale), the continuous inertia applied to accelerate gradient descent, governed by the variable 'momentum' (spanning from 0.1 to 0.99), and the discrete number of training examples processed before each model update, managed by the variable 'batch_size' (evaluated from 16 to 512). Finally, to prevent the network from merely memorizing the training data, generalization must be enforced by tuning the continuous penalty applied to the magnitude of the weights, determined by the variable 'weight_decay' (ranging from 1e-5 to 1e-1), along with the continuous maximum probability of randomly deactivating neurons during the training phase, identified by the variable 'max_dropout' (accepting values from 0.0 to 1.0). Please note that while these specified ranges define the absolute implementational boundaries for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "batch_size",
+                            "low": 16,
+                            "high": 512,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "learning_rate",
+                            "low": 0.0001,
+                            "high": 0.1,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "max_dropout",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "max_units",
+                            "low": 64,
+                            "high": 1024,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "momentum",
+                            "low": 0.1,
+                            "high": 0.99,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "num_layers",
+                            "low": 1,
+                            "high": 5,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "weight_decay",
+                            "low": 1e-05,
+                            "high": 0.1,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "All variables are included since the evaluation budget is large enough to obtain a reasonable solution."
+                },
+                "algorithm": {
+                    "name": "CatCMA with margin",
+                    "reason": "The evaluation budget is moderate to explore the search space involving continuous and integer variables. CatCMA with margin is a strong algorithm for mixture of variable types optimization problems and can effectively search the space and converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "batch_size",
+                            "low": 16,
+                            "high": 512,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "learning_rate",
+                            "low": 0.0001,
+                            "high": 0.1,
+                            "log": true,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "max_dropout",
+                            "low": 0.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "max_units",
+                            "low": 64,
+                            "high": 1024,
+                            "step": 1,
+                            "log": true,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "momentum",
+                            "value": 0.9,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "num_layers",
+                            "low": 1,
+                            "high": 5,
+                            "step": 1,
+                            "type": "int"
+                        },
+                        {
+                            "actual_name": "weight_decay",
+                            "low": 1e-05,
+                            "high": 0.1,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "Variables with lower importance or known reasonable default values can be reduced by considering a given budget. The variable 'momentum' is fixed to 0.9 based on common practices in deep learning."
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space includes three continuous variables and three integer variables. TPE can handle such mixed variable types and reach reasonable solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}

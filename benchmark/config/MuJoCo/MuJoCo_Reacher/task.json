@@ -1,0 +1,311 @@
+{
+    "problem_id": "MuJoCo_Reacher",
+    "meta_data": {
+        "domain": "Optimization in linear policy for control problems",
+        "source": "MuJoCo Reacher environment"
+    },
+    "budget": [
+        {
+            "amount": "large",
+            "max_eval_value": 10000
+        },
+        {
+            "amount": "small",
+            "max_eval_value": 100
+        }
+    ],
+    "description": [
+        {
+            "difficulty": "hard",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a two-jointed robot arm moves its fingertip as close as possible to a randomly placed target. The control is performed by a linear policy that computes torques applied to the two hinge joints based on the current observation at each timestep. The total reward per timestep is defined as reward_distance plus reward_control, where reward_distance is the negative Euclidean distance between the fingertip and the target weighted by reward_near_weight (default 1.0), and reward_control is the negative squared Euclidean norm of the action vector weighted by reward_control_weight (default 0.1). The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "intermediate",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a two-jointed robot arm moves its fingertip as close as possible to a randomly placed target. The control is performed by a linear policy that computes torques applied to the two hinge joints based on the current observation at each timestep. The total reward per timestep is defined as reward_distance plus reward_control, where reward_distance is the negative Euclidean distance between the fingertip and the target weighted by reward_near_weight (default 1.0), and reward_control is the negative squared Euclidean norm of the action vector weighted by reward_control_weight (default 0.1). The design variables consist of feedback gains and terms. The observation variables are: cosine of the angle of the first arm, unitless; cosine of the angle of the second arm, unitless; sine of the angle of the first arm, unitless; sine of the angle of the second arm, unitless; x-coordinate of the target position, in meters; y-coordinate of the target position, in meters; angular velocity of the first hinge joint, in radians per second; angular velocity of the second hinge joint, in radians per second; x-component of the vector from the target to the fingertip, in meters; and y-component of the vector from the target to the fingertip, in meters. The action variables are torque applied at the first hinge joint connecting the arm to the fixed point, in Newton-meters, and torque applied at the second hinge joint connecting the two links, in Newton-meters. The evaluation budget is {MAX_EVAL_VALUE}."
+        },
+        {
+            "difficulty": "easy",
+            "text": "The objective is to maximize the cumulative reward obtained over an episode in which a two-jointed robot arm moves its fingertip as close as possible to a randomly placed target, simulated in MuJoCo via the Gymnasium interface (Reacher-v5). The control is performed by a linear policy that computes torques applied to the two hinge joints based on the current observation at each timestep. The episode has a fixed length of 50 timesteps. The total reward per timestep is defined as reward_distance plus reward_control, where reward_distance is the negative Euclidean distance between the fingertip and the target weighted by reward_near_weight (default 1.0), and reward_control is the negative squared Euclidean norm of the action vector weighted by reward_control_weight (default 0.1). The observation variables are: cos_joint0 (cosine of the angle of the first arm, unitless), cos_joint1 (cosine of the angle of the second arm, unitless), sin_joint0 (sine of the angle of the first arm, unitless), sin_joint1 (sine of the angle of the second arm, unitless), target_x (x-coordinate of the target position, in meters), target_y (y-coordinate of the target position, in meters), angular_velocity_joint0 (angular velocity of the first hinge joint, in radians per second), angular_velocity_joint1 (angular velocity of the second hinge joint, in radians per second), fingertip_error_x (x-component of the vector from the target to the fingertip, in meters), and fingertip_error_y (y-component of the vector from the target to the fingertip, in meters). The action variables are torque_joint0 (torque applied at the first hinge joint connecting the arm to the fixed point, in Newton-meters) and torque_joint1 (torque applied at the second hinge joint connecting the two links, in Newton-meters), each clipped to [-1.0, 1.0] by the simulator. The design variables consist of 22 continuous variables. Twenty of them are feedback gains, each of which multiplies one observation variable for one action variable, and the remaining two are bias terms. The feedback gains are named as 'observation variable'_to_'action variable', and the bias terms are named as bias_to_torque_joint0 and bias_to_torque_joint1. Each design variable ranges over [-1000, 1000]. Please note that while these specified ranges define the absolute implementational boundaries for each parameter, they serve primarily as a reference frame; you can flexibly control the actual search space depending on your optimization strategy. The evaluation budget is {MAX_EVAL_VALUE}."
+        }
+    ],
+    "answer": [
+        {
+            "amount": "large",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "cos_joint0_to_torque_joint0",
+                            "low": -2.0,
+                            "high": 2.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "cos_joint1_to_torque_joint0",
+                            "low": -2.0,
+                            "high": 2.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "sin_joint0_to_torque_joint0",
+                            "low": -2.0,
+                            "high": 2.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "sin_joint1_to_torque_joint0",
+                            "low": -2.0,
+                            "high": 2.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "target_x_to_torque_joint0",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "target_y_to_torque_joint0",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_joint0_to_torque_joint0",
+                            "low": -0.5,
+                            "high": 0.5,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_joint1_to_torque_joint0",
+                            "low": -0.5,
+                            "high": 0.5,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "fingertip_error_x_to_torque_joint0",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "fingertip_error_y_to_torque_joint0",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "cos_joint0_to_torque_joint1",
+                            "low": -2.0,
+                            "high": 2.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "cos_joint1_to_torque_joint1",
+                            "low": -2.0,
+                            "high": 2.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "sin_joint0_to_torque_joint1",
+                            "low": -2.0,
+                            "high": 2.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "sin_joint1_to_torque_joint1",
+                            "low": -2.0,
+                            "high": 2.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "target_x_to_torque_joint1",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "target_y_to_torque_joint1",
+                            "low": -5.0,
+                            "high": 5.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_joint0_to_torque_joint1",
+                            "low": -0.5,
+                            "high": 0.5,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_joint1_to_torque_joint1",
+                            "low": -0.5,
+                            "high": 0.5,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "fingertip_error_x_to_torque_joint1",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "fingertip_error_y_to_torque_joint1",
+                            "low": -20.0,
+                            "high": 20.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_joint0",
+                            "low": -1.0,
+                            "high": 1.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_joint1",
+                            "low": -1.0,
+                            "high": 1.0,
+                            "type": "float"
+                        }
+                    ],
+                    "reason": "The search space is designed based on the scale of the action variable, which is bounded to [-1.0, 1.0] by the simulator, and has a margin to allow broad exploration. All variables are included since the evaluation budget is moderate."
+                },
+                "algorithm": {
+                    "name": "CMA-ES",
+                    "reason": "The evaluation budget is moderate to explore the search space involving 22 continuous variables. CMA-ES can be a strong algorithm for continuous optimization problems and can effectively search the space and potentially converge to good solutions within the given budget.",
+                    "score": "TBA"
+                }
+            }
+        },
+        {
+            "amount": "small",
+            "answer_item": {
+                "search_space": {
+                    "variables": [
+                        {
+                            "actual_name": "cos_joint0_to_torque_joint0",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "cos_joint1_to_torque_joint0",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "sin_joint0_to_torque_joint0",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "sin_joint1_to_torque_joint0",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "target_x_to_torque_joint0",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "target_y_to_torque_joint0",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_joint0_to_torque_joint0",
+                            "low": -0.5,
+                            "high": 0.5,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_joint1_to_torque_joint0",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "fingertip_error_x_to_torque_joint0",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "fingertip_error_y_to_torque_joint0",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "cos_joint0_to_torque_joint1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "cos_joint1_to_torque_joint1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "sin_joint0_to_torque_joint1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "sin_joint1_to_torque_joint1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "target_x_to_torque_joint1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "target_y_to_torque_joint1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_joint0_to_torque_joint1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "angular_velocity_joint1_to_torque_joint1",
+                            "low": -0.5,
+                            "high": 0.5,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "fingertip_error_x_to_torque_joint1",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "fingertip_error_y_to_torque_joint1",
+                            "low": -10.0,
+                            "high": 10.0,
+                            "type": "float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_joint0",
+                            "value": 0.0,
+                            "type": "const_float"
+                        },
+                        {
+                            "actual_name": "bias_to_torque_joint1",
+                            "value": 0.0,
+                            "type": "const_float"
+                        }
+                    ],
+                    "reason": "The search space is designed based on the scale of the action variable, which is bounded to [-1.0, 1.0] by the simulator, and has a margin to allow broad exploration. The reduction of the search space is needed due to the limited evaluation budget. The gains of fingertip error and angular velocity of each joint for the corresponding torque are included in the search space. To make the search space smaller as much as possible with the severely limited evaluation budget, the gains of fingertip_error_x and fingertip_error_y are ranged [-10.0, 10.0]."
+                },
+                "algorithm": {
+                    "name": "TPE",
+                    "reason": "The search space involves six continuous variables. TPE is suitable for finding a reasonable solution within a limited budget and can handle continuous optimization problems.",
+                    "score": "TBA"
+                }
+            }
+        }
+    ]
+}
