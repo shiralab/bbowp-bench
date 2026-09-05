@@ -11,14 +11,11 @@ Yutaro Yamada, Kei Hiroshima, Nozomu Yoshinari, Kento Uchida, and Shinichi Shira
 If you use BBOWP-Bench in your research, please cite our paper:
 
 ```bibtex
-@misc{yamada2026bbowp,
-      title={BBOWP-Bench: Evaluating LLMs on Black-Box Optimization Word Problems}, 
-      author={Yutaro Yamada and Kei Hiroshima and Nozomu Yoshinari and Kento Uchida and Shinichi Shirakawa},
-      year={2026},
-      eprint={2608.02612},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2608.02612}, 
+@article{yamada2026bbowp,
+  title   = {{BBOWP-Bench}: Evaluating LLMs on Black-Box Optimization Word Problems},
+  author  = {Yamada, Yutaro and Hiroshima, Kei and Yoshinari, Nozomu and Uchida, Kento and Shirakawa, Shinichi},
+  journal = {arXiv preprint arXiv:2608.02612},
+  year    = {2026}
 }
 ```
 
