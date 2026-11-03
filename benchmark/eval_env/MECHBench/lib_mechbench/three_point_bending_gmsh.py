@@ -489,16 +489,14 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
 
             node_tags, node_coords, _ = gmsh.model.mesh.getNodes()
 
-            f.write("#{0:->10}{1:->20}{2:->20}{3:->20}\n".format("nid", "x", "y", "z"))
-            for i in range(len(node_tags)):
-                f.write(
-                    "{0:>10}{1:20.5f}{2:20.5f}{3:20.5f}\n".format(
-                        int(node_tags[i]),  # nid
-                        node_coords[3 * i],  # x
-                        node_coords[3 * i + 1],  # y
-                        node_coords[3 * i + 2],  # z
-                    )
-                )
+            f.write("#{:->10}{:->20}{:->20}{:->20}\n".format("nid", "x", "y", "z"))
+            f.writelines(
+                f"{int(node_tags[i]):>10}"  # nid
+                f"{node_coords[3 * i]:20.5f}"  # x
+                f"{node_coords[3 * i + 1]:20.5f}"  # y
+                f"{node_coords[3 * i + 2]:20.5f}\n"  # z
+                for i in range(len(node_tags))
+            )
 
             ### ++++++++++++++++++++++++++++++++++
             ### Write the Nodes from the left side
@@ -519,11 +517,11 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
 
             L = ""
 
-            L += "#{0:->10}{1:->10}{2:->10}{3:->10}{4:->10}".format(
+            L += "#{:->10}{:->10}{:->10}{:->10}{:->10}".format(
                 "nid1", "nid2", "nid3", "nid4", "nid5"
             )
 
-            L += "{0:->10}{1:->10}{2:->10}{3:->10}{4:->10}\n".format(
+            L += "{:->10}{:->10}{:->10}{:->10}{:->10}\n".format(
                 "nid6", "nid7", "nid8", "nid9", "nid10"
             )
 
@@ -540,11 +538,11 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
 
             L = ""
 
-            L += "#{0:->10}{1:->10}{2:->10}{3:->10}{4:->10}".format(
+            L += "#{:->10}{:->10}{:->10}{:->10}{:->10}".format(
                 "nid1", "nid2", "nid3", "nid4", "nid5"
             )
 
-            L += "{0:->10}{1:->10}{2:->10}{3:->10}{4:->10}\n".format(
+            L += "{:->10}{:->10}{:->10}{:->10}{:->10}\n".format(
                 "nid6", "nid7", "nid8", "nid9", "nid10"
             )
 
@@ -574,14 +572,14 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             f.write("/PART/101\n")
             f.write("OUTER_CORE_SURFACES\n")
             f.write(
-                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
             )
             f.write(f"{1:>10}{1:>10}{0:>10}\n")
 
             f.write("/SHELL/101\n")
             # Write the element lists
-            f.write("#{0:->10}".format("eid"))
-            f.write("{0:->10}{1:->10}{2:->10}{3:->10}\n".format("n1", "n2", "n3", "n4"))
+            f.write("#{:->10}".format("eid"))
+            f.write("{:->10}{:->10}{:->10}{:->10}\n".format("n1", "n2", "n3", "n4"))
             for ii in range(len(element_list[0])):
                 n_eid = gmsh.model.mesh.getElement(element_list[0][ii])[1]
 
@@ -602,14 +600,14 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             f.write("/PART/102\n")
             f.write("LEVEL_SURFACES\n")
             f.write(
-                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
             )
             f.write(f"{2:>10}{1:>10}{0:>10}\n")
 
             f.write("/SHELL/102\n")
             # Write the element lists
-            f.write("#{0:->10}".format("eid"))
-            f.write("{0:->10}{1:->10}{2:->10}{3:->10}\n".format("n1", "n2", "n3", "n4"))
+            f.write("#{:->10}".format("eid"))
+            f.write("{:->10}{:->10}{:->10}{:->10}\n".format("n1", "n2", "n3", "n4"))
 
             elem_list_level_surfs = []
             for ii in range(1, 4):
@@ -637,15 +635,15 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             f.write("/PART/1000\n")
             f.write("SURFACE_1\n")
             f.write(
-                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
             )
             f.write(f"{3:>10}{1:>10}{0:>10}\n")
             f.write("/SHELL/1000\n")
 
             # Write the element lists
-            f.write("#{0:->10}".format("eid"))
+            f.write("#{:->10}".format("eid"))
             f.write(
-                "{0:->10}{1:->10}{2:->10}{3:->10}{4:->30}{5:->20}\n".format(
+                "{:->10}{:->10}{:->10}{:->10}{:->30}{:->20}\n".format(
                     "n1", "n2", "n3", "n4", "phi", "thick"
                 )
             )
@@ -667,15 +665,15 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             f.write("/PART/2000\n")
             f.write("SURFACE_2\n")
             f.write(
-                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
             )
             f.write(f"{3:>10}{1:>10}{0:>10}\n")
             f.write("/SHELL/2000\n")
 
             # Write the element lists
-            f.write("#{0:->10}".format("eid"))
+            f.write("#{:->10}".format("eid"))
             f.write(
-                "{0:->10}{1:->10}{2:->10}{3:->10}{4:->30}{5:->20}\n".format(
+                "{:->10}{:->10}{:->10}{:->10}{:->30}{:->20}\n".format(
                     "n1", "n2", "n3", "n4", "phi", "thick"
                 )
             )
@@ -697,15 +695,15 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             f.write("/PART/2001\n")
             f.write("SURFACE_2_PRIME\n")
             f.write(
-                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
             )
             f.write(f"{3:>10}{1:>10}{0:>10}\n")
             f.write("/SHELL/2001\n")
 
             # Write the element lists
-            f.write("#{0:->10}".format("eid"))
+            f.write("#{:->10}".format("eid"))
             f.write(
-                "{0:->10}{1:->10}{2:->10}{3:->10}{4:->30}{5:->20}\n".format(
+                "{:->10}{:->10}{:->10}{:->10}{:->30}{:->20}\n".format(
                     "n1", "n2", "n3", "n4", "phi", "thick"
                 )
             )
@@ -727,15 +725,15 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             f.write("/PART/3000\n")
             f.write("SURFACE_3\n")
             f.write(
-                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
             )
             f.write(f"{3:>10}{1:>10}{0:>10}\n")
             f.write("/SHELL/3000\n")
 
             # Write the element lists
-            f.write("#{0:->10}".format("eid"))
+            f.write("#{:->10}".format("eid"))
             f.write(
-                "{0:->10}{1:->10}{2:->10}{3:->10}{4:->30}{5:->20}\n".format(
+                "{:->10}{:->10}{:->10}{:->10}{:->30}{:->20}\n".format(
                     "n1", "n2", "n3", "n4", "phi", "thick"
                 )
             )
@@ -757,15 +755,15 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             f.write("/PART/3001\n")
             f.write("SURFACE_3_PRIME\n")
             f.write(
-                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
             )
             f.write(f"{3:>10}{1:>10}{0:>10}\n")
             f.write("/SHELL/3001\n")
 
             # Write the element lists
-            f.write("#{0:->10}".format("eid"))
+            f.write("#{:->10}".format("eid"))
             f.write(
-                "{0:->10}{1:->10}{2:->10}{3:->10}{4:->30}{5:->20}\n".format(
+                "{:->10}{:->10}{:->10}{:->10}{:->30}{:->20}\n".format(
                     "n1", "n2", "n3", "n4", "phi", "thick"
                 )
             )

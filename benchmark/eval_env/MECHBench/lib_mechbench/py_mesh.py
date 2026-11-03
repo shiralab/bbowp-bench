@@ -344,10 +344,10 @@ def py_mesh(var_file, save=True):
 
     # Part sets
     L += "*SET_PART_LIST\n"
-    L += "${0:->9}\n".format("sid")
+    L += "${:->9}\n".format("sid")
     L += f"{101:>10}\n"
-    L += "${0:->9}{1:->10}{2:->10}{3:->10}".format("pid1", "pid2", "pid3", "pid4")
-    L += "{0:->10}{1:->10}{2:->10}{3:->10}\n".format("pid5", "pid6", "pid7", "pid8")
+    L += "${:->9}{:->10}{:->10}{:->10}".format("pid1", "pid2", "pid3", "pid4")
+    L += "{:->10}{:->10}{:->10}{:->10}\n".format("pid5", "pid6", "pid7", "pid8")
     set_pids = sorted(cells.keys())
     for i in range(0, len(set_pids), 8):
         chunk = set_pids[i : i + 8]
@@ -358,10 +358,10 @@ def py_mesh(var_file, save=True):
     # Node sets
     for sid, set_node_ids in set_nodes.items():
         L += "*SET_NODE_LIST\n"
-        L += "${0:->9}\n".format("sid")
+        L += "${:->9}\n".format("sid")
         L += f"{sid:>10}\n"
-        L += "${0:->9}{1:->10}{2:->10}{3:->10}".format("nid1", "nid2", "nid3", "nid4")
-        L += "{0:->10}{1:->10}{2:->10}{3:->10}\n".format("nid5", "nid6", "nid7", "nid8")
+        L += "${:->9}{:->10}{:->10}{:->10}".format("nid1", "nid2", "nid3", "nid4")
+        L += "{:->10}{:->10}{:->10}{:->10}\n".format("nid5", "nid6", "nid7", "nid8")
         set_node_ids.sort()
         for i in range(0, len(set_node_ids), 8):
             chunk = set_node_ids[i : i + 8]
@@ -376,22 +376,22 @@ def py_mesh(var_file, save=True):
 
         L += "*PART\n"
         L += f"Part_{pid}\n"
-        L += "${0:->9}{1:->10}{2:->10}\n".format("pid", "secid", "mid")
+        L += "${:->9}{:->10}{:->10}\n".format("pid", "secid", "mid")
         L += f"{pid:>10}{secid:>10}{mid:>10}\n"
 
         L += "*SECTION_SHELL\n"
-        L += "${0:->9}{1:->10}{2:->10}{3:->10}\n".format(
+        L += "${:->9}{:->10}{:->10}{:->10}\n".format(
             "secid", "elform", "shrf", "nip"
         )
         L += f"{secid:>10}{elform:>10}{shrf:>10}{nip:>10}\n"
 
-        L += "${0:->9}{1:->10}{2:->10}{3:->10}\n".format("t1", "t2", "t3", "t4")
+        L += "${:->9}{:->10}{:->10}{:->10}\n".format("t1", "t2", "t3", "t4")
         L += f"{thickness:>10}{thickness:>10}{thickness:>10}{thickness:>10}\n"
 
     # Elements
     L += "*ELEMENT_SHELL\n"
-    L += "${0:->7}{1:->8}".format("eid", "pid")
-    L += "{0:->8}{1:->8}{2:->8}{3:->8}\n".format("n1", "n2", "n3", "n4")
+    L += "${:->7}{:->8}".format("eid", "pid")
+    L += "{:->8}{:->8}{:->8}{:->8}\n".format("n1", "n2", "n3", "n4")
 
     for s in sorted(shells.keys()):
         eid = s
@@ -405,7 +405,7 @@ def py_mesh(var_file, save=True):
 
     # Nodes
     L += "*NODE\n"
-    L += "${0:->7}{1:->16}{2:->16}{3:->16}\n".format("nid", "x", "y", "z")
+    L += "${:->7}{:->16}{:->16}{:->16}\n".format("nid", "x", "y", "z")
     for n in sorted(nodes.keys()):
         nid = n
         x = nodes[n][0]

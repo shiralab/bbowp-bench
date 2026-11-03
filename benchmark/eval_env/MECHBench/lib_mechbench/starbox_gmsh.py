@@ -1082,13 +1082,13 @@ class Starbox_GMSH(Template_GMSH_Mesh_Constructor):
 
             # Node sets
             L = "*SET_NODE_LIST\n"
-            L += "${0:->9}\n".format("sid")
+            L += "${:->9}\n".format("sid")
             L += f"{101:>10}\n"
-            L += "${0:->9}{1:->10}{2:->10}{3:->10}".format(
+            L += "${:->9}{:->10}{:->10}{:->10}".format(
                 "nid1", "nid2", "nid3", "nid4"
             )
 
-            L += "{0:->10}{1:->10}{2:->10}{3:->10}\n".format(
+            L += "{:->10}{:->10}{:->10}{:->10}\n".format(
                 "nid5", "nid6", "nid7", "nid8"
             )
             bottom_nodes_ID.sort()
@@ -1106,12 +1106,12 @@ class Starbox_GMSH(Template_GMSH_Mesh_Constructor):
 
             # Node sets
             L = "*SET_NODE_LIST\n"
-            L += "${0:->9}\n".format("sid")
+            L += "${:->9}\n".format("sid")
             L += f"{102:>10}\n"
-            L += "${0:->9}{1:->10}{2:->10}{3:->10}".format(
+            L += "${:->9}{:->10}{:->10}{:->10}".format(
                 "nid1", "nid2", "nid3", "nid4"
             )
-            L += "{0:->10}{1:->10}{2:->10}{3:->10}\n".format(
+            L += "{:->10}{:->10}{:->10}{:->10}\n".format(
                 "nid5", "nid6", "nid7", "nid8"
             )
             top_nodes_ID.sort()
@@ -1126,15 +1126,13 @@ class Starbox_GMSH(Template_GMSH_Mesh_Constructor):
             # Nodes
             node_tags, node_coords, _ = gmsh.model.mesh.getNodes()
             f.write("*NODE\n")
-            f.write("${0:->7}{1:->19}{2:->19}{3:->19}\n".format("nid", "x", "y", "z"))
+            f.write("${:->7}{:->19}{:->19}{:->19}\n".format("nid", "x", "y", "z"))
             for i in range(len(node_tags)):
                 f.write(
-                    "{0:>8},{1:18.10f},{2:18.10f},{3:18.10f}\n".format(
-                        int(node_tags[i]),  # nid
-                        node_coords[3 * i],  # x
-                        node_coords[3 * i + 1],  # y
-                        node_coords[3 * i + 2],  # z
-                    )
+                    f"{int(node_tags[i]):>8},"  # nid
+                    f"{node_coords[3 * i]:18.10f},"  # x
+                    f"{node_coords[3 * i + 1]:18.10f},"  # y
+                    f"{node_coords[3 * i + 2]:18.10f}\n"  # z
                 )
 
             ### ++++++++++++++++++++++++++++++++++
@@ -1146,21 +1144,21 @@ class Starbox_GMSH(Template_GMSH_Mesh_Constructor):
                 f.write(f"Part_{ii + 101}\n")
                 f.write("")
 
-                f.write("${0:->9}{1:->10}{2:->10}\n".format("pid", "secid", "mid"))
+                f.write("${:->9}{:->10}{:->10}\n".format("pid", "secid", "mid"))
                 f.write(
-                    "{0:>10}{1:>10}{2:>10}\n".format(
+                    "{:>10}{:>10}{:>10}\n".format(
                         itt["cid"], itt["cid"], params_dict["mid"]
                     )
                 )
 
                 f.write("*SECTION_SHELL\n")
                 f.write(
-                    "${0:->9}{1:->10}{2:->10}{3:->10}\n".format(
+                    "${:->9}{:->10}{:->10}{:->10}\n".format(
                         "secid", "elform", "shrf", "nip"
                     )
                 )
                 f.write(
-                    "{0:>10}{1:>10}{2:>10.5f}{3:>10}\n".format(
+                    "{:>10}{:>10}{:>10.5f}{:>10}\n".format(
                         itt["cid"],
                         params_dict[
                             "elform"
@@ -1173,7 +1171,7 @@ class Starbox_GMSH(Template_GMSH_Mesh_Constructor):
                 )  # nip (Integration Points)
 
                 f.write(
-                    "${0:->14}{1:->15}{2:->15}{3:->15}\n".format("t1", "t2", "t3", "t4")
+                    "${:->14}{:->15}{:->15}{:->15}\n".format("t1", "t2", "t3", "t4")
                 )
                 f.write(
                     f"{THICKNESS_MAP[ii + 1]:>15.10f}{THICKNESS_MAP[ii + 1]:>15.10f}{THICKNESS_MAP[ii + 1]:>15.10f}{THICKNESS_MAP[ii + 1]:>15.10f}\n"
@@ -1181,8 +1179,8 @@ class Starbox_GMSH(Template_GMSH_Mesh_Constructor):
 
             # Elements grouped by partition
             f.write("*ELEMENT_SHELL\n")
-            f.write("${0:->7}{1:->8}".format("eid", "pid"))
-            f.write("{0:->8}{1:->8}{2:->8}{3:->8}\n".format("n1", "n2", "n3", "n4"))
+            f.write("${:->7}{:->8}".format("eid", "pid"))
+            f.write("{:->8}{:->8}{:->8}{:->8}\n".format("n1", "n2", "n3", "n4"))
 
             for ii in range(xx1):
                 for eid in element_list[ii]:
