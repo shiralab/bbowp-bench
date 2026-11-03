@@ -83,7 +83,7 @@ if __name__ == "__main__":
     except yaml.YAMLError as e:
         parser.error(f"Error parsing config YAML: {e}")
         sys.exit(1)
-    except Exception as e:
+    except (OSError, ValueError) as e:
         parser.error(f"Error loading config: {e}")
         sys.exit(1)
 

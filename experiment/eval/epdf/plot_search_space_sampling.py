@@ -88,7 +88,7 @@ if __name__ == "__main__":
     except yaml.YAMLError as e:
         parser.error(f"Error parsing experiment config YAML: {e}")
         sys.exit(1)
-    except Exception as e:
+    except (OSError, ValueError) as e:
         parser.error(f"Error loading experiment config: {e}")
         sys.exit(1)
 
@@ -149,7 +149,7 @@ if __name__ == "__main__":
                         "color": "black",
                         "label": "domain",
                     }
-                except Exception as e:
+                except (OSError, ValueError, IndexError) as e:
                     print(
                         f"Warning: Failed to load domain data from {sample_domain_path}: {e}"
                     )
@@ -184,7 +184,7 @@ if __name__ == "__main__":
                             "color": "gray",
                             "label": "search space \nsampling baseline",
                         }
-                    except Exception as e:
+                    except (OSError, ValueError, IndexError) as e:
                         print(
                             f"Warning: Failed to load baseline data from {sample_search_space_baseline_path}: {e}"
                         )
@@ -225,7 +225,7 @@ if __name__ == "__main__":
                             print(
                                 f"Warning: No valid data points found in {sample_search_space_path}."
                             )
-                    except Exception as e:
+                    except (OSError, ValueError, IndexError) as e:
                         print(
                             f"Warning: Failed to load data from {sample_search_space_path}: {e}"
                         )

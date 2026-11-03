@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import yaml
 from core.sample_point_and_score import sample_point_and_score
+from pydantic import ValidationError
 
 from bbowp.schema.designed_answer import DesignedAnswer
 
@@ -65,7 +66,7 @@ def get_setting_list(config: dict) -> list[dict]:
             out_dir = designed_answer_path.parent
             try:
                 designed_answer_str = designed_answer_path.read_text(encoding="utf-8")
-            except Exception as e:
+            except (OSError, UnicodeDecodeError) as e:
                 print(f"Error reading designed answer file {designed_answer_path}: {e}")
                 continue
 
@@ -73,7 +74,7 @@ def get_setting_list(config: dict) -> list[dict]:
                 designed_answer = DesignedAnswer.model_validate_json(
                     designed_answer_str
                 )
-            except Exception as e:
+            except ValidationError as e:
                 print(
                     f"Error parsing designed answer JSON from file {designed_answer_path}: {e}"
                 )
@@ -131,7 +132,7 @@ if __name__ == "__main__":
     except yaml.YAMLError as e:
         parser.error(f"Error parsing experiment config YAML: {e}")
         sys.exit(1)
-    except Exception as e:
+    except (OSError, ValueError) as e:
         parser.error(f"Error loading experiment config: {e}")
         sys.exit(1)
 
@@ -170,7 +171,7 @@ if __name__ == "__main__":
 
             try:
                 future.result()
-            except Exception:
+            except Exception:  # noqa: BLE001
                 logger.error(
                     f"Sampling failed for setting {setting}: {traceback.format_exc()}"
                 )
