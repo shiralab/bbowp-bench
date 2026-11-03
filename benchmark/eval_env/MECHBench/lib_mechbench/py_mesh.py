@@ -64,7 +64,7 @@ def py_mesh(var_file, save=True):
             # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! newer py_mesh, K.Komeilizadeh
             if "trigger" == tmp[0]:
                 if (
-                    "trigger" not in variables.keys()
+                    "trigger" not in variables
                 ):  # if trigger doesn't exist, create a list
                     variables["trigger"] = []
                 variables["trigger"].append(
@@ -84,7 +84,7 @@ def py_mesh(var_file, save=True):
                 variables["nip"] = int(tmp[1])
 
             if "database" == tmp[0]:
-                if "database" not in variables.keys():
+                if "database" not in variables:
                     variables["database"] = []
                 variables["database"].append(int(tmp[1]))
 
@@ -174,7 +174,7 @@ def py_mesh(var_file, save=True):
     # database_grids = variables["database"]
     # database_nodes = []
 
-    if "trigger" in variables.keys():
+    if "trigger" in variables:
         trigger_cells = variables["trigger"]
     else:
         trigger_cells = []
@@ -363,28 +363,28 @@ def py_mesh(var_file, save=True):
     # Part sets
     L += "*SET_PART_LIST\n"
     L += "${0:->9}\n".format("sid")
-    L += "{0:>10}\n".format(101)
+    L += f"{101:>10}\n"
     L += "${0:->9}{1:->10}{2:->10}{3:->10}".format("pid1", "pid2", "pid3", "pid4")
     L += "{0:->10}{1:->10}{2:->10}{3:->10}\n".format("pid5", "pid6", "pid7", "pid8")
     set_pids = sorted(cells.keys())
     for i in range(0, len(set_pids), 8):
         chunk = set_pids[i : i + 8]
         for p in chunk:
-            L += "{0:>10}".format(p)
+            L += f"{p:>10}"
         L += "\n"
 
     # Node sets
     for sid in set_nodes:
         L += "*SET_NODE_LIST\n"
         L += "${0:->9}\n".format("sid")
-        L += "{0:>10}\n".format(sid)
+        L += f"{sid:>10}\n"
         L += "${0:->9}{1:->10}{2:->10}{3:->10}".format("nid1", "nid2", "nid3", "nid4")
         L += "{0:->10}{1:->10}{2:->10}{3:->10}\n".format("nid5", "nid6", "nid7", "nid8")
         set_nodes[sid].sort()
         for i in range(0, len(set_nodes[sid]), 8):
             chunk = set_nodes[sid][i : i + 8]
             for n in chunk:
-                L += "{0:>10}".format(n)
+                L += f"{n:>10}"
             L += "\n"
 
     # Parts
@@ -393,18 +393,18 @@ def py_mesh(var_file, save=True):
         thickness = cells[pid]["thickness"]
 
         L += "*PART\n"
-        L += "Part_{0:}\n".format(pid)
+        L += f"Part_{pid}\n"
         L += "${0:->9}{1:->10}{2:->10}\n".format("pid", "secid", "mid")
-        L += "{0:>10}{1:>10}{2:>10}\n".format(pid, secid, mid)
+        L += f"{pid:>10}{secid:>10}{mid:>10}\n"
 
         L += "*SECTION_SHELL\n"
         L += "${0:->9}{1:->10}{2:->10}{3:->10}\n".format(
             "secid", "elform", "shrf", "nip"
         )
-        L += "{0:>10}{1:>10}{2:>10}{3:>10}\n".format(secid, elform, shrf, nip)
+        L += f"{secid:>10}{elform:>10}{shrf:>10}{nip:>10}\n"
 
         L += "${0:->9}{1:->10}{2:->10}{3:->10}\n".format("t1", "t2", "t3", "t4")
-        L += "{0:>10}{0:>10}{0:>10}{0:>10}\n".format(thickness)
+        L += f"{thickness:>10}{thickness:>10}{thickness:>10}{thickness:>10}\n"
 
     # Elements
     L += "*ELEMENT_SHELL\n"
@@ -418,8 +418,8 @@ def py_mesh(var_file, save=True):
         n2 = shells[s][2]
         n3 = shells[s][3]
         n4 = shells[s][4]
-        L += "{0:>8}{1:>8}".format(eid, pid)
-        L += "{0:>8}{1:>8}{2:>8}{3:>8}\n".format(n1, n2, n3, n4)
+        L += f"{eid:>8}{pid:>8}"
+        L += f"{n1:>8}{n2:>8}{n3:>8}{n4:>8}\n"
 
     # Nodes
     L += "*NODE\n"
@@ -429,7 +429,7 @@ def py_mesh(var_file, save=True):
         x = nodes[n][0]
         y = nodes[n][1]
         z = nodes[n][2]
-        L += "{0:>8}{1:16.7f}{2:16.7f}{3:16.7f}\n".format(nid, x, y, z)
+        L += f"{nid:>8}{x:16.7f}{y:16.7f}{z:16.7f}\n"
 
     # added !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

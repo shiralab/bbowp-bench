@@ -1,7 +1,6 @@
 import json
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Union
 
 try:
     import gmsh
@@ -51,7 +50,7 @@ class Template_GMSH_Mesh_Constructor(ABC):
         pass
 
     @staticmethod
-    def load_json_file(path_to_file: Union[str, Path]) -> dict:
+    def load_json_file(path_to_file: str | Path) -> dict:
         r"""
         This is just a member function to load a JSON file
         into memory to define a mesh
@@ -76,12 +75,11 @@ class Template_GMSH_Mesh_Constructor(ABC):
 
     @property
     @abstractmethod
-    def required_parameters(self) -> Union[tuple, list]:
+    def required_parameters(self) -> tuple | list:
         r"""
         This is a property the derived classes must have which depends
         on defining a set of required parameters to construct the mesh
         """
-        pass
 
     def check_parameters(self, params_dict: dict) -> bool:
         r"""
@@ -91,7 +89,7 @@ class Template_GMSH_Mesh_Constructor(ABC):
         missing_params = [
             param
             for param in self.required_parameters
-            if param.lower() not in (key.lower() for key in params_dict.keys())
+            if param.lower() not in (key.lower() for key in params_dict)
         ]
 
         if not missing_params:

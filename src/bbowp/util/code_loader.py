@@ -9,4 +9,4 @@ def get_run_optimization(code_path: pathlib.Path):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 
-    return getattr(module, "run_optimization")
+    return module.run_optimization

@@ -1,7 +1,7 @@
 import importlib
 import logging
 import pathlib
-from typing import Any, Dict
+from typing import Any
 
 import uvicorn
 from fastapi import FastAPI, HTTPException
@@ -15,7 +15,7 @@ objectives = {}
 
 
 class EvalRequest(BaseModel):
-    params: Dict[str, Any]
+    params: dict[str, Any]
 
 
 def load_objective(task_name: str):

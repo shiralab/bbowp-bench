@@ -29,7 +29,7 @@ class TestPydanticParse:
         """checking if task.json can be parsed by Pydantic model."""
 
         try:
-            from bbowp.schema.bbowp import BBOWP  # noqa: PLC0415
+            from bbowp.schema.bbowp import BBOWP
 
             BBOWP.model_validate_json(task_json_raw)
         except ImportError:
@@ -40,7 +40,7 @@ class TestPydanticParse:
     def test_eval_config_json_parses(self, task_dir: Path, eval_config_json_raw: str):
         """checking if eval_config.json can be parsed by Pydantic model."""
         try:
-            from bbowp.schema.bbowp import BBOWPEvalConfig  # noqa: PLC0415
+            from bbowp.schema.bbowp import BBOWPEvalConfig
 
             BBOWPEvalConfig.model_validate_json(eval_config_json_raw)
         except ImportError:
@@ -54,7 +54,7 @@ class TestPydanticParse:
 class TestVariableSchema:
     def test_variable_types_valid(self, task_dir: Path, eval_config_json_raw: str):
         try:
-            from bbowp.schema.bbowp import BBOWPEvalConfig  # noqa: PLC0415
+            from bbowp.schema.bbowp import BBOWPEvalConfig
 
             _ = BBOWPEvalConfig.model_validate_json(eval_config_json_raw)
         except ImportError:

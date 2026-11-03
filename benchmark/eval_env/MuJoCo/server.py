@@ -1,6 +1,6 @@
 import json
 import logging
-from typing import Any, Dict
+from typing import Any
 
 import gymnasium as gym
 import numpy as np
@@ -24,7 +24,7 @@ TASK_CONFIGS = {
 
 
 class EvalRequest(BaseModel):
-    params: Dict[str, Any]
+    params: dict[str, Any]
 
 
 def evaluate_policy(
@@ -48,14 +48,14 @@ def evaluate_policy(
     return total_reward / n_eval_episodes
 
 
-def load_params(task_name: str) -> (Dict[str, Any], Dict[str, Any]):
+def load_params(task_name: str) -> (dict[str, Any], dict[str, Any]):
     with open(f"/app/params/{task_name}.json", "r") as f:
         params = json.load(f)
     return params["obs"], params["act"]
 
 
 def get_policy_params(
-    params: Dict[str, Any],
+    params: dict[str, Any],
     task_name: str,
     W_init: np.ndarray,
     b_init: np.ndarray,
