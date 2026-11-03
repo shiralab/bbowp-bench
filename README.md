@@ -146,6 +146,45 @@ uv run experiment/run_optimization_baseline.py --exp_config experiment/config/ru
 - Then it runs optimization and generates `optimization_result.json` including the best achieved solution and its score, under the same directory as `designed_answer.json`.
 - Optional: Set `--num_workers` for parallel execution
 
+### Evaluation: FRS
+1. Aggregate the optimization results
+```bash
+uv run experiment/eval/fval/aggregate_score.py --config experiment/eval/fval/aggregate_config.yaml
+```
+
+2. Calculate the FRS score and save to csv
+```bash
+uv run experiment/eval/frs/calc_frs.py --config experiment/eval/frs/calc_frs_config.yaml
+```
+
+3. (Optional) Convert the csv to LaTeX table
+```bash
+uv run experiment/eval/frs/frs_csv2tex.py --csv_path (csv_path)
+```
+
+### Evaluation: EPDF
+- **For quick evaluation**: run the following command (without any change) to plot EPDF in the paper:
+```bash
+uv run --with matplotlib experiment/eval/epdf/plot_search_space_sampling.py --exp_config experiment/eval/epdf/plot_search_space_sampling.yaml
+```
+
+1. To sample the points from the canonical domain, run the following command:
+```bash
+uv run experiment/eval/epdf/run_sample_point_domain.py --exp_config experiment/eval/epdf/sample_point_domain_config.yaml
+uv run experiment/eval/epdf/extract_score_sample_point_domain.py --task_name (task_name) --result_dir experiment/eval/epdf/sample_point_domain
+```
+
+2. To sample the points from the designed search space, run the following command:
+```bash
+uv run experiment/eval/epdf/run_sample_point_searchspace.py --exp_config experiment/eval/epdf/sample_point_searchspace_config.yaml
+uv run experiment/eval/epdf/extract_score_sample_point_searchspace.py --task_name (task_name) --result_dir experiment/result/example --out_dir experiment/eval/epdf/sample_point_searchspace
+```
+
+3. To calculate (plot) the EPDF, run the following command:
+```bash
+uv run --with matplotlib experiment/eval/epdf/plot_search_space_sampling.py --exp_config experiment/eval/epdf/plot_search_space_sampling.yaml
+```
+
 ## License
 
 Original code and documentation authored for BBOWP are licensed under the MIT License ([LICENSE](LICENSE)).
