@@ -49,6 +49,10 @@ filterwarnings = [
     "default::UserWarning",
 ]
 
+[tool.ruff]
+extend-exclude = ["benchmark/eval_env"]
+force-exclude = true
+
 [dependency-groups]
 dev = [
     "pytest>=9.0.2",

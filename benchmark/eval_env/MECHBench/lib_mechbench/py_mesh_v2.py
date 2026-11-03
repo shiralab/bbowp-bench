@@ -1,3 +1,5 @@
+from __future__ import print_function  #  K.Komeilizadeh
+
 import sys
 
 import numpy as np
@@ -64,7 +66,7 @@ def py_mesh_v2(var_file, save=True):
             # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! newer py_mesh, K.Komeilizadeh
             if "trigger" == tmp[0]:
                 if (
-                    "trigger" not in variables
+                    "trigger" not in variables.keys()
                 ):  # if trigger doesn't exist, create a list
                     variables["trigger"] = []
                 variables["trigger"].append(
@@ -84,7 +86,7 @@ def py_mesh_v2(var_file, save=True):
                 variables["nip"] = int(tmp[1])
 
             if "database" == tmp[0]:
-                if "database" not in variables:
+                if "database" not in variables.keys():
                     variables["database"] = []
                 variables["database"].append(int(tmp[1]))
 
@@ -124,17 +126,29 @@ def py_mesh_v2(var_file, save=True):
     id_min = variables["id_min"]
 
     if make_triggers:
-        trigger_rows = variables.get("trigger_rows", 2)
+        if "trigger_rows" in variables:
+            trigger_rows = variables["trigger_rows"]
+        else:
+            trigger_rows = 2
 
     # Material parameters
     mid = variables["mid"]
 
     # Section parameters
-    elform = variables.get("elform", 2)
+    if "elform" in variables:
+        elform = variables["elform"]
+    else:
+        elform = 2
 
-    shrf = variables.get("shrf", 1.0)
+    if "shrf" in variables:
+        shrf = variables["shrf"]
+    else:
+        shrf = 1.0
 
-    nip = variables.get("nip", 5)
+    if "nip" in variables:
+        nip = variables["nip"]
+    else:
+        nip = 5
 
     # Mesh generation
 
@@ -161,7 +175,10 @@ def py_mesh_v2(var_file, save=True):
     # database_grids = variables["database"]
     # database_nodes = []
 
-    trigger_cells = variables.get("trigger", [])
+    if "trigger" in variables.keys():
+        trigger_cells = variables["trigger"]
+    else:
+        trigger_cells = []
 
     nid = id_min
     eid = id_min
@@ -200,7 +217,7 @@ def py_mesh_v2(var_file, save=True):
         """
         Define the number of elements along the extrusion length
         """
-        num_elements_ext = round(extrusion_length / elsize)
+        num_elements_ext = int(round(extrusion_length / elsize))
         # element size in the extrusion direction
         elsize_ext = extrusion_length / num_elements_ext
 
@@ -302,9 +319,9 @@ def py_mesh_v2(var_file, save=True):
 
         # if make_triggers:
         #     if pid in trigger_cells:
-        #         trigger_nodes = nodes_ids[-6,1:-1]  # !!!!!!!!! changed from -3 to -6
+        #         trigger_nodes = nodes_ids[-6,1:-1]  #!!!!!!!!! changed from -3 to -6
         #         for i in range(1, trigger_rows):
-        #             trigger_nodes = np.append(trigger_nodes, nodes_ids[-6-i,1:-1]) # !!!!!!!!! changed from -3 to -6
+        #             trigger_nodes = np.append(trigger_nodes, nodes_ids[-6-i,1:-1]) #!!!!!!!!! changed from -3 to -6
         #         for gid in trigger_nodes:
         #             xy = nodes[gid][:2]
         #             z = nodes[gid][2]
@@ -317,7 +334,7 @@ def py_mesh_v2(var_file, save=True):
         """
         if make_triggers:
             trigger_distance_default = extrusion_length / 4
-            trigger_distance_default_el = round(trigger_distance_default / elsize)
+            trigger_distance_default_el = int(round(trigger_distance_default / elsize))
             # test variables
             # trigger_depths = np.array([-4, 2, 4])
             # trigger_position_vars = np.array([10, -10, 10])
@@ -335,11 +352,11 @@ def py_mesh_v2(var_file, save=True):
                     )
                     trigger_nodes = nodes_ids[
                         trigger_position, 1:-1
-                    ]  # !!!!!!!!! changed from -3 to -6
+                    ]  #!!!!!!!!! changed from -3 to -6
                     for i in range(1, trigger_rows):
                         trigger_nodes = np.append(
                             trigger_nodes, nodes_ids[trigger_position + i, 1:-1]
-                        )  # !!!!!!!!! changed from -3 to -6
+                        )  #!!!!!!!!! changed from -3 to -6
                     for gid in trigger_nodes:
                         xy = nodes[gid][:2]
                         z = nodes[gid][2]
@@ -379,29 +396,29 @@ def py_mesh_v2(var_file, save=True):
     #     L += '\n'
     # Part sets
     L += "*SET_PART_LIST\n"
-    L += "${:->9}\n".format("sid")
-    L += f"{101:>10}\n"
-    L += "${:->9}{:->10}{:->10}{:->10}".format("pid1", "pid2", "pid3", "pid4")
-    L += "{:->10}{:->10}{:->10}{:->10}\n".format("pid5", "pid6", "pid7", "pid8")
+    L += "${0:->9}\n".format("sid")
+    L += "{0:>10}\n".format(101)
+    L += "${0:->9}{1:->10}{2:->10}{3:->10}".format("pid1", "pid2", "pid3", "pid4")
+    L += "{0:->10}{1:->10}{2:->10}{3:->10}\n".format("pid5", "pid6", "pid7", "pid8")
     set_pids = sorted(cells.keys())
     for i in range(0, len(set_pids), 8):
         chunk = set_pids[i : i + 8]
         for p in chunk:
-            L += f"{p:>10}"
+            L += "{0:>10}".format(p)
         L += "\n"
 
     # Node sets
-    for sid, set_node_ids in set_nodes.items():
+    for sid in set_nodes:
         L += "*SET_NODE_LIST\n"
-        L += "${:->9}\n".format("sid")
-        L += f"{sid:>10}\n"
-        L += "${:->9}{:->10}{:->10}{:->10}".format("nid1", "nid2", "nid3", "nid4")
-        L += "{:->10}{:->10}{:->10}{:->10}\n".format("nid5", "nid6", "nid7", "nid8")
-        set_node_ids.sort()
-        for i in range(0, len(set_node_ids), 8):
-            chunk = set_node_ids[i : i + 8]
+        L += "${0:->9}\n".format("sid")
+        L += "{0:>10}\n".format(sid)
+        L += "${0:->9}{1:->10}{2:->10}{3:->10}".format("nid1", "nid2", "nid3", "nid4")
+        L += "{0:->10}{1:->10}{2:->10}{3:->10}\n".format("nid5", "nid6", "nid7", "nid8")
+        set_nodes[sid].sort()
+        for i in range(0, len(set_nodes[sid]), 8):
+            chunk = set_nodes[sid][i : i + 8]
             for n in chunk:
-                L += f"{n:>10}"
+                L += "{0:>10}".format(n)
             L += "\n"
 
     # Parts
@@ -410,20 +427,22 @@ def py_mesh_v2(var_file, save=True):
         thickness = cells[pid]["thickness"]
 
         L += "*PART\n"
-        L += f"Part_{pid}\n"
-        L += "${:->9}{:->10}{:->10}\n".format("pid", "secid", "mid")
-        L += f"{pid:>10}{secid:>10}{mid:>10}\n"
+        L += "Part_{0:}\n".format(pid)
+        L += "${0:->9}{1:->10}{2:->10}\n".format("pid", "secid", "mid")
+        L += "{0:>10}{1:>10}{2:>10}\n".format(pid, secid, mid)
 
         L += "*SECTION_SHELL\n"
-        L += "${:->9}{:->10}{:->10}{:->10}\n".format("secid", "elform", "shrf", "nip")
-        L += f"{secid:>10}{elform:>10}{shrf:>10}{nip:>10}\n"
+        L += "${0:->9}{1:->10}{2:->10}{3:->10}\n".format(
+            "secid", "elform", "shrf", "nip"
+        )
+        L += "{0:>10}{1:>10}{2:>10}{3:>10}\n".format(secid, elform, shrf, nip)
 
-        L += "${:->9}{:->10}{:->10}{:->10}\n".format("t1", "t2", "t3", "t4")
-        L += f"{thickness:>10}{thickness:>10}{thickness:>10}{thickness:>10}\n"
+        L += "${0:->9}{1:->10}{2:->10}{3:->10}\n".format("t1", "t2", "t3", "t4")
+        L += "{0:>10}{0:>10}{0:>10}{0:>10}\n".format(thickness)
     # Elements
     L += "*ELEMENT_SHELL\n"
-    L += "${:->7}{:->8}".format("eid", "pid")
-    L += "{:->8}{:->8}{:->8}{:->8}\n".format("n1", "n2", "n3", "n4")
+    L += "${0:->7}{1:->8}".format("eid", "pid")
+    L += "{0:->8}{1:->8}{2:->8}{3:->8}\n".format("n1", "n2", "n3", "n4")
 
     for s in sorted(shells.keys()):
         eid = s
@@ -432,18 +451,18 @@ def py_mesh_v2(var_file, save=True):
         n2 = shells[s][2]
         n3 = shells[s][3]
         n4 = shells[s][4]
-        L += f"{eid:>8}{pid:>8}"
-        L += f"{n1:>8}{n2:>8}{n3:>8}{n4:>8}\n"
+        L += "{0:>8}{1:>8}".format(eid, pid)
+        L += "{0:>8}{1:>8}{2:>8}{3:>8}\n".format(n1, n2, n3, n4)
 
     # Nodes
     L += "*NODE\n"
-    L += "${:->7}{:->16}{:->16}{:->16}\n".format("nid", "x", "y", "z")
+    L += "${0:->7}{1:->16}{2:->16}{3:->16}\n".format("nid", "x", "y", "z")
     for n in sorted(nodes.keys()):
         nid = n
         x = nodes[n][0]
         y = nodes[n][1]
         z = nodes[n][2]
-        L += f"{nid:>8}{x:16.7f}{y:16.7f}{z:16.7f}\n"
+        L += "{0:>8}{1:16.7f}{2:16.7f}{3:16.7f}\n".format(nid, x, y, z)
 
     # added !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -477,9 +496,9 @@ def main():
     print("N o r m a l")
 
     # return 0
-    # !!!!!!!!!!!!!!!!!!!!!!! added by K.Komeilizadeh
+    #!!!!!!!!!!!!!!!!!!!!!!! added by K.Komeilizadeh
     return mesh
-    # !!!!!!!!!!!!!!!!!!!!!!!
+    #!!!!!!!!!!!!!!!!!!!!!!!
 
 
 if __name__ == "__main__":

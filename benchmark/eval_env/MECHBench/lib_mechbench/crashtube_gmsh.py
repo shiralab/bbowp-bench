@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+from typing import List, Union
 
 import gmsh
 from src.sob.lib.gmsh_base_meshes import Template_GMSH_Mesh_Constructor
@@ -37,7 +38,7 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
             "trigger_dict_2",
         )
 
-    def __call__(self, var_file: Path | str, save: bool = True, *args, **kwds):
+    def __call__(self, var_file: Union[Path, str], save: bool = True, *args, **kwds):
         try:
             # Initialize GMSH
             gmsh.initialize(sys.argv, run=False, interruptible=True)
@@ -115,12 +116,12 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
 
         def get_height_points_profile(
             trigger_dict_1: dict, trigger_dict_2: dict
-        ) -> list[list[float]]:
+        ) -> List[List[float]]:
             r"""
             This is a function to generate profiles of points given the triggers positions
             """
 
-            def determine_trigger_profile(yy: float, hh: float) -> list[float]:
+            def determine_trigger_profile(yy: float, hh: float) -> List[float]:
                 r"""
                 Determine the profile of the trigger
 
@@ -146,13 +147,13 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
             list_face_1 = []
             list_face_2 = []
             # Perform the function from Face 1 (and 3... for now)
-            for trigg in trigger_dict_1.values():
+            for key, trigg in trigger_dict_1.items():
                 y_i = trigg["Y"]
                 h_i = trigg["HEIGHT"]
 
                 list_face_1.append(determine_trigger_profile(y_i, h_i))
 
-            for trigg in trigger_dict_2.values():
+            for key, trigg in trigger_dict_2.items():
                 y_i = trigg["Y"]
                 h_i = trigg["HEIGHT"]
 
@@ -656,18 +657,23 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
             ### Write the Part list (1 per partition)
             ### ++++++++++++++++++++++++++++++++++++++
             f.write("*SET_PART_LIST\n")
-            f.write("${:->9}\n".format("sid"))
-            f.write(f"{101:>10}\n")
+            f.write("${0:->9}\n".format("sid"))
+            f.write("{0:>10}\n".format(101))
             f.write(
-                "${:->9}{:->10}{:->10}{:->10}".format("pid1", "pid2", "pid3", "pid4")
+                "${0:->9}{1:->10}{2:->10}{3:->10}".format(
+                    "pid1", "pid2", "pid3", "pid4"
+                )
             )
             f.write(
-                "{:->10}{:->10}{:->10}{:->10}\n".format("pid5", "pid6", "pid7", "pid8")
+                "{0:->10}{1:->10}{2:->10}{3:->10}\n".format(
+                    "pid5", "pid6", "pid7", "pid8"
+                )
             )
 
             for i in range(0, len(set_pids), 8):
                 chunk = set_pids[i : i + 8]
-                f.writelines(f"{p:>10}" for p in chunk)
+                for p in chunk:
+                    f.write("{0:>10}".format(p))
                 f.write("\n")
 
             # #     r"""
@@ -691,15 +697,19 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
 
             # Node sets
             L = "*SET_NODE_LIST\n"
-            L += "${:->9}\n".format("sid")
-            L += f"{101:>10}\n"
-            L += "${:->9}{:->10}{:->10}{:->10}".format("nid1", "nid2", "nid3", "nid4")
-            L += "{:->10}{:->10}{:->10}{:->10}\n".format("nid5", "nid6", "nid7", "nid8")
+            L += "${0:->9}\n".format("sid")
+            L += "{0:>10}\n".format(101)
+            L += "${0:->9}{1:->10}{2:->10}{3:->10}".format(
+                "nid1", "nid2", "nid3", "nid4"
+            )
+            L += "{0:->10}{1:->10}{2:->10}{3:->10}\n".format(
+                "nid5", "nid6", "nid7", "nid8"
+            )
             bottom_nodes_ID.sort()
             for i in range(0, len(bottom_nodes_ID), 8):
                 chunk = bottom_nodes_ID[i : i + 8]
                 for n in chunk:
-                    L += f"{n:>10}"
+                    L += "{0:>10}".format(n)
                 L += "\n"
 
             f.write(L)
@@ -710,15 +720,19 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
 
             # Node sets
             L = "*SET_NODE_LIST\n"
-            L += "${:->9}\n".format("sid")
-            L += f"{102:>10}\n"
-            L += "${:->9}{:->10}{:->10}{:->10}".format("nid1", "nid2", "nid3", "nid4")
-            L += "{:->10}{:->10}{:->10}{:->10}\n".format("nid5", "nid6", "nid7", "nid8")
+            L += "${0:->9}\n".format("sid")
+            L += "{0:>10}\n".format(102)
+            L += "${0:->9}{1:->10}{2:->10}{3:->10}".format(
+                "nid1", "nid2", "nid3", "nid4"
+            )
+            L += "{0:->10}{1:->10}{2:->10}{3:->10}\n".format(
+                "nid5", "nid6", "nid7", "nid8"
+            )
             top_nodes_ID.sort()
             for i in range(0, len(top_nodes_ID), 8):
                 chunk = top_nodes_ID[i : i + 8]
                 for n in chunk:
-                    L += f"{n:>10}"
+                    L += "{0:>10}".format(n)
                 L += "\n"
 
             f.write(L)
@@ -726,13 +740,15 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
             # Nodes
             node_tags, node_coords, _ = gmsh.model.mesh.getNodes()
             f.write("*NODE\n")
-            f.write("${:->7}{:->19}{:->19}{:->19}\n".format("nid", "x", "y", "z"))
+            f.write("${0:->7}{1:->19}{2:->19}{3:->19}\n".format("nid", "x", "y", "z"))
             for i in range(len(node_tags)):
                 f.write(
-                    f"{int(node_tags[i]):>8},"  # nid
-                    f"{node_coords[3 * i]:18.10f},"  # x
-                    f"{node_coords[3 * i + 1]:18.10f},"  # y
-                    f"{node_coords[3 * i + 2]:18.10f}\n"  # z
+                    "{0:>8},{1:18.10f},{2:18.10f},{3:18.10f}\n".format(
+                        int(node_tags[i]),  # nid
+                        node_coords[3 * i],  # x
+                        node_coords[3 * i + 1],  # y
+                        node_coords[3 * i + 2],  # z
+                    )
                 )
 
             ### ++++++++++++++++++++++++++++++++++
@@ -744,17 +760,19 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
                 f.write(f"Part_{ii + init_sid}\n")
                 f.write("")
 
-                f.write("${:->9}{:->10}{:->10}\n".format("pid", "secid", "mid"))
-                f.write(f"{ii + init_sid:>10}{ii + init_sid:>10}{999:>10}\n")
+                f.write("${0:->9}{1:->10}{2:->10}\n".format("pid", "secid", "mid"))
+                f.write(
+                    "{0:>10}{1:>10}{2:>10}\n".format(ii + init_sid, ii + init_sid, 999)
+                )
 
                 f.write("*SECTION_SHELL\n")
                 f.write(
-                    "${:->9}{:->10}{:->10}{:->10}\n".format(
+                    "${0:->9}{1:->10}{2:->10}{3:->10}\n".format(
                         "secid", "elform", "shrf", "nip"
                     )
                 )
                 f.write(
-                    "{:>10}{:>10}{:>10.5f}{:>10}\n".format(
+                    "{0:>10}{1:>10}{2:>10.5f}{3:>10}\n".format(
                         ii + init_sid,
                         params_dict[
                             "elform"
@@ -767,23 +785,27 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
                 )  # nip (Integration Points)
 
                 f.write(
-                    "${:->14}{:->15}{:->15}{:->15}\n".format("t1", "t2", "t3", "t4")
+                    "${0:->14}{1:->15}{2:->15}{3:->15}\n".format("t1", "t2", "t3", "t4")
                 )
                 f.write(
-                    f"{THICKNESS:>15.10f}{THICKNESS:>15.10f}{THICKNESS:>15.10f}{THICKNESS:>15.10f}\n"
+                    "{0:>15.10f}{0:>15.10f}{0:>15.10f}{0:>15.10f}\n".format(THICKNESS)
                 )
 
             # Elements grouped by partition
             f.write("*ELEMENT_SHELL\n")
-            f.write("${:->7}{:->8}".format("eid", "pid"))
-            f.write("{:->8}{:->8}{:->8}{:->8}\n".format("n1", "n2", "n3", "n4"))
+            f.write("${0:->7}{1:->8}".format("eid", "pid"))
+            f.write("{0:->8}{1:->8}{2:->8}{3:->8}\n".format("n1", "n2", "n3", "n4"))
 
             for ii in range(len(set_pids)):
                 for eid in element_list[ii]:
-                    f.write(f"{eid:>8}{ii + 101:>8}")
+                    f.write("{0:>8}{1:>8}".format(eid, ii + 101))
                     # Get the nodes of each element
                     n_eid = gmsh.model.mesh.getElement(eid)[1]
-                    f.write(f"{n_eid[0]:>8}{n_eid[1]:>8}{n_eid[2]:>8}{n_eid[3]:>8}\n")
+                    f.write(
+                        "{0:>8}{1:>8}{2:>8}{3:>8}\n".format(
+                            n_eid[0], n_eid[1], n_eid[2], n_eid[3]
+                        )
+                    )
 
             f.write("*END\n")
 

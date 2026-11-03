@@ -1,5 +1,5 @@
 from olympus import Emulator
-from util.base_actual_objective import BaseActualObjective
+from util.BaseActualObjective import BaseActualObjective
 
 
 class ActualObjective(BaseActualObjective):

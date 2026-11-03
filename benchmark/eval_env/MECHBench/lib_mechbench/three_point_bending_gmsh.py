@@ -1,8 +1,10 @@
 import sys
 from pathlib import Path
+from typing import Union
 
 import gmsh
 from src.sob.lib.gmsh_base_meshes import Template_GMSH_Mesh_Constructor
+
 
 """
 This file is copied from MECHBench. (https://github.com/BayesOptApp/MECHBench)
@@ -33,7 +35,7 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             "nelz_div",
         )
 
-    def __call__(self, var_file: Path | str, save: bool = True, *args, **kwds):
+    def __call__(self, var_file: Union[Path, str], save: bool = True, *args, **kwds):
         try:
             # Initialize GMSH
             gmsh.initialize(sys.argv, run=False, interruptible=True)
@@ -205,8 +207,9 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
                 elif iDim == 1:
                     if iTag not in newLines:
                         newLines.append(iTag)
-                elif iDim == 2 and iTag not in newSurfs:
-                    newSurfs.append(iTag)
+                elif iDim == 2:
+                    if iTag not in newSurfs:
+                        newSurfs.append(iTag)
         # Synchronize
         gmsh.model.geo.synchronize()
 
@@ -489,14 +492,16 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
 
             node_tags, node_coords, _ = gmsh.model.mesh.getNodes()
 
-            f.write("#{:->10}{:->20}{:->20}{:->20}\n".format("nid", "x", "y", "z"))
-            f.writelines(
-                f"{int(node_tags[i]):>10}"  # nid
-                f"{node_coords[3 * i]:20.5f}"  # x
-                f"{node_coords[3 * i + 1]:20.5f}"  # y
-                f"{node_coords[3 * i + 2]:20.5f}\n"  # z
-                for i in range(len(node_tags))
-            )
+            f.write("#{0:->10}{1:->20}{2:->20}{3:->20}\n".format("nid", "x", "y", "z"))
+            for i in range(len(node_tags)):
+                f.write(
+                    "{0:>10}{1:20.5f}{2:20.5f}{3:20.5f}\n".format(
+                        int(node_tags[i]),  # nid
+                        node_coords[3 * i],  # x
+                        node_coords[3 * i + 1],  # y
+                        node_coords[3 * i + 2],  # z
+                    )
+                )
 
             ### ++++++++++++++++++++++++++++++++++
             ### Write the Nodes from the left side
@@ -517,11 +522,11 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
 
             L = ""
 
-            L += "#{:->10}{:->10}{:->10}{:->10}{:->10}".format(
+            L += "#{0:->10}{1:->10}{2:->10}{3:->10}{4:->10}".format(
                 "nid1", "nid2", "nid3", "nid4", "nid5"
             )
 
-            L += "{:->10}{:->10}{:->10}{:->10}{:->10}\n".format(
+            L += "{0:->10}{1:->10}{2:->10}{3:->10}{4:->10}\n".format(
                 "nid6", "nid7", "nid8", "nid9", "nid10"
             )
 
@@ -529,7 +534,7 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             for i in range(0, len(leftNodesMeshID), 10):
                 chunk = leftNodesMeshID[i : i + 10]
                 for n in chunk:
-                    L += f"{n:>10}"
+                    L += "{0:>10}".format(n)
                 L += "\n"
             f.write(L)
 
@@ -538,11 +543,11 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
 
             L = ""
 
-            L += "#{:->10}{:->10}{:->10}{:->10}{:->10}".format(
+            L += "#{0:->10}{1:->10}{2:->10}{3:->10}{4:->10}".format(
                 "nid1", "nid2", "nid3", "nid4", "nid5"
             )
 
-            L += "{:->10}{:->10}{:->10}{:->10}{:->10}\n".format(
+            L += "{0:->10}{1:->10}{2:->10}{3:->10}{4:->10}\n".format(
                 "nid6", "nid7", "nid8", "nid9", "nid10"
             )
 
@@ -550,7 +555,7 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             for i in range(0, len(rightNodesMeshID), 10):
                 chunk = rightNodesMeshID[i : i + 10]
                 for n in chunk:
-                    L += f"{n:>10}"
+                    L += "{0:>10}".format(n)
                 L += "\n"
             f.write(L)
 
@@ -571,18 +576,22 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
 
             f.write("/PART/101\n")
             f.write("OUTER_CORE_SURFACES\n")
-            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
-            f.write(f"{1:>10}{1:>10}{0:>10}\n")
+            f.write(
+                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+            )
+            f.write("{0:>10}{1:>10}{2:>10}\n".format(1, 1, 0))
 
             f.write("/SHELL/101\n")
             # Write the element lists
-            f.write("#{:->10}".format("eid"))
-            f.write("{:->10}{:->10}{:->10}{:->10}\n".format("n1", "n2", "n3", "n4"))
+            f.write("#{0:->10}".format("eid"))
+            f.write("{0:->10}{1:->10}{2:->10}{3:->10}\n".format("n1", "n2", "n3", "n4"))
             for ii in range(len(element_list[0])):
                 n_eid = gmsh.model.mesh.getElement(element_list[0][ii])[1]
 
                 f.write(
-                    f"{element_list[0][ii]:>10}{n_eid[0]:>10}{n_eid[1]:>10}{n_eid[2]:>10}{n_eid[3]:>10}\n"
+                    "{0:>10}{1:>10}{2:>10}{3:>10}{4:>10}\n".format(
+                        element_list[0][ii], n_eid[0], n_eid[1], n_eid[2], n_eid[3]
+                    )
                 )
             # Write the level surfaces
             f.write(
@@ -597,13 +606,15 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
 
             f.write("/PART/102\n")
             f.write("LEVEL_SURFACES\n")
-            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
-            f.write(f"{2:>10}{1:>10}{0:>10}\n")
+            f.write(
+                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+            )
+            f.write("{0:>10}{1:>10}{2:>10}\n".format(2, 1, 0))
 
             f.write("/SHELL/102\n")
             # Write the element lists
-            f.write("#{:->10}".format("eid"))
-            f.write("{:->10}{:->10}{:->10}{:->10}\n".format("n1", "n2", "n3", "n4"))
+            f.write("#{0:->10}".format("eid"))
+            f.write("{0:->10}{1:->10}{2:->10}{3:->10}\n".format("n1", "n2", "n3", "n4"))
 
             elem_list_level_surfs = []
             for ii in range(1, 4):
@@ -613,7 +624,13 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
                 n_eid = gmsh.model.mesh.getElement(elem_list_level_surfs[ii])[1]
 
                 f.write(
-                    f"{elem_list_level_surfs[ii]:>10}{n_eid[0]:>10}{n_eid[1]:>10}{n_eid[2]:>10}{n_eid[3]:>10}\n"
+                    "{0:>10}{1:>10}{2:>10}{3:>10}{4:>10}\n".format(
+                        elem_list_level_surfs[ii],
+                        n_eid[0],
+                        n_eid[1],
+                        n_eid[2],
+                        n_eid[3],
+                    )
                 )
 
             # Write the surface 1 (with sub-references)
@@ -630,14 +647,16 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             # WRITE THE ELEMENTS OF THE SURFACE 1
             f.write("/PART/1000\n")
             f.write("SURFACE_1\n")
-            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
-            f.write(f"{3:>10}{1:>10}{0:>10}\n")
+            f.write(
+                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+            )
+            f.write("{0:>10}{1:>10}{2:>10}\n".format(3, 1, 0))
             f.write("/SHELL/1000\n")
 
             # Write the element lists
-            f.write("#{:->10}".format("eid"))
+            f.write("#{0:->10}".format("eid"))
             f.write(
-                "{:->10}{:->10}{:->10}{:->10}{:->30}{:->20}\n".format(
+                "{0:->10}{1:->10}{2:->10}{3:->10}{4:->30}{5:->20}\n".format(
                     "n1", "n2", "n3", "n4", "phi", "thick"
                 )
             )
@@ -652,20 +671,30 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
                     )
 
                     f.write(
-                        f"{surf_1_segmented_elem_list[ii][jj]:>10}{n_eid[0]:>10}{n_eid[1]:>10}{n_eid[2]:>10}{n_eid[3]:>10}{0.0:>30}{THICKNESS_MAPS[0][str(ii + 1)]:>20.5f}\n"
+                        "{0:>10}{1:>10}{2:>10}{3:>10}{4:>10}{5:>30}{6:>20.5f}\n".format(
+                            surf_1_segmented_elem_list[ii][jj],
+                            n_eid[0],
+                            n_eid[1],
+                            n_eid[2],
+                            n_eid[3],
+                            0.0,
+                            THICKNESS_MAPS[0][str(ii + 1)],
+                        )
                     )
 
             # WRITE THE ELEMENTS OF THE SURFACE 2
             f.write("/PART/2000\n")
             f.write("SURFACE_2\n")
-            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
-            f.write(f"{3:>10}{1:>10}{0:>10}\n")
+            f.write(
+                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+            )
+            f.write("{0:>10}{1:>10}{2:>10}\n".format(3, 1, 0))
             f.write("/SHELL/2000\n")
 
             # Write the element lists
-            f.write("#{:->10}".format("eid"))
+            f.write("#{0:->10}".format("eid"))
             f.write(
-                "{:->10}{:->10}{:->10}{:->10}{:->30}{:->20}\n".format(
+                "{0:->10}{1:->10}{2:->10}{3:->10}{4:->30}{5:->20}\n".format(
                     "n1", "n2", "n3", "n4", "phi", "thick"
                 )
             )
@@ -680,20 +709,30 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
                     )
 
                     f.write(
-                        f"{surf_2_segmented_elem_list[ii][jj]:>10}{n_eid[0]:>10}{n_eid[1]:>10}{n_eid[2]:>10}{n_eid[3]:>10}{0.0:>30}{THICKNESS_MAPS[1][str(ii + 1)]:>20.5f}\n"
+                        "{0:>10}{1:>10}{2:>10}{3:>10}{4:>10}{5:>30}{6:>20.5f}\n".format(
+                            surf_2_segmented_elem_list[ii][jj],
+                            n_eid[0],
+                            n_eid[1],
+                            n_eid[2],
+                            n_eid[3],
+                            0.0,
+                            THICKNESS_MAPS[1][str(ii + 1)],
+                        )
                     )
 
             # WRITE THE ELEMENTS OF THE SURFACE 2 PRIME
             f.write("/PART/2001\n")
             f.write("SURFACE_2_PRIME\n")
-            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
-            f.write(f"{3:>10}{1:>10}{0:>10}\n")
+            f.write(
+                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+            )
+            f.write("{0:>10}{1:>10}{2:>10}\n".format(3, 1, 0))
             f.write("/SHELL/2001\n")
 
             # Write the element lists
-            f.write("#{:->10}".format("eid"))
+            f.write("#{0:->10}".format("eid"))
             f.write(
-                "{:->10}{:->10}{:->10}{:->10}{:->30}{:->20}\n".format(
+                "{0:->10}{1:->10}{2:->10}{3:->10}{4:->30}{5:->20}\n".format(
                     "n1", "n2", "n3", "n4", "phi", "thick"
                 )
             )
@@ -708,20 +747,30 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
                     )
 
                     f.write(
-                        f"{surf_2_prime_segmented_elem_list[ii][jj]:>10}{n_eid[0]:>10}{n_eid[1]:>10}{n_eid[2]:>10}{n_eid[3]:>10}{0.0:>30}{THICKNESS_MAPS[2][str(ii + 1)]:>20.5f}\n"
+                        "{0:>10}{1:>10}{2:>10}{3:>10}{4:>10}{5:>30}{6:>20.5f}\n".format(
+                            surf_2_prime_segmented_elem_list[ii][jj],
+                            n_eid[0],
+                            n_eid[1],
+                            n_eid[2],
+                            n_eid[3],
+                            0.0,
+                            THICKNESS_MAPS[2][str(ii + 1)],
+                        )
                     )
 
             # WRITE THE ELEMENTS OF THE SURFACE 3
             f.write("/PART/3000\n")
             f.write("SURFACE_3\n")
-            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
-            f.write(f"{3:>10}{1:>10}{0:>10}\n")
+            f.write(
+                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+            )
+            f.write("{0:>10}{1:>10}{2:>10}\n".format(3, 1, 0))
             f.write("/SHELL/3000\n")
 
             # Write the element lists
-            f.write("#{:->10}".format("eid"))
+            f.write("#{0:->10}".format("eid"))
             f.write(
-                "{:->10}{:->10}{:->10}{:->10}{:->30}{:->20}\n".format(
+                "{0:->10}{1:->10}{2:->10}{3:->10}{4:->30}{5:->20}\n".format(
                     "n1", "n2", "n3", "n4", "phi", "thick"
                 )
             )
@@ -736,20 +785,30 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
                     )
 
                     f.write(
-                        f"{surf_3_segmented_elem_list[ii][jj]:>10}{n_eid[0]:>10}{n_eid[1]:>10}{n_eid[2]:>10}{n_eid[3]:>10}{0.0:>30}{THICKNESS_MAPS[3][str(ii + 1)]:>20.5f}\n"
+                        "{0:>10}{1:>10}{2:>10}{3:>10}{4:>10}{5:>30}{6:>20.5f}\n".format(
+                            surf_3_segmented_elem_list[ii][jj],
+                            n_eid[0],
+                            n_eid[1],
+                            n_eid[2],
+                            n_eid[3],
+                            0.0,
+                            THICKNESS_MAPS[3][str(ii + 1)],
+                        )
                     )
 
             # WRITE THE ELEMENTS OF THE SURFACE 3 PRIME
             f.write("/PART/3001\n")
             f.write("SURFACE_3_PRIME\n")
-            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
-            f.write(f"{3:>10}{1:>10}{0:>10}\n")
+            f.write(
+                "#{0:->10}{1:->10}{2:>10}\n".format("prop_ID", "mat_ID", "subset_id")
+            )
+            f.write("{0:>10}{1:>10}{2:>10}\n".format(3, 1, 0))
             f.write("/SHELL/3001\n")
 
             # Write the element lists
-            f.write("#{:->10}".format("eid"))
+            f.write("#{0:->10}".format("eid"))
             f.write(
-                "{:->10}{:->10}{:->10}{:->10}{:->30}{:->20}\n".format(
+                "{0:->10}{1:->10}{2:->10}{3:->10}{4:->30}{5:->20}\n".format(
                     "n1", "n2", "n3", "n4", "phi", "thick"
                 )
             )
@@ -764,7 +823,15 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
                     )
 
                     f.write(
-                        f"{surf_3_prime_segmented_elem_list[ii][jj]:>10}{n_eid[0]:>10}{n_eid[1]:>10}{n_eid[2]:>10}{n_eid[3]:>10}{0.0:>30}{THICKNESS_MAPS[4][str(ii + 1)]:>20.5f}\n"
+                        "{0:>10}{1:>10}{2:>10}{3:>10}{4:>10}{5:>30}{6:>20.5f}\n".format(
+                            surf_3_prime_segmented_elem_list[ii][jj],
+                            n_eid[0],
+                            n_eid[1],
+                            n_eid[2],
+                            n_eid[3],
+                            0.0,
+                            THICKNESS_MAPS[4][str(ii + 1)],
+                        )
                     )
 
             # Write a surface group in Radioss
@@ -781,7 +848,9 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             f.write("/SURF/PART/EXT/4\n")
             f.write("SURFACES_INTERFACE\n")
             f.write(
-                f"{101:>10}{102:>10}{1000:>10}{2000:>10}{2001:>10}{3000:>10}{3001:>10}\n"
+                "{0:>10}{1:>10}{2:>10}{3:>10}{4:>10}{5:>10}{6:>10}\n".format(
+                    101, 102, 1000, 2000, 2001, 3000, 3001
+                )
             )
 
             f.write("#enddata\n")

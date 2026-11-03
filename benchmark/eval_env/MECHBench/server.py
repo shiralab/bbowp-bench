@@ -64,7 +64,7 @@ def get_valid_params(params: dict[str, float], task_name: str) -> list[float]:
         upper_bound = variable["high"]
 
         # validate all required parameters are provided
-        if key not in params:
+        if key not in params.keys():
             raise ValueError(f"Missing required parameter: {key}")
 
         value = params.get(key)
@@ -139,8 +139,8 @@ def evaluate(task_name: str, req: EvalRequest):
         logger.error(f"Parameter validation error: {e}")
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        logger.exception("Simulation execution failed")
-        raise HTTPException(status_code=500, detail=f"Simulation failed: {e!s}")
+        logger.error(f"Simulation execution failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Simulation failed: {str(e)}")
 
 
 if __name__ == "__main__":

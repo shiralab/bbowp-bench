@@ -30,12 +30,13 @@ def load_objective(task_name: str):
         spec.loader.exec_module(module)
 
         return module.ActualObjective()
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:
         raise RuntimeError(f"Failed to load task '{task_name}': {e}")
 
 
 @app.post("/evaluate/{task_name}")
 def evaluate(task_name: str, req: EvalRequest):
+    global objectives
     try:
         if task_name not in objectives:
             logger.info(f"Loading objective for task: {task_name}")
@@ -46,7 +47,7 @@ def evaluate(task_name: str, req: EvalRequest):
 
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail=f"Task '{task_name}' not found.")
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:
         logger.error(f"Error during evaluation: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
