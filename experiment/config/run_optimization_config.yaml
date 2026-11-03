@@ -1,4 +1,4 @@
-result_dir: experiment/result
+result_dir: experiment/result/example
 
 task:
   - MuJoCo_Hopper
@@ -36,4 +36,4 @@ budget:
 
 seed:
   start: 1
-  end: 1
+  end: 3

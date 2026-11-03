@@ -1,5 +1,7 @@
 data_dir: benchmark/config
 
+out_dir: experiment/result/example
+
 task:
   - MuJoCo_Hopper
   - MuJoCo_Inverted_Double_Pendulum
@@ -87,8 +89,6 @@ prompt:
 
     # Task Description
     {TASK_DESCRIPTION}
-
-out_dir: experiment/result
 
 seed:
   start: 1
