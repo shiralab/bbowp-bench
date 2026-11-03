@@ -51,7 +51,7 @@
   "name": "BBOWP-Bench",
   "description": "BBOWP-Bench is an auto-formulation benchmark dataset for black-box optimization from natural-language description.",
   "conformsTo": "http://mlcommons.org/croissant/1.1",
-  "citeAs": "TODO",
+  "citeAs": "@inproceedings{yamada2026bbowp,\n  title         = {{BBOWP-Bench}: Evaluating LLMs on Black-Box Optimization Word Problems},\n  author        = {Yamada, Yutaro and Hiroshima, Kei and Yoshinari, Nozomu and Uchida, Kento and Shirakawa, Shinichi},\n  booktitle     = {The Fortieth Annual Conference on Neural Information Processing Systems Evaluations and Datasets Track},\n  year          = {2026},\n  eprint        = {2608.02612},\n  archivePrefix = {arXiv}\n}",
   "creator": [
     {
       "@type": "sc:Person",
@@ -502,7 +502,7 @@
   "rai:dataLimitations": "Coverage is limited to 23 tasks from four benchmark sources and should not be treated as representative of all black-box optimization settings. Results also depend on the assumptions and fidelity of the underlying simulators and surrogate benchmarks.",
   "rai:dataBiases": "The dataset inherits biases from the selected benchmark suites, including their task choices, metrics, and simulator or surrogate assumptions. Benchmark-friendly domains are overrepresented relative to real-world deployment settings. Also, the human baselines are rooted in experiences of a few black-box optimization researchers. It perhaps introduces bias in the task domains and baselines towards their familiar research topics.",
   "rai:personalSensitiveInformation": "No personal or sensitive information is intended to be included.",
-  "rai:dataUseCases": "This dataset is designed to benchmark auto-formulation capability for black-box optimization.\nValidated use cases: zero-shot evaluation of large language models (see [TODO]). Not validated for high-stakes operational decision making or use in production systems.",
+  "rai:dataUseCases": "This dataset is designed to benchmark auto-formulation capability for black-box optimization.\nValidated use cases: zero-shot evaluation of large language models (see Yamada et al., \"BBOWP-Bench: Evaluating LLMs on Black-Box Optimization Word Problems,\" NeurIPS 2026 Evaluations and Datasets Track, https://arxiv.org/abs/2608.02612). Not validated for high-stakes operational decision making or use in production systems.",
   "rai:dataSocialImpact": "Potential benefits include improved reproducibility and comparability in optimization research. A main risk is overgeneralizing from benchmark performance to real-world settings.",
   "rai:hasSyntheticData": true,
   "prov:wasDerivedFrom": [
