@@ -571,9 +571,7 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
 
             f.write("/PART/101\n")
             f.write("OUTER_CORE_SURFACES\n")
-            f.write(
-                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
-            )
+            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
             f.write(f"{1:>10}{1:>10}{0:>10}\n")
 
             f.write("/SHELL/101\n")
@@ -599,9 +597,7 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
 
             f.write("/PART/102\n")
             f.write("LEVEL_SURFACES\n")
-            f.write(
-                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
-            )
+            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
             f.write(f"{2:>10}{1:>10}{0:>10}\n")
 
             f.write("/SHELL/102\n")
@@ -634,9 +630,7 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             # WRITE THE ELEMENTS OF THE SURFACE 1
             f.write("/PART/1000\n")
             f.write("SURFACE_1\n")
-            f.write(
-                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
-            )
+            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
             f.write(f"{3:>10}{1:>10}{0:>10}\n")
             f.write("/SHELL/1000\n")
 
@@ -664,9 +658,7 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             # WRITE THE ELEMENTS OF THE SURFACE 2
             f.write("/PART/2000\n")
             f.write("SURFACE_2\n")
-            f.write(
-                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
-            )
+            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
             f.write(f"{3:>10}{1:>10}{0:>10}\n")
             f.write("/SHELL/2000\n")
 
@@ -694,9 +686,7 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             # WRITE THE ELEMENTS OF THE SURFACE 2 PRIME
             f.write("/PART/2001\n")
             f.write("SURFACE_2_PRIME\n")
-            f.write(
-                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
-            )
+            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
             f.write(f"{3:>10}{1:>10}{0:>10}\n")
             f.write("/SHELL/2001\n")
 
@@ -724,9 +714,7 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             # WRITE THE ELEMENTS OF THE SURFACE 3
             f.write("/PART/3000\n")
             f.write("SURFACE_3\n")
-            f.write(
-                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
-            )
+            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
             f.write(f"{3:>10}{1:>10}{0:>10}\n")
             f.write("/SHELL/3000\n")
 
@@ -754,9 +742,7 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
             # WRITE THE ELEMENTS OF THE SURFACE 3 PRIME
             f.write("/PART/3001\n")
             f.write("SURFACE_3_PRIME\n")
-            f.write(
-                "#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id")
-            )
+            f.write("#{:->10}{:->10}{:>10}\n".format("prop_ID", "mat_ID", "subset_id"))
             f.write(f"{3:>10}{1:>10}{0:>10}\n")
             f.write("/SHELL/3001\n")
 

@@ -415,9 +415,7 @@ def py_mesh_v2(var_file, save=True):
         L += f"{pid:>10}{secid:>10}{mid:>10}\n"
 
         L += "*SECTION_SHELL\n"
-        L += "${:->9}{:->10}{:->10}{:->10}\n".format(
-            "secid", "elform", "shrf", "nip"
-        )
+        L += "${:->9}{:->10}{:->10}{:->10}\n".format("secid", "elform", "shrf", "nip")
         L += f"{secid:>10}{elform:>10}{shrf:>10}{nip:>10}\n"
 
         L += "${:->9}{:->10}{:->10}{:->10}\n".format("t1", "t2", "t3", "t4")

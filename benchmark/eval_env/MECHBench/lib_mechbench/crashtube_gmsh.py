@@ -659,14 +659,10 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
             f.write("${:->9}\n".format("sid"))
             f.write(f"{101:>10}\n")
             f.write(
-                "${:->9}{:->10}{:->10}{:->10}".format(
-                    "pid1", "pid2", "pid3", "pid4"
-                )
+                "${:->9}{:->10}{:->10}{:->10}".format("pid1", "pid2", "pid3", "pid4")
             )
             f.write(
-                "{:->10}{:->10}{:->10}{:->10}\n".format(
-                    "pid5", "pid6", "pid7", "pid8"
-                )
+                "{:->10}{:->10}{:->10}{:->10}\n".format("pid5", "pid6", "pid7", "pid8")
             )
 
             for i in range(0, len(set_pids), 8):
@@ -697,12 +693,8 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
             L = "*SET_NODE_LIST\n"
             L += "${:->9}\n".format("sid")
             L += f"{101:>10}\n"
-            L += "${:->9}{:->10}{:->10}{:->10}".format(
-                "nid1", "nid2", "nid3", "nid4"
-            )
-            L += "{:->10}{:->10}{:->10}{:->10}\n".format(
-                "nid5", "nid6", "nid7", "nid8"
-            )
+            L += "${:->9}{:->10}{:->10}{:->10}".format("nid1", "nid2", "nid3", "nid4")
+            L += "{:->10}{:->10}{:->10}{:->10}\n".format("nid5", "nid6", "nid7", "nid8")
             bottom_nodes_ID.sort()
             for i in range(0, len(bottom_nodes_ID), 8):
                 chunk = bottom_nodes_ID[i : i + 8]
@@ -720,12 +712,8 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
             L = "*SET_NODE_LIST\n"
             L += "${:->9}\n".format("sid")
             L += f"{102:>10}\n"
-            L += "${:->9}{:->10}{:->10}{:->10}".format(
-                "nid1", "nid2", "nid3", "nid4"
-            )
-            L += "{:->10}{:->10}{:->10}{:->10}\n".format(
-                "nid5", "nid6", "nid7", "nid8"
-            )
+            L += "${:->9}{:->10}{:->10}{:->10}".format("nid1", "nid2", "nid3", "nid4")
+            L += "{:->10}{:->10}{:->10}{:->10}\n".format("nid5", "nid6", "nid7", "nid8")
             top_nodes_ID.sort()
             for i in range(0, len(top_nodes_ID), 8):
                 chunk = top_nodes_ID[i : i + 8]
@@ -757,9 +745,7 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
                 f.write("")
 
                 f.write("${:->9}{:->10}{:->10}\n".format("pid", "secid", "mid"))
-                f.write(
-                    f"{ii + init_sid:>10}{ii + init_sid:>10}{999:>10}\n"
-                )
+                f.write(f"{ii + init_sid:>10}{ii + init_sid:>10}{999:>10}\n")
 
                 f.write("*SECTION_SHELL\n")
                 f.write(
@@ -797,9 +783,7 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
                     f.write(f"{eid:>8}{ii + 101:>8}")
                     # Get the nodes of each element
                     n_eid = gmsh.model.mesh.getElement(eid)[1]
-                    f.write(
-                        f"{n_eid[0]:>8}{n_eid[1]:>8}{n_eid[2]:>8}{n_eid[3]:>8}\n"
-                    )
+                    f.write(f"{n_eid[0]:>8}{n_eid[1]:>8}{n_eid[2]:>8}{n_eid[3]:>8}\n")
 
             f.write("*END\n")
 
