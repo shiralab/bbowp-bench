@@ -1,4 +1,4 @@
-from util.BaseActualObjective import BaseActualObjective
+from util.base_actual_objective import BaseActualObjective
 from yahpo_gym import benchmark_set
 
 

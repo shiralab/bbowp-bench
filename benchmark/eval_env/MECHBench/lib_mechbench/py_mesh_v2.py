@@ -1,5 +1,3 @@
-from __future__ import print_function  #  K.Komeilizadeh
-
 import sys
 
 import numpy as np
@@ -126,29 +124,17 @@ def py_mesh_v2(var_file, save=True):
     id_min = variables["id_min"]
 
     if make_triggers:
-        if "trigger_rows" in variables:
-            trigger_rows = variables["trigger_rows"]
-        else:
-            trigger_rows = 2
+        trigger_rows = variables.get("trigger_rows", 2)
 
     # Material parameters
     mid = variables["mid"]
 
     # Section parameters
-    if "elform" in variables:
-        elform = variables["elform"]
-    else:
-        elform = 2
+    elform = variables.get("elform", 2)
 
-    if "shrf" in variables:
-        shrf = variables["shrf"]
-    else:
-        shrf = 1.0
+    shrf = variables.get("shrf", 1.0)
 
-    if "nip" in variables:
-        nip = variables["nip"]
-    else:
-        nip = 5
+    nip = variables.get("nip", 5)
 
     # Mesh generation
 
@@ -175,10 +161,7 @@ def py_mesh_v2(var_file, save=True):
     # database_grids = variables["database"]
     # database_nodes = []
 
-    if "trigger" in variables:
-        trigger_cells = variables["trigger"]
-    else:
-        trigger_cells = []
+    trigger_cells = variables.get("trigger", [])
 
     nid = id_min
     eid = id_min
@@ -217,7 +200,7 @@ def py_mesh_v2(var_file, save=True):
         """
         Define the number of elements along the extrusion length
         """
-        num_elements_ext = int(round(extrusion_length / elsize))
+        num_elements_ext = round(extrusion_length / elsize)
         # element size in the extrusion direction
         elsize_ext = extrusion_length / num_elements_ext
 
@@ -319,9 +302,9 @@ def py_mesh_v2(var_file, save=True):
 
         # if make_triggers:
         #     if pid in trigger_cells:
-        #         trigger_nodes = nodes_ids[-6,1:-1]  #!!!!!!!!! changed from -3 to -6
+        #         trigger_nodes = nodes_ids[-6,1:-1]  # !!!!!!!!! changed from -3 to -6
         #         for i in range(1, trigger_rows):
-        #             trigger_nodes = np.append(trigger_nodes, nodes_ids[-6-i,1:-1]) #!!!!!!!!! changed from -3 to -6
+        #             trigger_nodes = np.append(trigger_nodes, nodes_ids[-6-i,1:-1]) # !!!!!!!!! changed from -3 to -6
         #         for gid in trigger_nodes:
         #             xy = nodes[gid][:2]
         #             z = nodes[gid][2]
@@ -334,7 +317,7 @@ def py_mesh_v2(var_file, save=True):
         """
         if make_triggers:
             trigger_distance_default = extrusion_length / 4
-            trigger_distance_default_el = int(round(trigger_distance_default / elsize))
+            trigger_distance_default_el = round(trigger_distance_default / elsize)
             # test variables
             # trigger_depths = np.array([-4, 2, 4])
             # trigger_position_vars = np.array([10, -10, 10])
@@ -352,11 +335,11 @@ def py_mesh_v2(var_file, save=True):
                     )
                     trigger_nodes = nodes_ids[
                         trigger_position, 1:-1
-                    ]  #!!!!!!!!! changed from -3 to -6
+                    ]  # !!!!!!!!! changed from -3 to -6
                     for i in range(1, trigger_rows):
                         trigger_nodes = np.append(
                             trigger_nodes, nodes_ids[trigger_position + i, 1:-1]
-                        )  #!!!!!!!!! changed from -3 to -6
+                        )  # !!!!!!!!! changed from -3 to -6
                     for gid in trigger_nodes:
                         xy = nodes[gid][:2]
                         z = nodes[gid][2]
@@ -408,15 +391,15 @@ def py_mesh_v2(var_file, save=True):
         L += "\n"
 
     # Node sets
-    for sid in set_nodes:
+    for sid, set_node_ids in set_nodes.items():
         L += "*SET_NODE_LIST\n"
         L += "${0:->9}\n".format("sid")
         L += f"{sid:>10}\n"
         L += "${0:->9}{1:->10}{2:->10}{3:->10}".format("nid1", "nid2", "nid3", "nid4")
         L += "{0:->10}{1:->10}{2:->10}{3:->10}\n".format("nid5", "nid6", "nid7", "nid8")
-        set_nodes[sid].sort()
-        for i in range(0, len(set_nodes[sid]), 8):
-            chunk = set_nodes[sid][i : i + 8]
+        set_node_ids.sort()
+        for i in range(0, len(set_node_ids), 8):
+            chunk = set_node_ids[i : i + 8]
             for n in chunk:
                 L += f"{n:>10}"
             L += "\n"
@@ -496,9 +479,9 @@ def main():
     print("N o r m a l")
 
     # return 0
-    #!!!!!!!!!!!!!!!!!!!!!!! added by K.Komeilizadeh
+    # !!!!!!!!!!!!!!!!!!!!!!! added by K.Komeilizadeh
     return mesh
-    #!!!!!!!!!!!!!!!!!!!!!!!
+    # !!!!!!!!!!!!!!!!!!!!!!!
 
 
 if __name__ == "__main__":

@@ -166,7 +166,7 @@ class TestAliases:
             var_name = var["actual_name"]
             try:
                 preprocess_fn = convert_snake_case
-                aliases_set = set([preprocess_fn(alias) for alias in var["aliases"]])
+                aliases_set = {preprocess_fn(alias) for alias in var["aliases"]}
             except KeyError as e:
                 pytest.fail(f"eval_config.json missing key: {e}")
 
@@ -225,7 +225,7 @@ class TestAliases:
             alias_to_choices: dict[str, list[str]] = {}
             for choice in var["choices"]:
                 preprocess_fn = convert_snake_case
-                aliases_set = set([preprocess_fn(alias) for alias in choice["aliases"]])
+                aliases_set = {preprocess_fn(alias) for alias in choice["aliases"]}
                 for alias in aliases_set:
                     alias_to_choices.setdefault(alias, []).append(
                         f"{var_name} -> {choice['actual_name']}"

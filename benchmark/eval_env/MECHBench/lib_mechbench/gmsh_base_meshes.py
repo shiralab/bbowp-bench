@@ -60,7 +60,7 @@ class Template_GMSH_Mesh_Constructor(ABC):
         elif isinstance(path_to_file, Path):
             path_to_file_path = path_to_file
         else:
-            raise ValueError(
+            raise TypeError(
                 "The path given as a parameter is not a string or Path object"
             )
 

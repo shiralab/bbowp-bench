@@ -226,9 +226,8 @@ def _find_todos_in_obj(obj, path: str = "") -> list[str]:
     elif isinstance(obj, list):
         for i, item in enumerate(obj):
             hits.extend(_find_todos_in_obj(item, f"{path}[{i}]"))
-    elif isinstance(obj, str):
-        if obj in TODO_TOKENS:
-            hits.append(f"{path} = '{obj}'")
+    elif isinstance(obj, str) and obj in TODO_TOKENS:
+        hits.append(f"{path} = '{obj}'")
     return hits
 
 

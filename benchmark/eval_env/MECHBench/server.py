@@ -139,7 +139,7 @@ def evaluate(task_name: str, req: EvalRequest):
         logger.error(f"Parameter validation error: {e}")
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        logger.error(f"Simulation execution failed: {e}", exc_info=True)
+        logger.exception("Simulation execution failed")
         raise HTTPException(status_code=500, detail=f"Simulation failed: {e!s}")
 
 

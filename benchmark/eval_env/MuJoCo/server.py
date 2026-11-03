@@ -132,7 +132,7 @@ def evaluate(task_name: str, req: EvalRequest):
 
     except HTTPException:
         raise  # re-raise HTTP exceptions to be handled by FastAPI
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         logger.error(f"Error during evaluation: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 

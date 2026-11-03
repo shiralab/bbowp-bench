@@ -108,7 +108,7 @@ def run_single_setting(setting: dict) -> tuple[dict, bool, str | None]:
     try:
         execute_designed_answer_generation(**setting)
         return setting, True, None
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001
         error_trace = "".join(traceback.format_exception(exc))
         return setting, False, error_trace
 
@@ -133,7 +133,7 @@ if __name__ == "__main__":
     except yaml.YAMLError as e:
         parser.error(f"Error parsing experiment config YAML: {e}")
         sys.exit(1)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         parser.error(f"Error loading experiment config: {e}")
         sys.exit(1)
 
@@ -174,7 +174,7 @@ if __name__ == "__main__":
 
             try:
                 _, success, error_trace = future.result()
-            except Exception:
+            except Exception:  # noqa: BLE001
                 logger.error(
                     f"Failed to execute designed answer generation for setting: {setting_label}\n"
                     f"{traceback.format_exc()}"

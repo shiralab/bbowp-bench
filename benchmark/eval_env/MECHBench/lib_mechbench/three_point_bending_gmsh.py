@@ -205,9 +205,8 @@ class ThreePointBending_GMSH(Template_GMSH_Mesh_Constructor):
                 elif iDim == 1:
                     if iTag not in newLines:
                         newLines.append(iTag)
-                elif iDim == 2:
-                    if iTag not in newSurfs:
-                        newSurfs.append(iTag)
+                elif iDim == 2 and iTag not in newSurfs:
+                    newSurfs.append(iTag)
         # Synchronize
         gmsh.model.geo.synchronize()
 

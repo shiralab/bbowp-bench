@@ -64,7 +64,7 @@ class Objective:
                         found_val = bool(found_val)
                     elif type_ == VariableType.CATEGORICAL:
                         found_val = str(found_val)
-                except Exception:
+                except Exception:  # noqa: BLE001
                     self.logger.debug(
                         f"[Objective] Could not cast value '{found_val}' of variable '{actual_name}' to type '{type_}'. Returning worst value."
                     )

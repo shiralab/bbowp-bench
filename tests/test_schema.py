@@ -34,7 +34,7 @@ class TestPydanticParse:
             BBOWP.model_validate_json(task_json_raw)
         except ImportError:
             pytest.fail("BBOWP not importable")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             pytest.fail(f"[{task_dir.name}] task.json Pydantic parse failed: {e}")
 
     def test_eval_config_json_parses(self, task_dir: Path, eval_config_json_raw: str):
@@ -45,7 +45,7 @@ class TestPydanticParse:
             BBOWPEvalConfig.model_validate_json(eval_config_json_raw)
         except ImportError:
             pytest.fail("BBOWPEvalConfig not importable")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             pytest.fail(
                 f"[{task_dir.name}] eval_config.json Pydantic parse failed: {e}"
             )
@@ -59,7 +59,7 @@ class TestVariableSchema:
             _ = BBOWPEvalConfig.model_validate_json(eval_config_json_raw)
         except ImportError:
             pytest.fail("BBOWPEvalConfig not importable")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             pytest.fail(f"[{task_dir.name}] Variable schema validation failed: {e}")
 
 

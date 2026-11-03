@@ -146,13 +146,13 @@ class Crashtube_GMSH(Template_GMSH_Mesh_Constructor):
             list_face_1 = []
             list_face_2 = []
             # Perform the function from Face 1 (and 3... for now)
-            for key, trigg in trigger_dict_1.items():
+            for trigg in trigger_dict_1.values():
                 y_i = trigg["Y"]
                 h_i = trigg["HEIGHT"]
 
                 list_face_1.append(determine_trigger_profile(y_i, h_i))
 
-            for key, trigg in trigger_dict_2.items():
+            for trigg in trigger_dict_2.values():
                 y_i = trigg["Y"]
                 h_i = trigg["HEIGHT"]
 
