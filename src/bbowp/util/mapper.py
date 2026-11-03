@@ -29,7 +29,7 @@ def map_variable_name(
         for alias in aliases
     )
 
-    for name in params.keys():
+    for name in params:
         name_preprocessed = (
             preprocess_name_fn(name) if preprocess_name_fn is not None else name
         )

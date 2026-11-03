@@ -135,7 +135,7 @@ if __name__ == "__main__":
     except yaml.YAMLError as e:
         parser.error(f"Error parsing experiment config YAML: {e}")
         sys.exit(1)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         parser.error(f"Error loading experiment config: {e}")
         sys.exit(1)
 
@@ -174,7 +174,7 @@ if __name__ == "__main__":
 
             try:
                 future.result()
-            except Exception:
+            except Exception:  # noqa: BLE001
                 logger.error(
                     f"Optimization failed for setting {setting}: {traceback.format_exc()}"
                 )

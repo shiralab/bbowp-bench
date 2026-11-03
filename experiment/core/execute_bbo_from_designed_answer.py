@@ -16,7 +16,7 @@ logger.addHandler(logging.NullHandler())
 
 
 def setup_logger(log_path: str | pathlib.Path) -> logging.Logger:
-    logger_name = f"{str(log_path.parent)}"
+    logger_name = f"{log_path.parent!s}"
     run_logger = logging.getLogger(logger_name)
     run_logger.setLevel(logging.DEBUG)
     run_logger.propagate = False

@@ -1,3 +1,4 @@
+import contextlib
 import time
 
 import docker
@@ -28,7 +29,7 @@ class BenchmarkContainer:
             )
         except docker.errors.ImageNotFound:
             raise RuntimeError(f"Docker image '{self.image_name}' not found.")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             raise RuntimeError(f"Failed to start container: {e}")
 
         for _ in range(self.max_retries):
@@ -49,10 +50,8 @@ class BenchmarkContainer:
 
             time.sleep(1)
         else:
-            try:
+            with contextlib.suppress(Exception):
                 self.container.stop()
-            except Exception:
-                pass
             raise RuntimeError("Failed to map container port to host port.")
 
         self.logger.debug(f"Docker container started. Host port: {self.host_port}")
@@ -65,7 +64,7 @@ class BenchmarkContainer:
             self.logger.debug("Stopping Docker container...")
             try:
                 self.container.stop()
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 self.logger.warning(f"Error stopping container: {e}")
 
     def _wait_for_server(self, timeout: int = 30):

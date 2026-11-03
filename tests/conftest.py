@@ -83,7 +83,7 @@ def eval_config_json_raw(task_dir: Path) -> str:
 def task_model(task_json_raw: str):
     """parse task.json into Pydantic model and return it."""
     try:
-        from bbowp.schema.bbowp import BBOWP  # noqa: PLC0415
+        from bbowp.schema.bbowp import BBOWP
 
         return BBOWP.model_validate_json(task_json_raw)
     except ImportError:
@@ -94,7 +94,7 @@ def task_model(task_json_raw: str):
 def eval_config_model(eval_config_json_raw: str):
     """parse eval_config.json into Pydantic model and return it."""
     try:
-        from bbowp.schema.bbowp import BBOWPEvalConfig  # noqa: PLC0415
+        from bbowp.schema.bbowp import BBOWPEvalConfig
 
         return BBOWPEvalConfig.model_validate_json(eval_config_json_raw)
     except ImportError:

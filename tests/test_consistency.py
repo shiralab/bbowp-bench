@@ -24,7 +24,7 @@ BUDGET_LEVELS = ["large", "small"]
 
 class _TypeMap(dict[str, str]):
     def __missing__(self, key: str) -> str:
-        normalized_key = key[6:] if key.startswith("const_") else key
+        normalized_key = key.removeprefix("const_")
         self[key] = normalized_key
         return normalized_key
 

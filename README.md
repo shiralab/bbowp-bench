@@ -62,7 +62,7 @@ If you use BBOWP-Bench in your research, please cite our paper:
   - We extracted 2/3 tasks for the BBOWP dataset: Star-Shaped Crash Box and Three Point Bending of Layered Beam.
     - The dimension $d$ of the search space is fixed as follows: $d=5$ for Star-Shaped Crash Box and $d=10$ for Three-Point Bending of Layered Beam.
     - Long Crash Tube is excluded as we confirmed there is a discrepancy between paper and official code.
-  - Python files and radioss files in `dataset/MECHBench/lib_mechbench` are copied from the official repository. (February 11, 2026)
+  - Python files and radioss files in `benchmark/eval_env/MECHBench/lib_mechbench` are copied from the official repository. (February 11, 2026)
 
 - MuJoCo [Todorov, et al. 2012] ([GitHub](https://github.com/google-deepmind/mujoco))
   - We provide five black-box optimization tasks based on MuJoCo continuous control environments, accessed through the Gymnasium interface. In each task, the objective is to maximize the cumulative reward over a fixed-length episode by optimizing the parameters of a linear feedback policy. The design variables consist of feedback gains and bias terms of the linear policy.
@@ -83,6 +83,16 @@ If you use BBOWP-Bench in your research, please cite our paper:
 3. Sync the environment (install packages)
 ```bash
 uv sync
+```
+
+- To use SMAC3 as an optimization algorithm, install the optional `smac` extra instead:
+```bash
+uv sync --extra smac
+```
+  - `smac` depends on [pyrfr](https://github.com/automl/random_forest_run), which is built from source and requires [SWIG](https://www.swig.org/) and a C++ compiler.
+  - With GCC 15 or later (e.g., Ubuntu 26.04), building pyrfr fails. In that case, run:
+```bash
+CXXFLAGS="-Wno-template-body" uv sync --extra smac
 ```
 
 ### Run LLM for search space design and algorithm selection
