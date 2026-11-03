@@ -135,7 +135,7 @@ if __name__ == "__main__":
                 try:
                     with open(sample_domain_path, "r", encoding="utf-8") as f:
                         reader = csv.reader(f)
-                        domain_data_raw = list(float(row[0]) for row in reader)
+                        domain_data_raw = [float(row[0]) for row in reader]
                     domain_data_raw = np.array(domain_data_raw)
                     domain_data_size = len(domain_data_raw)
                     domain_data = domain_data_raw[
@@ -164,9 +164,9 @@ if __name__ == "__main__":
                             sample_search_space_baseline_path, "r", encoding="utf-8"
                         ) as f:
                             reader = csv.reader(f)
-                            search_space_baseline_data_raw = list(
+                            search_space_baseline_data_raw = [
                                 float(row[0]) for row in reader
-                            )
+                            ]
                         search_space_baseline_data_raw = np.array(
                             search_space_baseline_data_raw
                         )
@@ -204,9 +204,7 @@ if __name__ == "__main__":
                     try:
                         with open(sample_search_space_path, "r", encoding="utf-8") as f:
                             reader = csv.reader(f)
-                            search_space_data_raw = list(
-                                float(row[0]) for row in reader
-                            )
+                            search_space_data_raw = [float(row[0]) for row in reader]
                         search_space_data_raw = np.array(search_space_data_raw)
                         search_space_data_size = len(search_space_data_raw)
                         search_space_data = search_space_data_raw[
