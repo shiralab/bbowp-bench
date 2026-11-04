@@ -6,16 +6,19 @@ This repository provides the code and benchmark suite for:
 
 **BBOWP-Bench: Evaluating LLMs on Black-Box Optimization Word Problems**  
 Yutaro Yamada, Kei Hiroshima, Nozomu Yoshinari, Kento Uchida, and Shinichi Shirakawa  
+*The Fortieth Annual Conference on Neural Information Processing Systems (NeurIPS 2026), Evaluations and Datasets Track*  
 [arXiv:2608.02612](https://arxiv.org/abs/2608.02612)
 
 If you use BBOWP-Bench in your research, please cite our paper:
 
 ```bibtex
-@article{yamada2026bbowp,
-  title   = {{BBOWP-Bench}: Evaluating LLMs on Black-Box Optimization Word Problems},
-  author  = {Yamada, Yutaro and Hiroshima, Kei and Yoshinari, Nozomu and Uchida, Kento and Shirakawa, Shinichi},
-  journal = {arXiv preprint arXiv:2608.02612},
-  year    = {2026}
+@inproceedings{yamada2026bbowp,
+  title         = {{BBOWP-Bench}: Evaluating LLMs on Black-Box Optimization Word Problems},
+  author        = {Yamada, Yutaro and Hiroshima, Kei and Yoshinari, Nozomu and Uchida, Kento and Shirakawa, Shinichi},
+  booktitle     = {The Fortieth Annual Conference on Neural Information Processing Systems Evaluations and Datasets Track},
+  year          = {2026},
+  eprint        = {2608.02612},
+  archivePrefix = {arXiv}
 }
 ```
 
